@@ -67,11 +67,11 @@ $insumo_cushion,
 $insumo_clises)", $conexion);
 
 if (mysql_errno()!=0){
-	echo "ERROR: ". mysql_errno() . " - ". mysql_error();
 	mysql_close($conexion);
+	header("Location:lista.php?m=2");
 } else {
 	mysql_close($conexion);
-	header("Location:lista.php");
+	header("Location:lista.php?m=1");
 }
 
 ?>

@@ -48,11 +48,11 @@ insumo_cushion=$insumo_cushion,
 insumo_clises=$insumo_clises WHERE id_costo_produccion=$dtecnicos_id;", $conexion);
 
 if (mysql_errno()!=0){
-	echo "ERROR: ". mysql_errno() . " - ". mysql_error();
 	mysql_close($conexion);
+	header("Location:lista.php?m=4");
 } else {
 	mysql_close($conexion);
-	header("Location:lista.php?m=2");
+	header("Location:lista.php?m=3");
 }
 
 ?>

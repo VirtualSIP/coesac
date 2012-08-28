@@ -27,10 +27,24 @@ $rst_prodterminado=mysql_query("SELECT * FROM syCoesa_articulo ORDER BY id_artic
 <!-- FUENTES -->
 <link href='http://fonts.googleapis.com/css?family=Cuprum:400,700' rel='stylesheet' type='text/css'>
 
+<!-- DESHABILITAR ENTER -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jEnter = jQuery.noConflict();
+jEnter(document).ready(function() {
+    jEnter("form").keypress(function(e) {
+        if (e.which == 13) {
+            return false;
+        }
+    });
+});
+</script>
+
 <!-- SPRY -->
 <link rel="stylesheet" type="text/css" href="/libs_js/SpryAssets/SpryValidationSelect.css">
 <link rel="stylesheet" type="text/css" href="/libs_js/SpryAssets/SpryValidationTextarea.css">
-<script type="text/javascript" src="/libs_js/SpryAssets/SpryValidationSelect.js"></script><script type="text/javascript" src="/libs_js/SpryAssets/SpryValidationTextarea.js"></script>
+<script type="text/javascript" src="/libs_js/SpryAssets/SpryValidationSelect.js"></script>
+<script type="text/javascript" src="/libs_js/SpryAssets/SpryValidationTextarea.js"></script>
 
 <!-- TEXT AREA -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>

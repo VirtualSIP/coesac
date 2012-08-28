@@ -66,6 +66,19 @@ $rst_cilindro=mysql_query("SELECT * FROM syCoesa_mantenimiento_cilindro ORDER BY
 <!-- FUENTES -->
 <link href='http://fonts.googleapis.com/css?family=Cuprum:400,700' rel='stylesheet' type='text/css'>
 
+<!-- DESHABILITAR ENTER -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jEnter = jQuery.noConflict();
+jEnter(document).ready(function() {
+    jEnter("form").keypress(function(e) {
+        if (e.which == 13) {
+            return false;
+        }
+    });
+});
+</script>
+
 <!-- COMBO -->
 <link rel="stylesheet" href="/libs_js/jquery_ui/themes/base/jquery.ui.all.css">
 <script src="/libs_js/jquery-1.7.2.min.js"></script>

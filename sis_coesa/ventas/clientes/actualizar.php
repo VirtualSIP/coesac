@@ -24,11 +24,11 @@ cliente_contacto_email='$cliente_contacto_email',
 observaciones_cliente='$cliente_observaciones' WHERE id_cliente=$cliente_id;", $conexion);
 
 if (mysql_errno()!=0){
-	echo "ERROR: ". mysql_errno() . " - ". mysql_error();
 	mysql_close($conexion);
+	header("Location:lista.php?m=4");
 } else {
 	mysql_close($conexion);
-	header("Location:lista.php?m=2");
+	header("Location:lista.php?m=3");
 }
 
 ?>

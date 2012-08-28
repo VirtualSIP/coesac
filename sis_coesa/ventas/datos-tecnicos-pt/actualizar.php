@@ -125,7 +125,6 @@ $dtecnicos_observaciones<>$fila_ver_art["observaciones_articulo"] ){
 	} else {
 		mysql_close($conexion);
 		header("Location:lista.php?m=2");
-		//header("Location:dtecnicos-laminas/form-agregar.php?did=$dato_tecnico&clm=$dtecnicos_laminas");
 	}
 
 }else{

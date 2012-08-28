@@ -4,7 +4,8 @@ require_once("../../../connect/conexion.php");
 require_once("../../../connect/function.php");
 require_once("../../../connect/sesion/verificar_sesion.php");
 
-$web="http://coesac.marostsac.com/";
+//VARIABLES DE URL
+$notificacion=$_REQUEST["m"];
 
 //ARTICULOS
 $rst_clientes=mysql_query("SELECT * FROM syCoesa_clientes ORDER BY id_cliente ASC;", $conexion);
@@ -84,6 +85,32 @@ jmenu(document).ready(function(){
 	}
 });
 </script>
+
+<?php if($notificacion<>""){ ?>
+<!-- NOTICIFICACIONES -->
+<link type="text/css" href="/libs_js/jnotify/css/jquery.jnotify.css" rel="stylesheet" title="default" media="all" />
+<link type="text/css" href="/libs_js/jnotify/css/jquery.jnotify-alt.css" rel="alternate stylesheet" title="alt" media="all" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="/libs_js/jnotify/lib/jquery.jnotify.min.js"></script>
+<script type="text/javascript">
+var jNotify = jQuery.noConflict();
+jNotify(document).ready(function (){
+	<?php if($notificacion==1){ ?>
+	jNotify.jnotify("El registro se ha guardado correctamente.", 5000);
+	<?php }elseif($notificacion==2){ ?>
+	jNotify.jnotify("El registro NO se ha guardado correctamente, ingrese nuevamente los datos.", "error", 5000);
+	<?php }elseif($notificacion==3){ ?>
+	jNotify.jnotify("El registro se ha actualizó correctamente.", 5000);
+	<?php }elseif($notificacion==4){ ?>
+	jNotify.jnotify("El registro NO se ha actualizado correctamente, ingrese nuevamente los datos.", "error", 5000);
+	<?php }elseif($notificacion==5){ ?>
+	jNotify.jnotify("El registro se eliminó correctamente.", 5000);
+	<?php }elseif($notificacion==6){ ?>
+	jNotify.jnotify("El registro NO eliminó correctamente, intente nuevamente.", "error", 5000);
+	<?php } ?>
+});
+</script>
+<?php } ?>
 
 <!-- ELIMINAR -->
 <script type="text/javascript">

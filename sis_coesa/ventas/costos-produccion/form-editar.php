@@ -208,6 +208,19 @@ if($lamina1_extrusion>0 or $lamina2_extrusion>0 or $lamina3_extrusion>0){ //EXTR
 <!-- FUENTES -->
 <link href='http://fonts.googleapis.com/css?family=Cuprum:400,700' rel='stylesheet' type='text/css'>
 
+<!-- DESHABILITAR ENTER -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jEnter = jQuery.noConflict();
+jEnter(document).ready(function() {
+    jEnter("form").keypress(function(e) {
+        if (e.which == 13) {
+            return false;
+        }
+    });
+});
+</script>
+
 <!-- MENU -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="/libs_js/effc_menu/jscript_jzScrollHorizontalPane.js"></script>

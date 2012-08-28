@@ -30,8 +30,8 @@ VALUES ('$cliente_nombre',
 '$cliente_observaciones')", $conexion);
 
 if (mysql_errno()!=0){
-	echo "ERROR: ". mysql_errno() . " - ". mysql_error();
 	mysql_close($conexion);
+	header("Location:lista.php?m=2");
 } else {
 	mysql_close($conexion);
 	header("Location:lista.php?m=1");
