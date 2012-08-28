@@ -87,8 +87,8 @@ if($articulo_id<>""){
 	$dato_tecnico=$fila_dato_tecnico["id_datos_tecnicos"];
 	
 	if (mysql_errno()!=0){
+		echo "ERROR: ". mysql_errno() . " - ". mysql_error();
 		mysql_close($conexion);
-		header("Location:lista.php?m=2");
 	} else {
 		mysql_close($conexion);
 		header("Location:dtecnicos-laminas/form-agregar.php?did=$dato_tecnico&clt=$dtecnicos_cliente&dart=$articulo_id&cun=$codigo_unico");

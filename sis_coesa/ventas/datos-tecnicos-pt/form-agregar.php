@@ -148,22 +148,6 @@ jcmbimg(document).ready(function() {
 });
 </script>
 
-<!-- FRECUENCIA -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-var jFrec = jQuery.noConflict();
-jFrec(document).ready(function(){
-	jFrec("#dtecnicos_repeticion").change(function(){
-		var cilindro = jFrec("#dtecnicos_cilindro").val();
-		var repeticion = jFrec(this).val();
-		jFrec.post("frecuencia.php", {cilindro: cilindro, repeticion: repeticion},
-			function(data){
-				jFrec("#frecuencia").html(data);
-			});
-	});
-});
-</script>
-
 </head>
 
 <body>	
@@ -229,7 +213,17 @@ jFrec(document).ready(function(){
                         </fieldset>
                         
                         <fieldset class="alto50 w180">
-                          <label for="dtecnicos_cilindro">Cilindro (mm):</label>
+                            <label for="dtecnicos_repeticion">Distancia de repetición:</label>
+                          <input type="text" name="dtecnicos_repeticion" id="dtecnicos_repeticion" size="50" class="w130 texto_der" value="0">
+                        </fieldset>
+                        
+                        <fieldset class="alto50 w180">
+                            <label for="dtecnicos_frecuencia">Frecuencia:</label>
+                          <input type="text" name="dtecnicos_frecuencia" id="dtecnicos_frecuencia" size="50" class="w130 texto_der" value="0">
+                        </fieldset>
+                        
+                        <fieldset class="alto50 w180">
+                          <label for="dtecnicos_cilindro">Cilindro:</label>
                           <select name="dtecnicos_cilindro" id="dtecnicos_cilindro" class="w140">
                             <option value>Seleccione</option>
                             <?php while($fila_cilindro=mysql_fetch_array($rst_cilindro)){
@@ -241,18 +235,6 @@ jFrec(document).ready(function(){
                             <?php } ?>
                           </select>
                         </fieldset>
-                        
-                        <fieldset class="alto50 w180">
-                            <label for="dtecnicos_repeticion">Distancia de repetición (mm):</label>
-                          <input type="text" name="dtecnicos_repeticion" id="dtecnicos_repeticion" size="50" class="w130 texto_der" value="0">
-                        </fieldset>
-                        
-                        <div id="frecuencia" class="w180 float_left">
-                        <fieldset class="alto50 w180">
-                            <label for="dtecnicos_frecuencia">Frecuencia (mm):</label>
-                          <input name="dtecnicos_frecuencia" type="text" class="w130 texto_der" id="dtecnicos_frecuencia" value="0" size="50" readonly>
-                        </fieldset>
-                        </div>
                         
                         <fieldset class="alto50 w180" id="item-nrobandas">
                             <label for="dtecnicos_numbandas">Número de bandas:</label>

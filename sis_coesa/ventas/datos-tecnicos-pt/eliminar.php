@@ -13,10 +13,10 @@ $rst_eliminar=mysql_query("DELETE FROM syCoesa_datos_tecnicos WHERE id_datos_tec
 if (mysql_errno()!=0){
 	echo "ERROR: ".mysql_errno()." - ".mysql_error();
 	mysql_close($conexion);
-	header("Location:lista.php?m=6");
+	header("Location:lista.php?m=4");
 } else {
 	mysql_close($conexion);
-	header("Location:lista.php?m=5");
+	header("Location:lista.php?m=3");
 }
 
 ?>
