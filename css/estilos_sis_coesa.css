@@ -1,0 +1,122 @@
+.panel_der/* Marco Antonio López Sotomayor */
+
+/*====================================== ETIQUETAS ======================================*/
+article, footer, header, section{ display: block;}
+body{ font-size:12px; color:#000; background-image:url(../imagenes/bg.jpg); }
+h1, h2, h3, h4, h5, h6, a, p{ margin:0; padding:0; font-weight:normal; text-decoration:none;}
+p{ line-height:140%;}
+header{ position:fixed; width:100%; height:50px; z-index:2; background-image:url(../imagenes/fondo-cabecera.jpg); min-width:920px;}
+footer{ width:940px; padding:20px; position:relative; z-index:2; background-color:#333; }
+input[type=file]{ width:300px !important; }
+
+/*====================================== CLASES ======================================*/
+.an50{ width:50% !important; }
+.an100{ width:100% !important; }
+.alto50{ height:50px !important; }
+.w245{ width:245px !important; }
+.w230{ width:230px !important; }
+.w250{ width:250px !important; }
+.w215{ width:215px !important; }
+.w235{ width:235px !important; }
+.w450{ width:450px !important; }
+.w180{ width:180px !important; }
+.w130{ width:130px !important; }
+.w140{ width:140px !important; }
+.w150{ width:150px !important; }
+.margin_0{ margin:0 !important; }
+.margin_r10{ margin-right:10px !important; }
+.padding_tb10{ margin:10px 0 !important; }
+.handle{ cursor:n-resize !important; }
+.texto_der{ text-align:right !important; }
+.texto_izq{ text-align:left !important; }
+.texto_cen{ text-align:center !important; }
+.texto_bold{ font-weight:bold !important; }
+.display_none{ display:none !important; }
+.panel_izq, .panel_der{ width:360px !important; float:left; }
+.ocultar{ display:none !important; }
+.float_left{ float:left !important; }
+.border_der{ border-right:1px solid #000 !important; }
+.text_mensaje{ color:#F00; font-weight:bold; }
+
+/*====================================== TEXTO - COLOR - COLOR DE FONDO ======================================*/
+.texto_11{ font-size:11px !important; }
+.texto_10{ font-size:10px !important; }
+.texto_bold{ font-weight:bold !important; }
+.fondo_c1{ background-color:#45C0C0 !important; }
+
+/*====================================== MODAL ======================================*/
+#cliente_add, #producto_add{ display:none; }
+
+/*====================================== HEADER ======================================*/
+#hd_logo{ width:200px; float:left; margin:8px 0 0 10px; }
+#hd_datos{ width:250px; float:right; padding:15px 10px 0 0;; text-align:right; color:#fff; min-width:100px; }
+#hd_datos a{ color:#fff; text-decoration:none; }
+
+/*====================================== SECTION ======================================*/
+/* SECTION CUERPO */
+section#cuerpo{ height:auto; min-height:100%; width:100%; position:relative; min-width:940px; }
+
+/* SECTION CUERPO - MENU */
+#nav { position:fixed; width:190px; height:100%; background-color:#f1f1f1; border-right:1px solid #999; margin:50px 0 0 0 !important; padding:0 !important; }
+#nav dt.items b { width:175px; height:20px; padding:10px 0 10px 15px; display:block; font-weight:normal; 
+	font-size:16px; font-family:'Cuprum', sans-serif; color:#000; cursor:pointer;
+	background-image:url(../imagenes/fondo-menu-sep.gif); background-repeat:repeat-x; background-position:bottom; }
+#nav dt.items b:hover{ display:block; font-weight:normal; cursor:pointer;
+	background-image:url(../imagenes/fondo-menu-active.jpg); background-repeat:repeat-x; color:#fff; }
+#nav dd { padding:0; margin:0;}
+#nav dd ul { width:186px; padding:0; margin:0; list-style:none; border:2px solid #333; border-top:none; border-bottom:none; }
+#nav dd ul li a { display:block; width:170px; height:20px; font-size:11px; color:#000; text-decoration:none; border-bottom:1px dashed #CCC;
+background-image:url(../imagenes/arrow.gif); background-repeat:no-repeat; background-position:7px 12px; padding:8px 0 8px 15px;}
+
+/* SECTION CUERPO - SECTION CONTENIDO */
+section#contenido{ margin:70px 0 0 200px; height:100%; float:left; position:relative; min-height:100%; width: 79%;}
+#datos_procesos{ width:100%; float:left; position:relative; min-width:780px; }
+
+/* SECTION CUERPO - SUBOPCIONES */
+#datos_subopciones{ width:100%; float:left; margin:0 0 10px 0; } 
+#opt_subopc_titulo{ display:block; float:left; font-size:28px; }
+ul#opt_subopc, ul#opt_subopc li{ list-style:none; margin:0; padding:0; }
+ul#opt_subopc li a{ display:block; float:left; padding:10px 15px; margin:0 10px; color:#000; font-size:16px;
+background-image:url(../imagenes/fondo-form-datos.png); border:1px solid #D5D5D5;
+border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+
+/* SECTION CUERPO - FORMULARIO DATOS */
+.formulario_datos{ width:100%; border:1px solid #D5D5D5; border-bottom:none; border-top:none; position:relative; float:left; }
+.frmdt_cabecera{ width:100%; height:38px; float:left; 
+background-image:url(../imagenes/fondo-form-datos.png); background-repeat:repeat-x;  }
+.frmdt_cabecera h6{ font-size:22px; font-family:'Cuprum', sans-serif; padding:7px 0 0 15px; }
+.frmdt_contenido{ width:98%; float:left; position:relative; padding:1%; background-color:#F8F8F8; border-bottom:1px solid #D5D5D5; }
+form{ width: 96%; padding:20px; float:left; position:relative; } 
+form fieldset{ width:360px; float:left; position:relative; border:none; margin:0 0 20px 0; padding:0; }
+form fieldset .charleft{ width:50px !important; position:absolute; top:0; left:270px; font-size:11px; text-align:right; color:#F00; }
+form fieldset label{ width:100%; float:left; padding:0 0 5px 0; font-size:12px; }
+form fieldset select{ padding:5px; }
+form fieldset input[type=text],
+form fieldset input[type=password]{ width:300px; height:15px; padding:5px;
+border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border:1px solid lightGrey; background-color:#e6e6e6e;
+background-image:url(/libs_js/jquery_ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png);
+background-repeat:repeat-x; background-position:50% 50%; }
+form fieldset input[type=button],
+form fieldset input[type=submit],
+form fieldset #dtp_selecmaq{ height:40px; float:left; padding:0 7px; margin:0 10px 0 0; background-image:url(../imagenes/fondo-form-datos.png); border:1px solid #D5D5D5;
+border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+form fieldset #dtp_selecmaq{ height:18px !important; padding:10px !important; text-decoration:none; color:#000; }
+form fieldset textarea{ width:310px; height:80px; padding:5px; resize:none;
+border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+form fieldset select{ width:320px !important; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+.frmdt_contenido .frmdtc_acciones{ width:100%; position:relative; float:left; padding:5px 0; margin:0 0 15px 0; }
+#dtecnicos_sentido_bobina label{ float:none; }
+
+
+/* FORMULARIO SUB */
+#formulario_sub{ width:100%; float:left; position:relative; }
+#formulario_sub .ui-button{ position:relative !important; }
+
+/* TABLA COLORES */
+table.tabla_colores{ width:100%; float:left; }
+table.tabla_colores tr td{ border:1px solid #666; }
+ul#lista_colores{ list-style:none; padding:0; margin:0; float:left; width:100%; }
+ul#lista_colores li{ width:100%; float:left; }
+
+/* LAMINAS */
+#laminas{ width:100%; float:left; padding:10px 0; }

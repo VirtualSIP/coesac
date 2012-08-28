@@ -1,0 +1,140 @@
+<?php
+session_start();
+require_once("../../../connect/conexion.php");
+require_once("../../../connect/function.php");
+require_once("../../../connect/sesion/verificar_sesion.php");
+
+//VARIABLES
+$id_cotizacion=$_POST["id_cotizacion"];
+$cliente=$_POST["dtecnicos_cliente"];
+$producto=$_POST["dtecnicos_articulo"];
+$grm2=$_POST["dtecnicos_grm2"];
+$anchofinal=$_POST["dtecnicos_anchofinal"];
+$repeticion=$_POST["dtecnicos_repeticion"];
+$frecuencia=$_POST["dtecnicos_frecuencia"];
+$nrobandas=$_POST["dtecnicos_numbandas"];
+$nrocolores=$_POST["dtecnicos_numcolores"];
+$cantcliente=$_POST["dtecnicos_cantrq"];
+$tolerancia=$_POST["dtecnicos_tolerancia"];
+$unidadmedida=$_POST["dtecnicos_unidadmedida"];
+$precio=$_POST["dtecnicos_precio"];
+$grm2total=$_POST["dtecnicos_grm2_total"];
+$cantproduccion=$_POST["dtecnicos_cantrequerida"];
+$metrosproducir=$_POST["dtecnicos_metrosproducir"];
+
+//LAMINA 1
+if($_POST["dt_articulo1"]==""){ $lamina1=0; }else{ $lamina1=$_POST["dt_articulo1"]; };
+if($_POST["extrusion1"]==""){ $lamina1_extrusion=0; }else{ $lamina1_extrusion=$_POST["extrusion1"]; };
+if($_POST["impresion1"]==""){ $lamina1_impresion=0; }else{ $lamina1_impresion=$_POST["impresion1"]; };
+if($_POST["bilaminado1"]==""){ $lamina1_bilaminado=0; }else{ $lamina1_bilaminado=$_POST["bilaminado1"]; };
+if($_POST["trilaminado1"]==""){ $lamina1_trilaminado=0; }else{ $lamina1_trilaminado=$_POST["trilaminado1"]; };
+if($_POST["rebobinado1"]==""){ $lamina1_rebobinado=0; }else{ $lamina1_rebobinado=$_POST["rebobinado1"]; };
+if($_POST["habilitado1"]==""){ $lamina1_habilitado=0; }else{ $lamina1_habilitado=$_POST["habilitado1"]; };
+if($_POST["cortefinal1"]==""){ $lamina1_cortefinal=0; }else{ $lamina1_cortefinal=$_POST["cortefinal1"]; };
+if($_POST["sellado1"]==""){ $lamina1_sellado=0; }else{ $lamina1_sellado=$_POST["sellado1"]; };
+$lamina1_impresion_grm2=$_POST["grm2_tintaseca_1"];
+
+//LAMINA 2
+if($_POST["dt_articulo2"]==""){ $lamina2=0; }else{ $lamina2=$_POST["dt_articulo2"]; };
+if($_POST["extrusion2"]==""){ $lamina2_extrusion=0; }else{ $lamina2_extrusion=$_POST["extrusion2"]; };
+if($_POST["bilaminado2"]==""){ $lamina2_bilaminado=0; }else{ $lamina2_bilaminado=$_POST["bilaminado2"]; };
+if($_POST["trilaminado2"]==""){ $lamina2_trilaminado=0; }else{ $lamina2_trilaminado=$_POST["trilaminado2"]; };
+if($_POST["rebobinado2"]==""){ $lamina2_rebobinado=0; }else{ $lamina2_rebobinado=$_POST["rebobinado2"]; };
+if($_POST["habilitado2"]==""){ $lamina2_habilitado=0; }else{ $lamina2_habilitado=$_POST["habilitado2"]; };
+if($_POST["cortefinal2"]==""){ $lamina2_cortefinal=0; }else{ $lamina2_cortefinal=$_POST["cortefinal2"]; };
+if($_POST["sellado2"]==""){ $lamina2_sellado=0; }else{ $lamina2_sellado=$_POST["sellado2"]; };
+$lamina2_bilaminado_grm2=$_POST["bilaminado_proceso_2"];
+
+//LAMINA 3
+if($_POST["dt_articulo3"]==""){ $lamina3=0; }else{ $lamina3=$_POST["dt_articulo3"]; };
+if($_POST["extrusion3"]==""){ $lamina3_extrusion=0; }else{ $lamina3_extrusion=$_POST["extrusion3"]; };
+if($_POST["trilaminado3"]==""){ $lamina3_trilaminado=0; }else{ $lamina3_trilaminado=$_POST["trilaminado3"]; };
+if($_POST["rebobinado3"]==""){ $lamina3_rebobinado=0; }else{ $lamina3_rebobinado=$_POST["rebobinado3"]; };
+if($_POST["habilitado3"]==""){ $lamina3_habilitado=0; }else{ $lamina3_habilitado=$_POST["habilitado3"]; };
+if($_POST["cortefinal3"]==""){ $lamina3_cortefinal=0; }else{ $lamina3_cortefinal=$_POST["cortefinal3"]; };
+if($_POST["sellado3"]==""){ $lamina3_sellado=0; }else{ $lamina3_sellado=$_POST["sellado3"]; };
+$lamina3_trilaminado_grm2=$_POST["trilaminado_proceso_3"];
+
+//MAQUINAS
+if($_POST["maquina1"]==""){ $maquina1=0; }else{ $maquina1=$_POST["maquina1"]; }; //EXTRUSION
+if($_POST["maquina2"]==""){ $maquina2=0; }else{ $maquina2=$_POST["maquina2"]; }; //IMPRESION
+if($_POST["maquina3"]==""){ $maquina3=0; }else{ $maquina3=$_POST["maquina3"]; }; //BILAMINADO
+if($_POST["maquina4"]==""){ $maquina4=0; }else{ $maquina4=$_POST["maquina4"]; }; //TRILAMINADO
+if($_POST["maquina5"]==""){ $maquina5=0; }else{ $maquina5=$_POST["maquina5"]; }; //CORTE FINAL
+if($_POST["maquina6"]==""){ $maquina6=0; }else{ $maquina6=$_POST["maquina6"]; }; //SELLADO
+if($_POST["maquina7"]==""){ $maquina7=0; }else{ $maquina7=$_POST["maquina7"]; }; //REBOBINADO
+if($_POST["maquina8"]==""){ $maquina8=0; }else{ $maquina8=$_POST["maquina8"]; }; //HABILITADO
+
+//INSUMOS
+if($_POST["insumotinta"]==""){ $insumo_tinta=0; }else{ $insumo_tinta=$_POST["insumotinta"]; }
+if($_POST["insumo2"]==""){ $insumo_bilaminado=0; }else{ $insumo_bilaminado=$_POST["insumo2"]; }
+if($_POST["insumo3"]==""){ $insumo_trilaminado=0; }else{ $insumo_trilaminado=$_POST["insumo3"]; }
+if($_POST["insumo4"]==""){ $insumo_cushion=0; }else{ $insumo_cushion=$_POST["insumo4"]; }
+if($_POST["insumo5"]==""){ $insumo_clises=0; }else{ $insumo_clises=$_POST["insumo5"]; }
+
+//ACTUALIZAR
+$rst_guardar=mysql_query("UPDATE syCoesa_cotizacion SET cliente_cotizacion='$cliente',
+producto_cotizacion='$producto',
+grm2_cotizacion=$grm2,
+repeticion_cotizacion=$repeticion,
+frecuencia_cotizacion=$frecuencia,
+ancho_final_cotizacion=$anchofinal,
+nrobandas_cotizacion=$nrobandas,
+nrocolores_cotizacion=$nrocolores,
+cantcliente_cotizacion=$cantcliente,
+tolerancia_cotizacion=$tolerancia,
+unidad_medida_cotizacion=$unidadmedida,
+precio_cotizacion=$precio,
+lamina1_cotizacion=$lamina1,
+extrusion1_cotizacion=$lamina1_extrusion,
+impresion1_cotizacion=$lamina1_impresion,
+impresion1_grm2_cotizacion=$lamina1_impresion_grm2,
+bilaminado1_cotizacion=$lamina1_bilaminado,
+trilaminado1_cotizacion=$lamina1_trilaminado,
+rebobinado1_cotizacion=$lamina1_rebobinado,
+habilitado1_cotizacion=$lamina1_habilitado,
+cortefinal1_cotizacion=$lamina1_cortefinal,
+sellado1_cotizacion=$lamina1_sellado,
+lamina2_cotizacion=$lamina2,
+extrusion2_cotizacion=$lamina2_extrusion,
+bilaminado2_cotizacion=$lamina2_bilaminado,
+bilaminado2_grm2_cotizacion=$lamina2_bilaminado_grm2,
+trilaminado2_cotizacion=$lamina2_trilaminado,
+rebobinado2_cotizacion=$lamina2_rebobinado,
+habilitado2_cotizacion=$lamina2_habilitado,
+cortefinal2_cotizacion=$lamina2_cortefinal,
+sellado2_cotizacion=$lamina2_sellado,
+lamina3_cotizacion=$lamina3,
+extrusion3_cotizacion=$lamina3_extrusion,
+trilaminado3_cotizacion=$lamina3_trilaminado,
+trilaminado3_grm2_cotizacion=$lamina3_trilaminado_grm2,
+rebobinado3_cotizacion=$lamina3_rebobinado,
+habilitado3_cotizacion=$lamina3_habilitado,
+cortefinal3_cotizacion=$lamina3_cortefinal,
+sellado3_cotizacion=$lamina3_sellado,
+grm2total_cotizacion=$grm2total,
+cantproduccion_cotizacion=$cantproduccion,
+metrosproducir_cotizacion=$metrosproducir,
+proc_extrusion_maq_cotizacion=$maquina1,
+proc_impresion_maq_cotizacion=$maquina2,
+proc_bilaminado_maq_cotizacion=$maquina3,
+proc_trilaminado_maq_cotizacion=$maquina4,
+proc_rebobinado_maq_cotizacion=$maquina7,
+proc_habilitado_maq_cotizacion=$maquina8,
+proc_cortefinal_maq_cotizacion=$maquina5, 
+proc_sellado_maq_cotizacion=$maquina6,
+insumo_tinta=$insumo_tinta,
+insumo_bilaminado=$insumo_bilaminado,
+insumo_trilaminado=$insumo_trilaminado,
+insumo_cushion=$insumo_cushion,
+insumo_clises=$insumo_clises WHERE id_cotizacion=$id_cotizacion", $conexion);
+
+if (mysql_errno()!=0){
+	mysql_close($conexion);
+	header("Location:lista.php?msj=4");
+} else {
+	mysql_close($conexion);
+	header("Location:lista.php?msj=3");
+}
+
+?>
