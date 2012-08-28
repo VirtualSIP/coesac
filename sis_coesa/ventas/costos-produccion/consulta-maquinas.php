@@ -46,35 +46,29 @@ $rst_pro=mysql_query("SELECT * FROM syCoesa_datos_tecnicos_laminas_procesos WHER
 $fila_pro=mysql_fetch_array($rst_pro);
 
 //PROCESOS SELECCIONADOS
+$lamina1=$fila_pro["lamina1"];
 $lamina1_extrusion=$fila_pro["lamina1_extrusion"];
 $lamina1_impresion=$fila_pro["lamina1_impresion"];
 $lamina1_impresion_grm2=$fila_pro["lamina1_impresion_grm2"];
 $lamina1_bilaminado=$fila_pro["lamina1_bilaminado"];
-$lamina1_bilaminado_grm2=$fila_pro["lamina1_bilaminado_grm2"];
 $lamina1_trilaminado=$fila_pro["lamina1_trilaminado"];
-$lamina1_trilaminado_grm2=$fila_pro["lamina1_trilaminado_grm2"];
 $lamina1_rebobinado=$fila_pro["lamina1_rebobinado"];
 $lamina1_habilitado=$fila_pro["lamina1_habilitado"];
 $lamina1_cortefinal=$fila_pro["lamina1_cortefinal"];
 $lamina1_sellado=$fila_pro["lamina1_sellado"];
 
+$lamina2=$fila_pro["lamina2"];
 $lamina2_extrusion=$fila_pro["lamina2_extrusion"];
-$lamina2_impresion=$fila_pro["lamina2_impresion"];
-$lamina2_impresion_grm2=$fila_pro["lamina2_impresion_grm2"];
 $lamina2_bilaminado=$fila_pro["lamina2_bilaminado"];
 $lamina2_bilaminado_grm2=$fila_pro["lamina2_bilaminado_grm2"];
 $lamina2_trilaminado=$fila_pro["lamina2_trilaminado"];
-$lamina2_trilaminado_grm2=$fila_pro["lamina2_trilaminado_grm2"];
 $lamina2_rebobinado=$fila_pro["lamina2_rebobinado"];
 $lamina2_habilitado=$fila_pro["lamina2_habilitado"];
 $lamina2_cortefinal=$fila_pro["lamina2_cortefinal"];
 $lamina2_sellado=$fila_pro["lamina2_sellado"];
 
+$lamina3=$fila_pro["lamina3"];
 $lamina3_extrusion=$fila_pro["lamina3_extrusion"];
-$lamina3_impresion=$fila_pro["lamina3_impresion"];
-$lamina3_impresion_grm2=$fila_pro["lamina3_impresion_grm2"];
-$lamina3_bilaminado=$fila_pro["lamina3_bilaminado"];
-$lamina3_bilaminado_grm2=$fila_pro["lamina3_bilaminado_grm2"];
 $lamina3_trilaminado=$fila_pro["lamina3_trilaminado"];
 $lamina3_trilaminado_grm2=$fila_pro["lamina3_trilaminado_grm2"];
 $lamina3_rebobinado=$fila_pro["lamina3_rebobinado"];
@@ -83,19 +77,9 @@ $lamina3_cortefinal=$fila_pro["lamina3_cortefinal"];
 $lamina3_sellado=$fila_pro["lamina3_sellado"];
 
 //VALORES DE GRM2
-if($lamina1_impresion>0){
-	if($lamina1_impresion>0){ $tintaseca_lamina=$lamina1_impresion_grm2; }else{ $tintaseca_lamina=0; };
-	if($lamina1_bilaminado>0){ $bilaminado_lamina=$lamina1_bilaminado_grm2; }else{ $bilaminado_lamina=0; }
-	if($lamina1_trilaminado>0){ $trilaminado_lamina=$lamina1_trilaminado_grm2; }else{ $trilaminado_lamina=0; }
-}elseif($lamina2_bilaminado>0){
-	if($lamina2_impresion>0){ $tintaseca_lamina=$lamina2_impresion_grm2; }else{ $tintaseca_lamina=0; };
-	if($lamina2_bilaminado>0){ $bilaminado_lamina=$lamina2_bilaminado_grm2; }else{ $bilaminado_lamina=0; }
-	if($lamina2_trilaminado>0){ $trilaminado_lamina=$lamina2_trilaminado_grm2; }else{ $trilaminado_lamina=0; }
-}elseif($lamina3_trilaminado>0){
-	if($lamina3_impresion>0){ $tintaseca_lamina=$lamina3_impresion_grm2; }else{ $tintaseca_lamina=0; };
-	if($lamina3_bilaminado>0){ $bilaminado_lamina=$lamina3_bilaminado_grm2; }else{ $bilaminado_lamina=0; }
-	if($lamina3_trilaminado>0){ $trilaminado_lamina=$lamina3_trilaminado_grm2; }else{ $trilaminado_lamina=0; }
-}
+if($lamina1_impresion>0){ $impresion_lamina=$lamina1_impresion_grm2; }else{ $impresion_lamina=0; }
+if($lamina2_bilaminado>0){ $bilaminado_lamina=$lamina2_bilaminado_grm2; }else{ $bilaminado_lamina=0; }
+if($lamina3_trilaminado>0){ $trilaminado_lamina=$lamina3_trilaminado_grm2; }else{ $trilaminado_lamina=0; }
 
 //CANTIDAD REQUERIDA
 $grm2_total=round($pedido_grm2);
@@ -140,7 +124,9 @@ if($lamina1_impresion>0 or $lamina2_impresion>0 or $lamina3_impresion>0){ //IMPR
 	$mtrprod_impresion=($mtrprod + ($procprod_merma["merma_proceso"] * $dtart_nrocolores)) + ($procprod_merma_bilaminado["merma_proceso"]) + ($procprod_merma_trilaminado["merma_proceso"]) + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)) + ($mtrprod * ($procprod_merma_cortefinal["merma_proceso"] / 100));
 }else{ $mtrprod_impresion=0; }
 
-if($lamina1_extrusion>0 or $lamina2_extrusion>0 or $lamina3_extrusion>0){ //EXTRUSION
+
+//EXTRUSION
+if($lamina1_extrusion>0 or $lamina2_extrusion>0 or $lamina3_extrusion>0){
 	$procprod_merma=seleccionTabla("'extrusion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
 	
 	if($lamina1_extrusion>0){
@@ -300,7 +286,7 @@ if($lamina1_extrusion>0 or $lamina2_extrusion>0 or $lamina3_extrusion>0){ //EXTR
     </div>
 <?php } //FIN EXTRUSION ?>
 
-<?php if($lamina1_impresion>0 or $lamina2_impresion>0 or $lamina3_impresion>0){ ?>    
+<?php if($lamina1_impresion>0){ ?>
   <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Impresión</div>
 <div style="width:13%; height:20px; padding:1% 0;" class="float_left texto_cen">
             
@@ -360,7 +346,7 @@ if($lamina1_extrusion>0 or $lamina2_extrusion>0 or $lamina3_extrusion>0){ //EXTR
     </div>
 <?php } ?>
     
-<?php if($lamina1_bilaminado>0 or $lamina2_bilaminado>0 or $lamina3_bilaminado>0){ ?>
+<?php if($lamina2_bilaminado>0){ ?>
   <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Bilaminado</div>
 <div style="width:13%; height:20px; padding:1% 0;" class="float_left texto_cen">
             
@@ -420,7 +406,7 @@ if($lamina1_extrusion>0 or $lamina2_extrusion>0 or $lamina3_extrusion>0){ //EXTR
     </div>
 <?php } ?>
 
-<?php if($lamina1_trilaminado>0 or $lamina2_trilaminado>0 or $lamina3_trilaminado>0){ ?>
+<?php if($lamina3_trilaminado>0){ ?>
   <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Trilaminado</div>
 <div style="width:13%; height:20px; padding:1% 0;" class="float_left texto_cen">
             
@@ -736,7 +722,7 @@ if($lamina1_extrusion>0 or $lamina2_extrusion>0 or $lamina3_extrusion>0){ //EXTR
     </thead>
 </table>
 
-<?php if($lamina1_impresion>0 or $lamina2_impresion>0 or $lamina3_impresion>0){ ?>
+<?php if($lamina1_impresion>0){ ?>
 
 <div class="float_left" style="width:800px;">
 
@@ -752,7 +738,7 @@ if($lamina1_extrusion>0 or $lamina2_extrusion>0 or $lamina3_extrusion>0){ //EXTR
 			var anchofinal = <?php echo $dtart_anchofinal; ?>;
 			var nrobandas = <?php echo $dtart_nrobandas; ?>;
 			var metrototal = <?php echo $mtrprod_impresion; ?>;
-			var grm2 = <?php echo $tintaseca_lamina; ?>;
+			var grm2 = <?php echo $impresion_lamina; ?>;
 			var tipo = "tinta";
 			jcmbIns1.post("insumos-costos.php", {grm2total: grm2total, anchofinal: anchofinal, nrobandas: nrobandas, metrototal: metrototal, grm2: grm2, tipo: tipo}, 
 				function(data){
@@ -766,7 +752,7 @@ if($lamina1_extrusion>0 or $lamina2_extrusion>0 or $lamina3_extrusion>0){ //EXTR
 </div>
 <?php } ?>
 
-<?php if($lamina1_bilaminado>0 or $lamina2_bilaminado>0 or $lamina3_bilaminado>0){ ?>
+<?php if($lamina2_bilaminado>0){ ?>
 <div class="float_left" style="width:800px;">
     <div style="width:146px; height:20px; padding:1% 0;" class="float_left texto_izq">Adhesivo Bilaminado</div>
     <div style="width:200px; height:0px; padding:1% 0;" class="float_left texto_cen">
@@ -808,7 +794,7 @@ if($lamina1_extrusion>0 or $lamina2_extrusion>0 or $lamina3_extrusion>0){ //EXTR
 </div>
 <?php } ?>
 
-<?php if($lamina1_trilaminado>0 or $lamina2_trilaminado>0 or $lamina3_trilaminado>0){ ?>
+<?php if($lamina3_trilaminado>0){ ?>
 <div class="float_left" style="width:800px;">
     <div style="width:146px; height:20px; padding:1% 0;" class="float_left texto_izq">Adhesivo Trilaminado</div>
     <div style="width:200px; height:0px; padding:1% 0;" class="float_left texto_cen">

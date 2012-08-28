@@ -48,7 +48,8 @@ $artlamina3_precio=$articulo_lamina3["precio_articulo"];
 var jcmbPed = jQuery.noConflict();
 jcmbPed(document).ready(function(){
 	jcmbPed("#progressbar").removeClass("ocultar");
-	jcmbPed.post("consulta-maquinas.php", {artTerm: <?php echo $dtecnicos_articulo; ?>, cliente: <?php echo $dtecnicos_cliente; ?>},
+	var codUnico = "<?php echo $codUnico["cod_unico"]; ?>";
+	jcmbPed.post("consulta-maquinas.php", {artTerm: <?php echo $dtecnicos_articulo; ?>, cliente: <?php echo $dtecnicos_cliente; ?>, codUnico: codUnico},
 		function(data){
 			jcmbPed("#progressbar").addClass("ocultar");
 			jcmbPed('#maquinas_articulo').html(data);
