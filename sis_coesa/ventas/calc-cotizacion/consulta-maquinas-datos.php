@@ -47,11 +47,16 @@ $mtrprod=round($_POST["metroproducir"]);
 $tiempo=round($mtrprod / $velocidad);
 
 //MULTIPLICAR EL TIEMPO POR LOS COSTOS
-$costoKwHora=(($tiempo)/60) * $costokw_hora;
-$costoHoraHomb=(($tiempo)/60) * $costohora_hombre;
-$costoDeprec=(($tiempo)/60) * $costodepreciacion_hora;
-$costoFabrica=(($tiempo)/60) * $gastosfabrica_hora;
-$costoTotal=$costoKwHora + $costoHoraHomb + $costoDeprec + $costoFabrica;
+$proc_prep_reg=Sumar2Tiempos($preparacion, $regulacion);
+$proc_tiempo_num=round(Division2Num($mtrprod, $velocidad));
+$proc_tiempo=NumAHora($proc_tiempo_num);
+$proc_tiempo_produc=Sumar2Tiempos($proc_prep_reg, $proc_tiempo);
+$proc_total_horahombre=number_format(CostoLamina(($proc_tiempo_produc), $costohora_hombre), 2);
+$proc_total_kwhora=number_format(CostoLamina(($proc_tiempo_produc), $costokw_hora), 2);
+$proc_total_deprec=number_format(CostoLamina(($proc_tiempo_produc), $costodepreciacion_hora), 2);
+$proc_total_gastos=number_format(CostoLamina(($proc_tiempo_produc), $gastosfabrica_hora), 2);
+$proc_total_depgas=number_format($proc_total_deprec + $proc_total_gastos, 2);
+$costoTotal=($proc_total_horahombre + $proc_total_kwhora + $proc_total_deprec + $proc_total_gastos);
 
 //AGREGANDO METROS DE PROCESO + METROS A PRODUCIR
 if($proc_sellado>0){ //SELLADO
