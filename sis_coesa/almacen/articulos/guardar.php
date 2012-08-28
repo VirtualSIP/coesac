@@ -16,6 +16,10 @@ $articulo_unidad_medida=$_POST["almart_unidad_medida"];
 $articulo_observaciones=$_POST["almart_observaciones"];
 $producto_terminado="I";
 
+//DATOS USUARIO
+$dato_fecha=$fechaActual;
+$dato_usuario=$usuario_user;
+
 //GUARDAR
 $rst_guardar=mysql_query("INSERT INTO syCoesa_articulo (id_tipo_articulo, 
 nombre_articulo, 
@@ -26,7 +30,9 @@ precio_articulo,
 solido_tinta, 
 unidad_medida_articulo,
 observaciones_articulo,
-producto_terminado)
+producto_terminado,
+dato_fecha,
+dato_usuario)
 VALUES ($articulo_tipo_articulo, 
 '".htmlspecialchars($articulo_nombre)."', 
 '".htmlspecialchars($articulo_abreviacion)."', 
@@ -36,7 +42,9 @@ $articulo_precio,
 $articulo_solido,
 $articulo_unidad_medida,
 '".htmlspecialchars($articulo_observaciones)."',
-'$producto_terminado')", $conexion);
+'$producto_terminado',
+'$dato_fecha',
+'$dato_usuario')", $conexion);
 
 if (mysql_errno()!=0){
 	header("Location:lista.php?m=2");

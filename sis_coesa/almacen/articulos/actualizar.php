@@ -16,6 +16,10 @@ if($_POST["almart_solido"]<>""){ $articulo_solido=$_POST["almart_solido"]; }else
 $articulo_unidad_medida=$_POST["almart_unidad_medida"];
 $articulo_observaciones=$_POST["almart_observaciones"];
 
+//DATOS USUARIO
+$dato_fecha=$fechaActual;
+$dato_usuario=$usuario_user;
+
 //ACTUALIZAR
 $rst_guardar=mysql_query("UPDATE syCoesa_articulo SET id_tipo_articulo=$articulo_tipo_articulo,
 nombre_articulo='".htmlspecialchars($articulo_nombre)."', 
@@ -25,7 +29,9 @@ ancho_articulo=$articulo_ancho,
 precio_articulo=$articulo_precio, 
 solido_tinta=$articulo_solido,
 unidad_medida_articulo=$articulo_unidad_medida,
-observaciones_articulo='".htmlspecialchars($articulo_observaciones)."' WHERE id_articulo=$articulo_id;", $conexion);
+observaciones_articulo='".htmlspecialchars($articulo_observaciones)."',
+dato_fecha='$dato_fecha',
+dato_usuario='$dato_usuario' WHERE id_articulo=$articulo_id;", $conexion);
 
 if (mysql_errno()!=0){
 	header("Location:lista.php?m=4");
