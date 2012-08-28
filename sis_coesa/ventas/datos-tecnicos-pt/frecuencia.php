@@ -13,5 +13,5 @@ $Frecuencia=$cilindro["cilindro"] / $repeticion;
 ?>
 <fieldset class="alto50 w180">
   <label for="dtecnicos_frecuencia">Frecuencia (mm):</label>
-  <input name="dtecnicos_frecuencia" type="text" id="dtecnicos_frecuencia" class="w130" value="<?php echo round($Frecuencia); ?>" readonly>
+  <input name="dtecnicos_frecuencia" type="text" id="dtecnicos_frecuencia" class="w130 texto_der" value="<?php echo round($Frecuencia); ?>" readonly>
 </fieldset>
