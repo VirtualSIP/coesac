@@ -247,10 +247,19 @@ jFrec(document).ready(function(){
                           <input type="text" name="dtecnicos_repeticion" id="dtecnicos_repeticion" size="50" class="w130 texto_der" value="0">
                         </fieldset>
                         
+<<<<<<< HEAD
                         <fieldset class="alto50 w180">
                             <label for="dtecnicos_frecuencia">Frecuencia (mm):</label>
                           <input type="text" name="dtecnicos_frecuencia" id="dtecnicos_frecuencia" size="50" class="w130 texto_der" value="0">
                         </fieldset>
+=======
+                        <div id="frecuencia" class="w180 float_left">
+                        <fieldset class="alto50 w180">
+                            <label for="dtecnicos_frecuencia">Frecuencia (mm):</label>
+                          <input name="dtecnicos_frecuencia" type="text" class="w130 texto_der" id="dtecnicos_frecuencia" value="0" size="50" readonly>
+                        </fieldset>
+                        </div>
+>>>>>>> 0e256aaf5a3bff8efeed19fc6400e006b72a2348
                         
                         <fieldset class="alto50 w180" id="item-nrobandas">
                             <label for="dtecnicos_numbandas">Número de bandas:</label>
