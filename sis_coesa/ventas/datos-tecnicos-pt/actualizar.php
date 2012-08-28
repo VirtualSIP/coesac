@@ -39,97 +39,30 @@ $dtecnicos_observaciones=$_POST["dtecnicos_observaciones"];
 $producto_terminado="A"; //ES "A" CUANDO SE CREA EL PRODUCTO DIRECTAMENTE PARA EL CLIENTE
 $codigo_unico=codigoAleatorio(25,true,true,true);
 
-//VERIFICAR DATOS DE ARTICULO
-$rst_ver_art=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_articulo=$dtecnicos_articulo_id;", $conexion);
-$fila_ver_art=mysql_fetch_array($rst_ver_art);
+//ACTUALIZAR DATOS DE ARTICULO
+$rst_actArticulo=mysql_query("UPDATE syCoesa_articulo SET grm2_articulo=$dtecnicos_grm2, 
+ancho_articulo=$dtecnicos_ancho_final, 
+unidad_medida_articulo=$dtecnicos_unidad_medida,
+observaciones_articulo='$dtecnicos_observaciones',
+dato_fecha='$datoFecha', dato_usuario='$datoUsuario' WHERE id_articulo=$dtecnicos_articulo_id", $conexion);
 
-//VERFICICAR DATOS DE DATOS TECNICOS BASICOS
-$rst_ver_dtb=mysql_query("SELECT * FROM syCoesa_datos_tecnicos WHERE id_datos_tecnicos=$dtecnicos_id;", $conexion);
-$fila_ver_dtb=mysql_fetch_array($rst_ver_dtb);
+$rst_actDTecnico=mysql_query("UPDATE syCoesa_datos_tecnicos SET imagen_prod_datos_tecnicos='$dtecnicos_imagen',
+ancho_final_datos_tecnicos=$dtecnicos_ancho_final,
+nro_bandas_datos_tecnicos=$dtecnicos_numbandas,
+nro_colores_datos_tecnicos=$dtecnicos_numcolores,
+sentido_bobina_dtecnicos=$dtecnicos_sentbob,
+distancia_repeticion=$dtecnicos_repeticion,
+frecuencia=$dtecnicos_frecuencia,
+cilindro=$dtecnicos_cilindro,
+dato_fecha='$datoFecha',
+dato_usuario='$datoUsuario' WHERE id_datos_tecnicos=$dtecnicos_id;", $conexion);
 
-if($dtecnicos_imagen<>$fila_ver_dtb["imagen_prod_datos_tecnicos"] or 
-$dtecnicos_ancho_final<>$fila_ver_dtb["ancho_final_datos_tecnicos"] or 
-$dtecnicos_numbandas<>$fila_ver_dtb["nro_bandas_datos_tecnicos"] or 
-$dtecnicos_numcolores<>$fila_ver_dtb["nro_colores_datos_tecnicos"] or 
-$dtecnicos_laminas<>$fila_ver_dtb["laminas_datos_tecnicos"] or
-$dtecnicos_repeticion<>$fila_ver_dtb["distancia_repeticion"] or 
-$dtecnicos_cilindro<>$fila_ver_dtb["cilindro"] or 
-$dtecnicos_frecuencia<>$fila_ver_dtb["frecuencia"] or 
-$dtecnicos_sentbob<>$fila_ver_dtb["sentido_bobina_dtecnicos"] or 
-$dtecnicos_grm2<>$fila_ver_art["grm2_articulo"] or  
-$dtecnicos_unidad_medida<>$fila_ver_art["unidad_medida_articulo"] or 
-$dtecnicos_observaciones<>$fila_ver_art["observaciones_articulo"] ){
-	//GUARDAR DATOS EN ARTICULO
-	$rst_guardar_articulo=mysql_query("INSERT INTO syCoesa_articulo (id_cliente,
-	nombre_articulo, 
-	grm2_articulo, 
-	ancho_articulo, 
-	precio_articulo, 
-	unidad_medida_articulo,
-	observaciones_articulo,
-	producto_terminado,
-	cod_unico)
-	VALUES ($dtecnicos_cliente_id,
-	'".htmlspecialchars($dtecnicos_articulo)."', 
-	$dtecnicos_grm2, 
-	$dtecnicos_ancho_final, 
-	'$dtecnicos_precio', 
-	$dtecnicos_unidad_medida,
-	'$dtecnicos_observaciones',
-	'$producto_terminado',
-	'$codigo_unico')", $conexion);
-	
-	//EXTRAER ID DEL NUEVO ARTICULO
-	$rst_articulo=mysql_query("SELECT * FROM syCoesa_articulo WHERE cod_unico='$codigo_unico' LIMIT 1;", $conexion);
-	$fila_articulo=mysql_fetch_array($rst_articulo);
-	$articulo_id=$fila_articulo["id_articulo"];
-	
-	//GUARDA DATOS EN DATOS TECNICOS
-	$rst_guardar=mysql_query("INSERT INTO syCoesa_datos_tecnicos (id_cliente,
-	id_articulo,
-	imagen_prod_datos_tecnicos,
-	ancho_final_datos_tecnicos,
-	nro_bandas_datos_tecnicos,
-	nro_colores_datos_tecnicos,
-	sentido_bobina_dtecnicos,
-	distancia_repeticion,
-	frecuencia,
-	cilindro,
-	estado_datos_tecnicos,
-	cod_unico,
-	dato_fecha,
-	dato_usuario)
-	VALUES ($dtecnicos_cliente_id,
-	$articulo_id,
-	'$dtecnicos_imagen',
-	'$dtecnicos_ancho_final',
-	$dtecnicos_numbandas,
-	$dtecnicos_numcolores,
-	$dtecnicos_sentbob,
-	$dtecnicos_repeticion,
-	$dtecnicos_frecuencia,
-	$dtecnicos_cilindro,
-	'$dtecnicos_estado',
-	'$codigo_unico',
-	'$datoFecha',
-	'$datoUsuario')", $conexion);
-	
-	//DATO TECNICO AGREGADO
-	$rst_dato_tecnico=mysql_query("SELECT * FROM syCoesa_datos_tecnicos WHERE cod_unico='$codigo_unico' LIMIT 1;", $conexion);
-	$fila_dato_tecnico=mysql_fetch_array($rst_dato_tecnico);
-	$dato_tecnico=$fila_dato_tecnico["id_datos_tecnicos"];
-	
-	if (mysql_errno()!=0){
-		echo "ERROR: ". mysql_errno() . " - ". mysql_error();
-		mysql_close($conexion);
-	} else {
-		mysql_close($conexion);
-		header("Location:lista.php?m=2");
-	}
-
-}else{
+if (mysql_errno()!=0){
 	mysql_close($conexion);
-	header("Location:lista.php?m=2");
+	header("Location:lista.php?m=4");
+} else {
+	mysql_close($conexion);
+	header("Location:lista.php?m=3");
 }
 
 ?>
