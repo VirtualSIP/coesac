@@ -9,9 +9,13 @@ $maquina_id=$_POST["maquina_id"];
 $maquina_nombre=$_POST["maquina_nombre"];
 $maquina_proceso=$_POST["maquina_proceso"];
 
+//DATOS USUARIO
+$dato_fecha=$fechaActual;
+$dato_usuario=$usuario_user;
+
 //ACTUALIZAR
-$rst_guardar=mysql_query("UPDATE syCoesa_mantenimiento_maquinas_tipo SET nombre_tipo_maquina='$maquina_nombre', proceso_tipo_maquina='$maquina_proceso' 
-WHERE id_tipo_maquina=$maquina_id;", $conexion);
+$rst_guardar=mysql_query("UPDATE syCoesa_mantenimiento_maquinas_tipo SET nombre_tipo_maquina='$maquina_nombre', 
+proceso_tipo_maquina='$maquina_proceso', dato_fecha='$dato_fecha', dato_usuario='$dato_usuario' WHERE id_tipo_maquina=$maquina_id;", $conexion);
 
 if (mysql_errno()!=0){
 	mysql_close($conexion);

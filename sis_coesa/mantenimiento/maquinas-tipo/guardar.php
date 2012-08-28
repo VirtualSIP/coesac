@@ -8,9 +8,13 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 $maquina_nombre=$_POST["maquina_nombre"];
 $maquina_proceso=$_POST["maquina_proceso"];
 
+//DATOS USUARIO
+$dato_fecha=$fechaActual;
+$dato_usuario=$usuario_user;
+
 //GUARDAR
-$rst_guardar=mysql_query("INSERT INTO syCoesa_mantenimiento_maquinas_tipo (nombre_tipo_maquina, proceso_tipo_maquina)
-VALUES ('$maquina_nombre', '$maquina_proceso')", $conexion);
+$rst_guardar=mysql_query("INSERT INTO syCoesa_mantenimiento_maquinas_tipo (nombre_tipo_maquina, proceso_tipo_maquina, dato_fecha, dato_usuario)
+VALUES ('$maquina_nombre', '$maquina_proceso', '$dato_fecha', '$dato_usuario')", $conexion);
 
 if (mysql_errno()!=0){
 	mysql_close($conexion);

@@ -14,10 +14,14 @@ $articulo_ancho=$_POST["almart_ancho"];
 $articulo_precio=$_POST["almart_precio"];
 $articulo_observaciones=$_POST["almart_observaciones"];
 
+//DATOS USUARIO
+$dato_fecha=$fechaActual;
+$dato_usuario=$usuario_user;
+
 //ACTUALIZAR
 $rst_guardar=mysql_query("UPDATE syCoesa_articulo_tipo SET nombre_tipo_articulo='$articulo_nombre', 
-abreviado_tipo_articulo='$articulo_abreviacion', 
-observaciones_tipo_articulo='$articulo_observaciones' WHERE id_tipo_articulo=$articulo_id;", $conexion);
+abreviado_tipo_articulo='$articulo_abreviacion', observaciones_tipo_articulo='$articulo_observaciones', 
+dato_fecha='$dato_fecha', dato_usuario='$dato_usuario' WHERE id_tipo_articulo=$articulo_id;", $conexion);
 
 if (mysql_errno()!=0){
 	mysql_close($conexion);
