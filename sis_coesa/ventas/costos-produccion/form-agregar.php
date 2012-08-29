@@ -105,12 +105,13 @@ jcmb(document).ready(function(){
 <script type="text/javascript">
 var jefform = jQuery.noConflict();
 jefform(document).ready(function(){
-	jefform("#dtecnicos_articulo").change(function() {
+	jefform("#dtp_selecmaq").click(function() {
 		jefform("#progressbar").removeClass("ocultar");
-		//VALORES DE COMBOS
 		var cliente = jefform("select#dtecnicos_cliente option:selected").val();
-		var articulo = jefform(this).val();
-		
+		var articulo = jefform("select#dtecnicos_articulo option:selected").val();
+		var tolerancia = jefform("#dtecnicos_tolerancia").val();
+		var cantidad = jefform("#dtecnicos_cantidadclt").val();
+		var precio = jefform("#dtecnicos_precio").val();
 		jefform.post("consulta-laminas.php", {articulo: articulo, cliente: cliente},
 			function(data){
 				jefform("#progressbar").addClass("ocultar");
@@ -179,6 +180,25 @@ jefform(document).ready(function(){
                           </select>
                           <span class="selectInvalidMsg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*)</span>
                           <span class="selectRequiredMsg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*)</span></span>
+                        </fieldset>
+                        
+                        <fieldset class="alto50 w180">
+                        	<label>% Tolerancia:</label>
+                            <input name="dtecnicos_tolerancia" id="dtecnicos_tolerancia" type="text" class="w130 texto_der" value="0">
+                        </fieldset>
+                        
+                        <fieldset class="alto50 w180">
+                        	<label>Cantidad:</label>
+                            <input name="dtecnicos_cantidadclt" id="dtecnicos_cantidadclt" type="text" class="w130 texto_der" value="0">
+                        </fieldset>
+                        
+                        <fieldset class="alto50 w180">
+                        	<label>Precio:</label>
+                            <input name="dtecnicos_precio" id="dtecnicos_precio" type="text" class="w130 texto_der" value="0">
+                        </fieldset>
+                        
+                        <fieldset class="float_left w180">
+                            <a href="javascript:;" name="dtp_selecmaq" id="dtp_selecmaq">Seleccionar maquinas</a>
                         </fieldset>
                         
                         <div id="laminas"></div>

@@ -8,6 +8,9 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 $cliente=$_POST["cliente"];
 $articulo=$_POST["artTerm"];
 $codUnico=$_POST["codUnico"];
+$tolerancia=$_POST["tolerancia"];
+$cantidad=$_POST["cantidad"];
+$precio=$_POST["precio"];
 $procesos_laminas="";
 
 //TIPOS DE INSUMOS
@@ -18,16 +21,21 @@ $rst_insAdhTri=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articul
 $rst_insCush=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=8 ORDER BY nombre_articulo ASC;", $conexion);
 $rst_insClis=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=11 ORDER BY nombre_articulo ASC;", $conexion);
 
-//PEDIDOS
-$rst_pedido=mysql_query("SELECT * FROM syCoesa_pedidos_articulos WHERE cod_unico='".$codUnico."'", $conexion);
-$fila_pedido=mysql_fetch_array($rst_pedido);
-$pedido_precio=$fila_pedido["precio_pedido"];
-$pedido_cantidad=$fila_pedido["cantidad_pedido"];
-$pedido_tolerancia=$fila_pedido["tolerancia_pedido"];
-$pedido_utilidad=$fila_pedido["utilidad_pedido"];
-$pedido_grm2=$fila_pedido["grm2_total"];
-$pedido_cantproduccion=$fila_pedido["cantidad_produccion"];
-$pedido_metrosproducir=$fila_pedido["metros_producir"];
+//EXTRAER LAS LAMINAS RELACIONADAS AL PRODUCTO
+$rst_exlam=mysql_query("SELECT * FROM syCoesa_datos_tecnicos_laminas_procesos WHERE cod_unico='".$codUnico["cod_unico"]."';", $conexion);
+$fila_exlam=mysql_fetch_array($rst_exlam);
+$exlam_lamina1=seleccionTabla($fila_exlam["lamina1"], "id_articulo", "syCoesa_articulo", $conexion);
+$exlam_lamina2=seleccionTabla($fila_exlam["lamina2"], "id_articulo", "syCoesa_articulo", $conexion);
+$exlam_lamina3=seleccionTabla($fila_exlam["lamina3"], "id_articulo", "syCoesa_articulo", $conexion);
+$exlam_grm2_tintaseca=$fila_exlam["lamina1_impresion_grm2"];
+$exlam_grm2_bilaminado=$fila_exlam["lamina2_bilaminado_grm2"];
+$exlam_grm_trilaminado=$fila_exlam["lamina3_trilaminado_grm2"];
+
+//SUMA DE GRM2 DE LAMINAS SELECCIONADAS
+$grm2_laminas=$exlam_lamina1["grm2_articulo"] + $exlam_lamina2["grm2_articulo"] + $exlam_lamina3["grm2_articulo"];
+
+//GRM2 TOTAL
+$grm2_total=$grm2_laminas + $exlam_grm2_tintaseca + $exlam_grm2_bilaminado + $exlam_grm_trilaminado;
 
 //ARTICULO TERMINADO DE DATOS TECNICOS
 $rst_dtart=mysql_query("SELECT * FROM syCoesa_datos_tecnicos WHERE cod_unico='".$codUnico."'", $conexion);
@@ -39,6 +47,21 @@ $dtart_repeticion=$fila_dtart["distancia_repeticion"];
 $dtart_frecuencia=$fila_dtart["frecuencia"];
 $dtart_cilindro=$fila_dtart["cilindro"];
 
+//FORMUlA DE CANTIDAD PARA PRODUCCION
+$qr_total=$cantidad * (1 + ($tolerancia / 100));
+
+//EXTRAER DATOS DE DATOS TECNICOS BASICOS
+$rst_dtb=mysql_query("SELECT * FROM syCoesa_datos_tecnicos WHERE id_articulo=$producto AND id_cliente=$cliente;", $conexion);
+$fila_dtb=mysql_fetch_array($rst_dtb);
+
+//FORMUlA PARA METROS A PRODUCIR
+$mtrprod=($qr_total / ($dtart_anchofinal * $dtart_nrobandas) / $grm2_total) * 1000000;
+
+//CANTIDAD REUERIDA PARA PRODUCCION Y METROS A PRODUCIR
+$pedido_cantproduccion=$qr_total;
+$pedido_metrosproducir=$mtrprod;
+
+//SELECCIONAR ARTICULO
 $articulo_datos=seleccionTabla($articulo, "id_articulo", "syCoesa_articulo", $conexion);
 
 //LAMINAS PROCESO
@@ -82,13 +105,13 @@ if($lamina2_bilaminado>0){ $bilaminado_lamina=$lamina2_bilaminado_grm2; }else{ $
 if($lamina3_trilaminado>0){ $trilaminado_lamina=$lamina3_trilaminado_grm2; }else{ $trilaminado_lamina=0; }
 
 //CANTIDAD REQUERIDA
-$grm2_total=round($pedido_grm2);
+$grm2_total=round($grm2_total);
 
 //CANTIDAD REQUERIDA
-$cantidad_requerida=round($pedido_cantidad);
+$cantidad_requerida=round($qr_total);
 
 //METROS A PRODUCIR
-$mtrprod=round($pedido_metrosproducir);
+$mtrprod=round($mtrprod);
 
 //AGREGANDO METROS DE PROCESO + METROS A PRODUCIR
 if($lamina1_sellado>0 or $lamina2_sellado>0 or $lamina3_sellado>0){ //SELLADO

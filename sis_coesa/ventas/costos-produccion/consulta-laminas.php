@@ -7,6 +7,9 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 //VARIABLES
 $dtecnicos_cliente=$_POST["cliente"];
 $dtecnicos_articulo=$_POST["articulo"];
+$dtecnicos_tolerancia=$_POST["tolerancia"];
+$dtecnicos_cantidad=$_POST["cantidad"];
+$dtecnicos_precio=$_POST["precio"];
 $aux=0;
 
 //EXTRAER CODIGO UNICO DE PRODUCTO TERMIANDO
@@ -49,7 +52,12 @@ var jcmbPed = jQuery.noConflict();
 jcmbPed(document).ready(function(){
 	jcmbPed("#progressbar").removeClass("ocultar");
 	var codUnico = "<?php echo $codUnico["cod_unico"]; ?>";
-	jcmbPed.post("consulta-maquinas.php", {artTerm: <?php echo $dtecnicos_articulo; ?>, cliente: <?php echo $dtecnicos_cliente; ?>, codUnico: codUnico},
+	var artTerm = <?php echo $dtecnicos_articulo; ?>;
+	var cliente = <?php echo $dtecnicos_cliente; ?>;
+	var tolerancia = <?php echo $dtecnicos_tolerancia; ?>;
+	var cantidad = <?php echo $dtecnicos_cantidad; ?>;
+	var precio = <?php echo $dtecnicos_precio; ?>;
+	jcmbPed.post("consulta-maquinas.php", {artTerm: artTerm, cliente: cliente, codUnico: codUnico, tolerancia: tolerancia, cantidad: cantidad, precio: precio},
 		function(data){
 			jcmbPed("#progressbar").addClass("ocultar");
 			jcmbPed('#maquinas_articulo').html(data);
