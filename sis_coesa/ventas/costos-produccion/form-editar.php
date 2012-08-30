@@ -19,7 +19,10 @@ $cproduccion_articulo=seleccionTabla($fila_cproduccion["id_articulo"], "id_artic
 
 $cproduccion_grm2total=$fila_cproduccion["grm2total"];
 $cproduccion_cantproduccion=$fila_cproduccion["cantproduccion"];
-$cproduccion_metrosproducir=$fila_cproduccion["metrosproduccion"];
+$cproduccion_metrosproducir=$fila_cproduccion["metrosproducir"];
+$cproduccion_tolerancia=$fila_cproduccion["tolerancia"];
+$cproduccion_cantcliente=$fila_cproduccion["cantcliente"];
+$cproduccion_precio=$fila_cproduccion["precio"];
 $cproduccion_proc_extrusion_maq=$fila_cproduccion["proc_extrusion_maq"];
 $cproduccion_proc_impresion_maq=$fila_cproduccion["proc_impresion_maq"];
 $cproduccion_proc_bilaminado_maq=$fila_cproduccion["proc_bilaminado_maq"];
@@ -58,17 +61,6 @@ $rst_insAdhBi=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo
 $rst_insAdhTri=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=4 ORDER BY nombre_articulo ASC;", $conexion);
 $rst_insCush=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=8 ORDER BY nombre_articulo ASC;", $conexion);
 $rst_insClis=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=11 ORDER BY nombre_articulo ASC;", $conexion);
-
-//PEDIDOS
-$rst_pedido=mysql_query("SELECT * FROM syCoesa_pedidos_articulos WHERE cod_unico='".$codUnico."';", $conexion);
-$fila_pedido=mysql_fetch_array($rst_pedido);
-$pedido_precio=$fila_pedido["precio_pedido"];
-$pedido_cantidad=$fila_pedido["cantidad_pedido"];
-$pedido_tolerancia=$fila_pedido["tolerancia_pedido"];
-$pedido_utilidad=$fila_pedido["utilidad_pedido"];
-$pedido_grm2=$fila_pedido["grm2_total"];
-$pedido_cantproduccion=$fila_pedido["cantidad_produccion"];
-$pedido_metrosproducir=$fila_pedido["metros_producir"];
 
 //ARTICULO TERMINADO DE DATOS TECNICOS
 $rst_dtart=mysql_query("SELECT * FROM syCoesa_datos_tecnicos WHERE cod_unico='".$codUnico."';", $conexion);
@@ -121,13 +113,13 @@ $lamina3_cortefinal=$fila_pro["lamina3_cortefinal"];
 $lamina3_sellado=$fila_pro["lamina3_sellado"];
 
 //CANTIDAD REQUERIDA
-$grm2_total=round($pedido_grm2);
+$grm2_total=round($cproduccion_grm2total);
 
 //CANTIDAD REQUERIDA
-$cantidad_requerida=round($pedido_cantidad);
+$cantidad_requerida=round($cproduccion_cantproduccion);
 
 //METROS A PRODUCIR
-$mtrprod=round($pedido_metrosproducir);
+$mtrprod=round($cproduccion_metrosproducir);
 
 //AGREGANDO METROS DE PROCESO + METROS A PRODUCIR
 if($lamina1_sellado>0 or $lamina2_sellado>0 or $lamina3_sellado>0){ //SELLADO
@@ -248,17 +240,25 @@ jmenu(document).ready(function(){
 });
 </script>
 
-<!-- SELECCIONAR -->
+<!-- SELECCIONAR MAQUINAS -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-var jcmbPed = jQuery.noConflict();
-jcmbPed(document).ready(function(){
-	jcmbPed("#progressbar").removeClass("ocultar");
-	jcmbPed.post("consulta-maquinas.php", {artTerm: <?php echo $dtecnicos_articulo; ?>, cliente: <?php echo $dtecnicos_cliente; ?>},
-		function(data){
-			jcmbPed("#progressbar").addClass("ocultar");
-			jcmbPed('#maquinas_articulo').html(data);
-		});
+<script type="text/javascript">
+var jefform = jQuery.noConflict();
+jefform(document).ready(function(){
+	jefform("#dtp_selecmaq").click(function() {
+		jefform("#progressbar").removeClass("ocultar");
+		var cliente = <?php echo $cproduccion_cliente["id_cliente"]; ?>;
+		var articulo = <?php echo $cproduccion_articulo["id_articulo"]; ?>;
+		var tolerancia = jefform("#dtecnicos_tolerancia").val();
+		var cantidad = jefform("#dtecnicos_cantidadclt").val();
+		var precio = jefform("#dtecnicos_precio").val();
+		jefform.post("consulta-laminas.php", {articulo: articulo, cliente: cliente, tolerancia: tolerancia, cantidad: cantidad, precio: precio},
+			function(data){
+				jefform("#progressbar").addClass("ocultar");
+				jefform('#laminas').html(data);
+			});
+		
+	});
 });
 </script>
 
@@ -293,6 +293,25 @@ jcmbPed(document).ready(function(){
                         <fieldset class="alto50">
                           	<label for="dtecnicos_producto">Producto terminado:</label>
 							<input name="dtecnicos_producto" id="dtecnicos_producto" type="text" value="<?php echo $cproduccion_articulo["nombre_articulo"]; ?>">
+                        </fieldset>
+                        
+                        <fieldset class="alto50 w180">
+                        	<label>% Tolerancia:</label>
+                            <input name="dtecnicos_tolerancia" id="dtecnicos_tolerancia" type="text" class="w130 texto_der" value="<?php echo $cproduccion_tolerancia; ?>">
+                        </fieldset>
+                        
+                        <fieldset class="alto50 w180">
+                        	<label>Cantidad:</label>
+                            <input name="dtecnicos_cantidadclt" id="dtecnicos_cantidadclt" type="text" class="w130 texto_der" value="<?php echo $cproduccion_cantcliente; ?>">
+                        </fieldset>
+                        
+                        <fieldset class="alto50 w180">
+                        	<label>Precio:</label>
+                            <input name="dtecnicos_precio" id="dtecnicos_precio" type="text" class="w130 texto_der" value="<?php echo $cproduccion_precio; ?>">
+                        </fieldset>
+                        
+                        <fieldset class="float_left w180">
+                            <a href="javascript:;" name="dtp_selecmaq" id="dtp_selecmaq">Seleccionar maquinas</a>
                         </fieldset>
                         
                         <div id="laminas">

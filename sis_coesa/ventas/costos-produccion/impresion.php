@@ -14,6 +14,9 @@ $impresion_producto=seleccionTabla($impresion["id_articulo"], "id_articulo", "sy
 $impresion_grm2total=$impresion["grm2total"];
 $impresion_cantproduccion=$impresion["cantproduccion"];
 $impresion_metrosproducir=$impresion["metrosproducir"];
+$impresion_precio=$impresion["precio"];
+$impresion_cantcliente=$impresion["cantcliente"];
+$impresion_tolerancia=$impresion["tolerancia"];
 $impresion_grm2=$impresion_producto["grm2_articulo"];
 $impresion_unidadmedida=seleccionTabla($impresion_producto["unidad_medida_articulo"], "id_unidad_medida", "syCoesa_unidad_medida", $conexion);
 
@@ -68,13 +71,6 @@ $impresion_repeticion=$fila_dtecnicos["distancia_repeticion"];
 $impresion_frecuencia=$fila_dtecnicos["frecuencia"];
 $impresion_cilindro=seleccionTabla($fila_dtecnicos["cilindro"], "id_cilindro", "syCoesa_mantenimiento_cilindro", $conexion);
 
-//DATOS DE PRODUCTO TERMINADO
-$rst_PedidoArt=mysql_query("SELECT * FROM syCoesa_pedidos_articulos WHERE cod_unico='".$impresion_producto["cod_unico"]."';", $conexion);
-$fila_PedidoArt=mysql_fetch_array($rst_PedidoArt);
-$impresion_precio=$fila_PedidoArt["precio_pedido"];
-$impresion_cantcliente=$fila_PedidoArt["cantidad_pedido"];
-$impresion_tolerancia=$fila_PedidoArt["tolerancia_pedido"];
-
 //LAMINAS
 $rst_laminaProc=mysql_query("SELECT * FROM syCoesa_datos_tecnicos_laminas_procesos WHERE cod_unico='".$impresion_producto["cod_unico"]."';", $conexion);
 $fila_laminaProc=mysql_fetch_array($rst_laminaProc);
@@ -123,34 +119,41 @@ $cant_colores=$impresion_nrocolores;
 if($proc_sellado>0){ //SELLADO
 	$procprod_merma_sellado=seleccionTabla("'sellado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
 	$mtrprod_sellado=$mtrprod + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100));
+	$proc_sellado_merma=round($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100));
 }else{ $mtrprod_sellado=0; $procprod_merma_sellado=0; }
 
 if($proc_habilitado>0){ //HABILITADO
 	$mtrprod_habilitado=$mtrprod_sellado;
+	$proc_habilitado_merma=round($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100));
 }else{ $mtrprod_habilitado=0; }
 
 if($proc_cortefinal>0){ //CORTE FINAL
 	$procprod_merma_cortefinal=seleccionTabla("'corte-final'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
 	$mtrprod_cortefinal=($mtrprod + ($mtrprod * ($procprod_merma_cortefinal["merma_proceso"] / 100)));
+	$proc_cortefinal_merma=round($mtrprod * ($procprod_merma_cortefinal["merma_proceso"] / 100));
 }else{ $mtrprod_cortefinal=0; $procprod_merma_cortefinal=0; }
 
 if($proc_trilaminado>0){ //TRILAMINADO
 	$procprod_merma_trilaminado=seleccionTabla("'trilaminado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
 	$mtrprod_trilaminado=($mtrprod + $procprod_merma_trilaminado["merma_proceso"]) + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)) + ($mtrprod * ($procprod_merma_cortefinal["merma_proceso"] / 100));
+	$proc_trilaminado_merma=round($procprod_merma_trilaminado["merma_proceso"]);
 }else{ $mtrprod_trilaminado=0; $procprod_merma_trilaminado=0; }
 
 if($proc_bilaminado>0){ //BILAMINADO
 	$procprod_merma_bilaminado=seleccionTabla("'bilaminado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
 	$mtrprod_bilaminado=($mtrprod + $procprod_merma_bilaminado["merma_proceso"]) + ($procprod_merma_trilaminado["merma_proceso"]) + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)) + ($mtrprod * ($procprod_merma_cortefinal["merma_proceso"] / 100));
+	$proc_bilaminado_merma=round($procprod_merma_bilaminado["merma_proceso"]);
 }else{ $mtrprod_bilaminado=0; $procprod_merma_bilaminado=0; }
 
 if($proc_rebobinado>0){ //REBOBINADO	
 	$mtrprod_rebobinado=$mtrprod_bilaminado;
+	$proc_rebobinado_merma=round($procprod_merma_bilaminado["merma_proceso"]);
 }else{ $mtrprod_rebobinado=0; }
 
 if($proc_impresion>0){ //IMPRESION
 	$procprod_merma=seleccionTabla("'impresion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
 	$mtrprod_impresion=($mtrprod + ($procprod_merma["merma_proceso"] * $cant_colores)) + ($procprod_merma_bilaminado["merma_proceso"]) + ($procprod_merma_trilaminado["merma_proceso"]) + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)) + ($mtrprod * ($procprod_merma_cortefinal["merma_proceso"] / 100));
+	$proc_impresion_merma=round($procprod_merma["merma_proceso"] * $cant_colores);
 }else{ $mtrprod_impresion=0; }
 
 //TOTAL DE KILOS DE EXTRUSION
@@ -824,7 +827,7 @@ $TotalDepGas=$proc_extrusion_total_depgas + $proc_impresion_total_depgas + $proc
   <tr>
     <th width="110" height="23" scope="col" class="border_rb1s0">EXTRUSIÓN</th>
     <th width="118" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_nombre["nombre_maquina"]; ?></th>
-    <th width="45" height="23" scope="col" class="border_rb1s0"></th>
+    <th width="45" scope="col" class="border_rb1s0"></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_extrusion); ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion["velocidad_maquina"]; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_prep_reg; ?></th>
@@ -843,7 +846,7 @@ $TotalDepGas=$proc_extrusion_total_depgas + $proc_impresion_total_depgas + $proc
   <tr>
     <th width="110" height="23" scope="col" class="border_rb1s0">IMPRESIÓN</th>
     <th width="118" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion_nombre["nombre_maquina"]; ?></th>
-    <th width="45" height="23" scope="col" class="border_rb1s0"></th>
+    <th width="45" scope="col" class="border_rb1s0"><?php echo $proc_impresion_merma; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_impresion); ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion["velocidad_maquina"]; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion_prep_reg; ?></th>
@@ -862,7 +865,7 @@ $TotalDepGas=$proc_extrusion_total_depgas + $proc_impresion_total_depgas + $proc
   <tr>
     <th width="110" height="23" scope="col" class="border_rb1s0">BILAMINADO</th>
     <th width="118" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado_nombre["nombre_maquina"]; ?></th>
-    <th width="45" height="23" scope="col" class="border_rb1s0"></th>
+    <th width="45" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado_merma; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_bilaminado); ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado["velocidad_maquina"]; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado_prep_reg; ?></th>
@@ -881,7 +884,7 @@ $TotalDepGas=$proc_extrusion_total_depgas + $proc_impresion_total_depgas + $proc
   <tr>
     <th width="110" height="23" scope="col" class="border_rb1s0">TRILAMINADO</th>
     <th width="118" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado_nombre["nombre_maquina"]; ?></th>
-    <th width="45" height="23" scope="col" class="border_rb1s0"></th>
+    <th width="45" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado_merma; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_trilaminado); ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado["velocidad_maquina"]; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado_prep_reg; ?></th>
@@ -900,7 +903,7 @@ $TotalDepGas=$proc_extrusion_total_depgas + $proc_impresion_total_depgas + $proc
   <tr>
     <th width="110" height="23" scope="col" class="border_rb1s0">REBOBINADO</th>
     <th width="118" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado_nombre["nombre_maquina"]; ?></th>
-    <th width="45" height="23" scope="col" class="border_rb1s0"></th>
+    <th width="45" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado_merma; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_rebobinado); ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado["velocidad_maquina"]; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado_prep_reg; ?></th>
@@ -919,7 +922,7 @@ $TotalDepGas=$proc_extrusion_total_depgas + $proc_impresion_total_depgas + $proc
   <tr>
     <th height="23" scope="col" class="border_rb1s0">HABILITADO</th>
     <th height="23" scope="col" class="border_rb1s0"><?php echo $proc_habilitado_nombre["nombre_maquina"]; ?></th>
-    <th width="45" height="23" scope="col" class="border_rb1s0"></th>
+    <th width="45" scope="col" class="border_rb1s0"><?php echo $proc_habilitado_merma; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_habilitado); ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_habilitado["velocidad_maquina"]; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_habilitado_prep_reg; ?></th>
@@ -938,7 +941,7 @@ $TotalDepGas=$proc_extrusion_total_depgas + $proc_impresion_total_depgas + $proc
   <tr>
     <th height="23" scope="col" class="border_rb1s0">CORTE FINAL</th>
     <th height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal_nombre["nombre_maquina"]; ?></th>
-    <th width="45" height="23" scope="col" class="border_rb1s0"></th>
+    <th width="45" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal_merma; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_cortefinal); ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal["velocidad_maquina"]; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal_prep_reg; ?></th>
@@ -957,7 +960,7 @@ $TotalDepGas=$proc_extrusion_total_depgas + $proc_impresion_total_depgas + $proc
   <tr>
     <th height="23" scope="col" class="border_rb1s0">SELLADO</th>
     <th height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado_nombre["nombre_maquina"]; ?></th>
-    <th width="45" height="23" scope="col" class="border_rb1s0"></th>
+    <th width="45" scope="col" class="border_rb1s0"><?php echo $proc_sellado_merma; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_sellado); ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado["velocidad_maquina"]; ?></th>
     <th width="45" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado_prep_reg; ?></th>
@@ -1041,9 +1044,9 @@ $TotalDepGas=$proc_extrusion_total_depgas + $proc_impresion_total_depgas + $proc
     <th height="20" align="left" scope="col">&nbsp;</th>
     <th height="20" align="right" scope="col">TOTAL</th>
     <th height="20" scope="col">&nbsp;</th>
-    <th width="178" height="20" class="border_rb1s0" scope="col">&nbsp;</th>
-    <th width="200" height="20" class="border_rb1s0" scope="col">&nbsp;</th>
-  </tr>
+    <th height="20" class="border_rb1s0" scope="col">&nbsp;</th>
+    <th height="20" class="border_rb1s0" scope="col"><?php echo number_format((($totalCostoMaterial + $TotalCostoProcesos) + (($impresion_cantcliente * $impresion_precio) - ($totalCostoMaterial + $TotalCostoProcesos))), 2); ?></th>
+    </tr>
 </table>
 
 <table width="1000" align="center">

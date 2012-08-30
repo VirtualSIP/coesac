@@ -8,6 +8,11 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 $dtecnicos_id=$_POST["dtecnicos_id"];
 $cliente=$_POST["dtecnicos_cliente"];
 $producto=$_POST["dtecnicos_articulo"];
+
+$tolerancia=$_POST["dtecnicos_tolerancia"];
+$cantcliente=$_POST["dtecnicos_cantidadclt"];
+$precio=$_POST["dtecnicos_precio"];
+
 $grm2total=$_POST["dtecnicos_grm2_total"];
 $cantproduccion=$_POST["dtecnicos_cantrequerida"];
 $metrosproducir=$_POST["dtecnicos_metrosproducir"];
@@ -33,6 +38,9 @@ if($_POST["insumo5"]==""){ $insumo_clises=0; }else{ $insumo_clises=$_POST["insum
 $rst_guardar=mysql_query("UPDATE syCoesa_costo_produccion SET grm2total=$grm2total, 
 cantproduccion=$cantproduccion, 
 metrosproducir=$metrosproducir, 
+tolerancia=$tolerancia,
+cantcliente=$cantcliente,
+precio=$precio,
 proc_extrusion_maq=$maquina1, 
 proc_impresion_maq=$maquina2, 
 proc_bilaminado_maq=$maquina3, 

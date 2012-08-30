@@ -22,7 +22,7 @@ $rst_insCush=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
 $rst_insClis=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=11 ORDER BY nombre_articulo ASC;", $conexion);
 
 //EXTRAER LAS LAMINAS RELACIONADAS AL PRODUCTO
-$rst_exlam=mysql_query("SELECT * FROM syCoesa_datos_tecnicos_laminas_procesos WHERE cod_unico='".$codUnico["cod_unico"]."';", $conexion);
+$rst_exlam=mysql_query("SELECT * FROM syCoesa_datos_tecnicos_laminas_procesos WHERE cod_unico='".$codUnico."';", $conexion);
 $fila_exlam=mysql_fetch_array($rst_exlam);
 $exlam_lamina1=seleccionTabla($fila_exlam["lamina1"], "id_articulo", "syCoesa_articulo", $conexion);
 $exlam_lamina2=seleccionTabla($fila_exlam["lamina2"], "id_articulo", "syCoesa_articulo", $conexion);

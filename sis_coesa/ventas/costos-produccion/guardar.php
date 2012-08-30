@@ -7,6 +7,11 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 //VARIABLES
 $cliente=$_POST["dtecnicos_cliente"];
 $producto=$_POST["dtecnicos_articulo"];
+
+$tolerancia=$_POST["dtecnicos_tolerancia"];
+$cantcliente=$_POST["dtecnicos_cantidadclt"];
+$precio=$_POST["dtecnicos_precio"];
+
 $grm2total=$_POST["dtecnicos_grm2_total"];
 $cantproduccion=$_POST["dtecnicos_cantrequerida"];
 $metrosproducir=$_POST["dtecnicos_metrosproducir"];
@@ -34,6 +39,9 @@ id_articulo,
 grm2total, 
 cantproduccion, 
 metrosproducir, 
+tolerancia,
+cantcliente,
+precio,
 proc_extrusion_maq, 
 proc_impresion_maq, 
 proc_bilaminado_maq, 
@@ -52,6 +60,9 @@ $producto,
 $grm2total, 
 $cantproduccion, 
 $metrosproducir, 
+$tolerancia,
+$cantcliente,
+$precio,
 $maquina1, 
 $maquina2, 
 $maquina3, 

@@ -68,11 +68,11 @@ if($tipo=="tinta" and $insumo_tinta>0){
 	$fila_insumos=mysql_fetch_array($rst_insumos);
 	$insumo_precio=$fila_insumos["precio_articulo"];
 	
-	//FORMULA: CANTIDADRQ = (((ANCHOFINAL * BANDAS) / 10) * (REPETICION * FRECUENCIA) / 10) * (NROCOLORES * 1.15)
-	$AgregadoEstruc = (($anchofinal * $nrobandas) / 10) * (($repeticion * $frecuencia) / 10) * ($nrocolores * 1.15);
+	//FORMULA: CANTIDADRQ = (( ((Ancho final[mm] / 10) * Bandas) * ((Distancia de repetición[mm] / 10) * Frecuencia)) * 1.10)
+	$AgregadoEstruc = ( ( ( ($anchofinal / 10) * $nrobandas) * ( ($repeticion / 10 ) * $frecuencia) ) * 1.10);
 	
 	//TOTAL DE COSTOS
-	$TotalCosto=$AgregadoEstruc * $insumo_precio;
+	$TotalCosto=($AgregadoEstruc * $insumo_precio) * $nrocolores;
 }else{	
 	//SELECCIONAR DATOS DE MAQUINA
 	$rst_insumos=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_articulo=$insumos;", $conexion);

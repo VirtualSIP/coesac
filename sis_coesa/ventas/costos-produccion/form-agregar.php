@@ -112,7 +112,7 @@ jefform(document).ready(function(){
 		var tolerancia = jefform("#dtecnicos_tolerancia").val();
 		var cantidad = jefform("#dtecnicos_cantidadclt").val();
 		var precio = jefform("#dtecnicos_precio").val();
-		jefform.post("consulta-laminas.php", {articulo: articulo, cliente: cliente},
+		jefform.post("consulta-laminas.php", {articulo: articulo, cliente: cliente, tolerancia: tolerancia, cantidad: cantidad, precio: precio},
 			function(data){
 				jefform("#progressbar").addClass("ocultar");
 				jefform('#laminas').html(data);
