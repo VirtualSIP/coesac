@@ -425,12 +425,14 @@ if($impresion_unidadmedida["id_unidad_medida"]==3){
 $TotalResumenCostos=($totalCostoMaterial + $TotalCostoProcesos) / $impresion_cantcliente;
 $TotalResumenUtilidad=$impresion_precio - $TotalResumenCostos;
 
-$TotalFinal=$TotalResumenCostos + $TotalResumenUtilidad;
+$TotalFinal=$impresion_cantcliente * $impresion_precio;
+
+$TotalFinalUtilidad=($impresion_cantcliente * $impresion_precio) - ($totalCostoMaterial + $TotalCostoProcesos);
 
 //RESULTADOS PARA GRAFICO PIE
-$grafCostoMaterial=$totalCostoMaterial / $TotalFinal;
-$grafCostoProceso=$TotalCostoProcesos / $TotalFinal;
-$grafUtilidad=$TotalResumenUtilidad / $TotalFinal;
+$grafCostoMaterial=round(($totalCostoMaterial / $TotalFinal) * 100);
+$grafCostoProceso=round(($TotalCostoProcesos / $TotalFinal) * 100);
+$grafUtilidad=round(($TotalFinalUtilidad / $TotalFinal) * 100);
 
 //TOTALES DE PROCESOS
 //TIEMPOS
@@ -995,7 +997,7 @@ $TotalDepGas=$proc_extrusion_total_depgas + $proc_impresion_total_depgas + $proc
   </tr>
 </table>
 
-<table width="1000" align="center" cellspacing="3">
+<table width="1012" align="center" cellspacing="3">
   <tr>
     <th height="20" colspan="6" scope="col" class="titulo_tabla">RESUMEN</th>
     </tr>
@@ -1003,38 +1005,35 @@ $TotalDepGas=$proc_extrusion_total_depgas + $proc_impresion_total_depgas + $proc
     <th width="335" rowspan="5" scope="col">
     <img src="/libs/graphpico/graphpastel.php?fil=100&bkg=ffffff&wdt=300&hgt=100&dat=<?php echo $grafUtilidad; ?>,<?php echo $grafCostoMaterial; ?>,<?php echo $grafCostoProceso; ?>" width="300" height="100">
     </th>
-    <th width="97" height="20" align="left" scope="col"><img src="/imagenes/graficos/pie-1.gif" width="5" height="5"> UTILIDAD</th>
-    <th width="70" height="20" scope="col">&nbsp;</th>
+    <th height="20" colspan="2" align="left" scope="col"><img src="/imagenes/graficos/pie-1.gif" width="5" height="5"> UTILIDAD = <strong class="texto_s12"><?php echo $grafUtilidad; ?> %</strong></th>
     <th width="85" height="20" scope="col">&nbsp;</th>
     <th width="178" height="20" scope="col">&nbsp;</th>
     <th width="200" height="20" align="left" scope="col">VALOR DE VENTA</th>
   </tr>
   <tr>
-    <th height="20" align="left" scope="col"><img src="/imagenes/graficos/pie-2.gif" width="5" height="5"> INSUMOS</th>
-    <th height="20" scope="col">&nbsp;</th>
+    <th height="20" colspan="2" align="left" scope="col"><img src="/imagenes/graficos/pie-2.gif" width="5" height="5"> INSUMOS = <strong class="texto_s12"><?php echo $grafCostoMaterial; ?> %</strong></th>
     <th height="20" scope="col">&nbsp;</th>
     <th width="178" height="20" scope="col">US$ x KG</th>
     <th width="200" height="20" scope="col">TOTAL US$</th>
   </tr>
   <tr>
-    <th height="20" align="left" scope="col"><img src="/imagenes/graficos/pie-3.gif" width="5" height="5"> PROCESOS</th>
-    <th height="20" align="right" scope="col">COSTOS</th>
-    <th height="20" scope="col">&nbsp;</th>
+    <th height="20" colspan="2" align="left" scope="col"><img src="/imagenes/graficos/pie-3.gif" width="5" height="5"> PROCESOS = <strong class="texto_s12"><?php echo $grafCostoProceso; ?> %</strong></th>
+    <th align="right" scope="col">COSTOS</th>
     <th width="178" height="20" class="border_rb1s0" scope="col"><?php echo number_format($TotalResumenCostos, 2); ?></th>
     <th width="200" height="20" class="border_rb1s0" scope="col"><?php echo number_format(($totalCostoMaterial + $TotalCostoProcesos), 2); ?></th>
   </tr>
   <tr>
-    <th height="20" align="left" scope="col">&nbsp;</th>
-    <th height="20" align="right" scope="col">UTILIDAD</th>
-    <th height="20" scope="col" class="border_rb1s0">&nbsp;</th>
+    <th width="97" height="20" align="left" scope="col">&nbsp;</th>
+    <th width="70" height="20" align="right" scope="col">&nbsp;</th>
+    <th align="right" scope="col">UTILIDAD</th>
     <th width="178" height="20" class="border_rb1s0" scope="col"><?php echo number_format($TotalResumenUtilidad, 2); ?></th>
     <th width="200" height="20" class="border_rb1s0" scope="col"><?php echo number_format(($impresion_cantcliente * $impresion_precio) - ($totalCostoMaterial + $TotalCostoProcesos), 2); ?></th>
   </tr>
   <tr>
     <th height="20" align="left" scope="col">&nbsp;</th>
-    <th height="20" align="right" scope="col">TOTAL</th>
-    <th height="20" scope="col">&nbsp;</th>
-    <th width="178" height="20" class="border_rb1s0" scope="col">&nbsp;</th>
+    <th height="20" align="right" scope="col">&nbsp;</th>
+    <th align="right" scope="col">TOTAL</th>
+    <th width="178" height="20" class="border_rb1s0" scope="col"><?php echo number_format(($TotalResumenCostos + $TotalResumenUtilidad), 2); ?></th>
     <th width="200" height="20" class="border_rb1s0" scope="col"><?php echo number_format((($totalCostoMaterial + $TotalCostoProcesos) + (($impresion_cantcliente * $impresion_precio) - ($totalCostoMaterial + $TotalCostoProcesos))), 2); ?></th>
   </tr>
 </table>
