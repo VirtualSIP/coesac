@@ -200,49 +200,15 @@ if($articulo_id<>""){
 	'$codigo_unico');", $conexion);
 }
 
-//GUARDAR CLIENTE EN PEDIDO
-$rst_guardar_pedart=mysql_query("INSERT INTO syCoesa_pedidos (id_cliente) VALUES ($cotizacion_cliente);", $conexion);
-$verpedido=seleccionTabla($cotizacion_cliente, "id_cliente", "syCoesa_pedidos", $conexion);
-
-//VARIABLES PARA PEDIDO
-$pedido_id=$verpedido["id_pedido"];
-$pedido_cliente=$cotizacion_cliente;
-$pedido_articulo=$articulo_id;
-$pedido_precio=$cotizacion_precio;
-$pedido_cantidad=$cotizacion_cantcliente;
-$pedido_tolerancia=$cotizacion_tolerancia;
-$pedido_grm2=$cotizacion_grm2total;
-$pedido_cantidad_produccion=$cotizacion_cantproduccion;
-$pedido_metros=$cotizacion_metrosproducir;
-
-//GUARDAR
-$rst_guardar_pedido=mysql_query("INSERT INTO syCoesa_pedidos_articulos (id_pedido,
-id_cliente,
-id_articulo,
-precio_pedido,
-cantidad_pedido,
-tolerancia_pedido,
-grm2_total,
-cantidad_produccion,
-metros_producir,
-cod_unico)
-VALUES ($pedido_id,
-$pedido_cliente,
-$pedido_articulo,
-$pedido_precio,
-$pedido_cantidad,
-$pedido_tolerancia,
-$pedido_grm2,
-$pedido_cantidad_produccion,
-$pedido_metros,
-'$codigo_unico')", $conexion);
-
 //GUARDAR
 $rst_guardar_costos=mysql_query("INSERT INTO syCoesa_costo_produccion (id_cliente, 
 id_articulo, 
 grm2total, 
 cantproduccion, 
-metrosproducir, 
+metrosproducir,
+tolerancia,
+cantcliente,
+precio,
 proc_extrusion_maq, 
 proc_impresion_maq, 
 proc_bilaminado_maq, 
@@ -261,6 +227,9 @@ $articulo_id,
 $cotizacion_grm2total, 
 $cotizacion_cantproduccion, 
 $cotizacion_metrosproducir, 
+$cotizacion_tolerancia,
+$cotizacion_cantcliente,
+$cotizacion_precio,
 $proc_extrusion, 
 $proc_impresion, 
 $proc_bilaminado, 
