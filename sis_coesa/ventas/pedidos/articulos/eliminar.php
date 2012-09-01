@@ -6,19 +6,19 @@ require_once("../../../../connect/sesion/verificar_sesion.php");
 
 //VARIABLES
 $articulo_id=$_REQUEST["id"];
-$articulo_cliente=$_REQUEST["clt"];
+$cliente=$_REQUEST["clt"];
 $pedido=$_REQUEST["pedido"];
+$cod_unico=$_REQUEST["cun"];
 
 //ELIMINAR
-$rst_eliminar=mysql_query("DELETE FROM syCoesa_pedidos_articulos WHERE id_pedido_articulo=$articulo_id;", $conexion);
+$rst_eliminar=mysql_query("DELETE FROM syCoesa_pedidos_final WHERE id_pedidos_final=$articulo_id;", $conexion);
 	
 if (mysql_errno()!=0){
-	//echo "ERROR: ".mysql_errno()." - ".mysql_error();
 	mysql_close($conexion);
-	header("Location:lista.php?id=$pedido&clt=$articulo_cliente&m=4");
+	header("Location:lista-ped.php?id=".$pedido."&clt=".$cliente."&cun=".$cod_unico."&m=6");
 } else {
 	mysql_close($conexion);
-	header("Location:lista.php?id=$pedido&clt=$articulo_cliente&m=3");
+	header("Location:lista-ped.php?id=".$pedido."&clt=".$cliente."&cun=".$cod_unico."&m=5");
 }
 
 ?>

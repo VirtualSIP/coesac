@@ -5,50 +5,41 @@ require_once("../../../../connect/function.php");
 require_once("../../../../connect/sesion/verificar_sesion.php");
 
 //VARIABLES
-$pedido_id=$_POST["pedido"];
-$pedido_cliente=$_POST["cliente"];
-$pedido_articulo=$_POST["pedido_articulo"];
-$pedido_precio=$_POST["pedido_precio"];
-$pedido_cantidad=$_POST["pedido_cantidad"];
-$pedido_tolerancia=$_POST["tolerancia_pedido"];
-$pedido_utilidad=$_POST["utilidad_pedido"];
-$pedido_grm2=$_POST["grm2_pedido"];
-$pedido_cantidad_produccion=$_POST["pedido_cantidad_produccion"];
-$pedido_metros=$_POST["metros_producir"];
+$articulo=$_POST["pedido_articulo"];
+$pedido=$_POST["pedido"];
+$pedido_final=$_POST["pedido_final"];
+$cliente=$_POST["cliente"];
+$cod_unico=$_POST["cod_unico"];
+$cod_unico_final=$_POST["cod_unico_final"];
 
-//EXTRAER CODIGO UNICO DE PRODUCTO TERMINADO
-$codUnico=seleccionTabla($pedido_articulo, "id_articulo", "syCoesa_articulo", $conexion);
+//FECHA Y USUARIO
+$dato_fecha=$fechaActual;
+$dato_usuario=$usuario_user;
 
 //GUARDAR
 $rst_guardar=mysql_query("INSERT INTO syCoesa_pedidos_articulos (id_pedido,
+id_pedido_final,
 id_cliente,
 id_articulo,
-precio_pedido,
-cantidad_pedido,
-tolerancia_pedido,
-utilidad_pedido,
-grm2_total,
-cantidad_produccion,
-metros_producir,
-cod_unico)
-VALUES ($pedido_id,
-$pedido_cliente,
-$pedido_articulo,
-$pedido_precio,
-$pedido_cantidad,
-$pedido_tolerancia,
-$pedido_utilidad,
-$pedido_grm2,
-$pedido_cantidad_produccion,
-$pedido_metros,
-'".$codUnico["cod_unico"]."')", $conexion);
+cod_unico,
+cod_unico_final,
+dato_fecha,
+dato_usuario)
+VALUES ($pedido,
+$pedido_final,
+$cliente,
+$articulo,
+'$cod_unico',
+'$cod_unico_final',
+'$dato_fecha',
+'$dato_usuario')", $conexion);
 
 if (mysql_errno()!=0){
-	echo "ERROR: ". mysql_errno() . " - ". mysql_error();
 	mysql_close($conexion);
+	header("Location:lista.php?m=4");
 } else {
 	mysql_close($conexion);
-	header("Location:lista.php?id=$pedido_id&clt=$pedido_cliente&m=1");
+	header("Location:lista.php?cun=$cod_unico&pedf=$pedido_final&ped=$pedido&clt=$cliente&cunf=$cod_unico_final&m=3");
 }
 
 ?>

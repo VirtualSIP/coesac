@@ -8,20 +8,15 @@ require_once("../../../../connect/sesion/verificar_sesion.php");
 $notificacion=$_REQUEST["m"];
 
 //VARIABLES URL
-$id_pedido=$_REQUEST["ped"];
-$id_pedido_final=$_REQUEST["pedf"];
+$id_pedido=$_REQUEST["id"];
 $id_cliente=$_REQUEST["clt"];
 $codigo_unico=$_REQUEST["cun"];
-$codigo_unico_final=$_REQUEST["cunf"];
 
 //DATOS
 $cliente=seleccionTabla($id_cliente,"id_cliente","syCoesa_clientes",$conexion);
 
 //PEDIDO
-$rst_pedido=mysql_query("SELECT * FROM syCoesa_pedidos_articulos WHERE id_pedido=$id_pedido AND id_cliente=$id_cliente ORDER BY id_pedido_articulo ASC;", $conexion);
-
-//PRODUCTO
-$rst_articulo=mysql_query("SELECT * FROM syCoesa_costo_produccion WHERE id_cliente=$id_cliente ORDER BY id_costo_produccion ASC;", $conexion);
+$rst_pedido=mysql_query("SELECT * FROM syCoesa_pedidos_final WHERE id_pedido=$id_pedido ORDER BY id_pedidos_final ASC;", $conexion);
 
 ?>
 <!DOCTYPE HTML>
@@ -100,42 +95,6 @@ jmenu(document).ready(function(){
 });
 </script>
 
-<!-- PRODUCTO -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" src="/libs_js/blockui/jquery.blockUI.js"></script>
-<script type="text/javascript">
-var jcladd = jQuery.noConflict();
-jcladd(document).ready(function() { 
-    jcladd('#producto_btn').click(function() { 
-        jcladd.blockUI({ message: jcladd('#producto_add'), css: {top: '20%'} }); 
-    });
-	
-	jcladd('#btncancelar').click(function() { 
-		jcladd.unblockUI(); 
-		return false; 
-	});
-	 
-});
-</script>
-
-<!-- EXTRAER FORMULA -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-var jslpart = jQuery.noConflict();
-jslpart(document).ready(function() { 
-    jslpart('#pedido_articulo').change(function(){
-		jslpart("#progressbar").removeClass("ocultar");
-		var CostoProd = jslpart(this).val();
-		jslpart.post("datos-CP.php", {producto: CostoProd},
-			function(data){
-				jslpart('#datos_CP').html(data);
-				jslpart("#progressbar").addClass("ocultar");
-			});
-    });
-	
-});
-</script>
-
 <?php if($notificacion<>""){ ?>
 <!-- NOTICIFICACIONES -->
 <link type="text/css" href="/libs_js/jnotify/css/jquery.jnotify.css" rel="stylesheet" title="default" media="all" />
@@ -146,11 +105,11 @@ jslpart(document).ready(function() {
 var jNotify = jQuery.noConflict();
 jNotify(document).ready(function (){
 	<?php if($notificacion==1){ ?>
-	jNotify.jnotify("El Pedido se creó correctamente, ahora puede agregar nuevos articulos a este Pedido.", 7000);
+	jNotify.jnotify("El registro se ha guardado correctamente.", 5000);
 	<?php }elseif($notificacion==2){ ?>
 	jNotify.jnotify("El registro NO se ha guardado correctamente, ingrese nuevamente los datos.", "error", 5000);
 	<?php }elseif($notificacion==3){ ?>
-	jNotify.jnotify("El Producto se agrego correctamente.", 5000);
+	jNotify.jnotify("El registro se ha actualizó correctamente.", 5000);
 	<?php }elseif($notificacion==4){ ?>
 	jNotify.jnotify("El registro NO se ha actualizado correctamente, ingrese nuevamente los datos.", "error", 5000);
 	<?php }elseif($notificacion==5){ ?>
@@ -164,9 +123,9 @@ jNotify(document).ready(function (){
 
 <!-- ELIMINAR -->
 <script type="text/javascript">
-function eliminarRegistro(registro, cliente, pedido, pedido_final, cod_unico, cod_unico_final) {
+function eliminarRegistro(registro, cliente, pedido, cod_unico) {
 if(confirm("¿Está seguro de borrar este registro?")) {
-	document.location.href="eliminar-producto.php?id="+registro+"&clt="+cliente+"&ped="+pedido+"&pedfinal="+pedido_final+"&cun="+cod_unico+"&cunf="+cod_unico_final;
+	document.location.href="eliminar.php?id="+registro+"&clt="+cliente+"&cun="+cod_unico+"&ped="+pedido;
 	}
 }
 </script>
@@ -188,42 +147,51 @@ if(confirm("¿Está seguro de borrar este registro?")) {
             <div class="formulario_datos">
 
               <div class="frmdt_cabecera">
-           	  	<h6><a href="lista-ped.php?id=<?php echo $id_pedido; ?>&clt=<?php echo $id_cliente; ?>&cun=<?php echo $codigo_unico; ?>" title="Atrás">
+           	  	<h6><a href="../lista.php" title="Atrás">
               	<img src="/imagenes/icons/icon-back.png" width="25" height="19" alt="Atrás"></a>
-              Pedido - Lista | Cliente: <?php echo $cliente["nombre_cliente"]; ?> - Pedido: <?php echo $id_pedido_final; ?></h6></div>
+              Pedido - Lista | Cliente: <?php echo $cliente["nombre_cliente"]; ?></h6></div>
                             
                 <div class="frmdt_contenido">
                 
                 <div class="frmdtc_acciones">
                     Acciones: 
-                    <a href="javascript:;" id="producto_btn">
+                    <a href="guardar-pedido.php?ped=<?php echo $id_pedido; ?>&clt=<?php echo $id_cliente; ?>&cun=<?php echo $codigo_unico; ?>" id="producto_btn">
                     	<img src="/imagenes/icons/icon-agregar.png" width="20" height="20" alt="Agregar"></a>
                 </div>
                     
                 <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
                     <thead>
                         <tr>
-                            <th width="55%">Registros</th>
+                            <th width="55%">Pedidos</th>
                             <th width="15%">Precio</th>
-                            <th width="15%">Cantidad</th>
                             <th width="15%">Acciones</th>
                         </tr>
                     </thead>                    <tbody>
                     
                     	<?php while($fila_pedido=mysql_fetch_array($rst_pedido)){
-							$pedido_id=$fila_pedido["id_pedido_articulo"];
-							$Producto=seleccionTabla($fila_pedido["id_articulo"],"id_articulo","syCoesa_articulo",$conexion);
-							$CostoProduccion=seleccionTabla($fila_pedido["id_articulo"],"id_articulo","syCoesa_costo_produccion",$conexion);
-							$precio=$CostoProduccion["precio"];
-							$cantidad=$CostoProduccion["cantcliente"];
+							$pedido_id=$fila_pedido["id_pedidos_final"];
+							$pedido_cod=$fila_pedido["cod_unico"];
+							$pedido_cod_final=$fila_pedido["cod_unico_final"];
+							
+							//SELECCIONAR LOS PRODUCTOS DEL PEDIDO
+							$rst_ver=mysql_query("SELECT * FROM syCoesa_pedidos_articulos WHERE cod_unico='$pedido_cod' AND cod_unico_final='$pedido_cod_final';", $conexion);
+							
+							while($fila_ver=mysql_fetch_array($rst_ver)){
+								$productoFinal=seleccionTabla($fila_ver["id_articulo"], "id_articulo", "syCoesa_costo_produccion", $conexion);
+								$productoPrecio=$productoFinal["precio"];
+								$precioFinal=$productoPrecio + $precioFinal;
+							}							
+							$precio=$precioFinal;
 						?>
                         <tr>
-                            <td><?php echo $Producto["nombre_articulo"]; ?></td>
-                            <td align="center"><?php echo $precio; ?></td>
-                            <td align="center"><?php echo $cantidad; ?></td>
+                            <td align="center"><?php echo $pedido_id; ?></td>
+                            <td align="center"><?php echo number_format($precio, 2); ?></td>
                             <td class="center">
-                                <a onclick="eliminarRegistro(<?php echo $pedido_id ?>, <?php echo $id_cliente; ?>, <?php echo $id_pedido; ?>, '<?php echo $codigo_unico; ?>', '<?php echo $codigo_unico_final; ?>');" href="javascript:;">
+                                <a onclick="eliminarRegistro(<?php echo $pedido_id ?>, <?php echo $id_cliente; ?>, <?php echo $id_pedido; ?>, '<?php echo $codigo_unico; ?>');" href="javascript:;">
                               	<img src="/imagenes/icons/icon-eliminar.png" width="20" height="20" alt="Eliminar"></a>
+                                &nbsp;
+                                <a href="lista.php?ped=<?php echo $id_pedido; ?>&pedf=<?php echo $pedido_id; ?>&clt=<?php echo $id_cliente; ?>&cun=<?php echo $pedido_cod; ?>&cunf=<?php echo $pedido_cod_final; ?>">
+                              	<img src="/imagenes/icons/icon-producto.png" width="20" height="20" alt="Eliminar"></a>
                             </td>
                         </tr>
                         <?php } ?>
@@ -231,7 +199,6 @@ if(confirm("¿Está seguro de borrar este registro?")) {
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>&nbsp;</th>
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
@@ -248,54 +215,6 @@ if(confirm("¿Está seguro de borrar este registro?")) {
     </section><!-- FIN SECTION CONTENIDO -->
     
 </section><!-- FIN SECTION -->
-
-<div id="producto_add">
-	
-    <form method="post" action="guardar_articulo.php">
-    	
-        <h2>Seleccione Producto terminado:</h2>
-        
-        <fieldset class="alto50">
-          	
-          	<select name="pedido_articulo" id="pedido_articulo" class="pedido_articulo">
-                <option value>[ Seleccionar opcion ]</option>
-                <?php while($fila_articulo=mysql_fetch_array($rst_articulo)){
-                    //VARIABLES
-                    $articulo=seleccionTabla($fila_articulo["id_articulo"], "id_articulo", "syCoesa_articulo", $conexion);
-                    $articulo_cliente=$fila_articulo["id_cliente"];
-                ?>
-                <option value="<?php echo $articulo["id_articulo"]; ?>"><?php echo $articulo["nombre_articulo"]; ?></option>
-                <?php } ?>
-          	</select>
-        </fieldset>
-        
-        <div id="datos_CP" class="float_left">
-        
-        <fieldset class="alto50 w180">
-            <label for="pedido_cantidad">Cantidad para cliente:</label>
-          	<input name="pedido_cantidad" type="text" class="an50 texto_cen w130" id="pedido_cantidad" value="0" size="50" readonly>
-        </fieldset>
-        
-        <fieldset class="alto50 w180">
-            <label for="pedido_precio">Precio:</label>
-          	<input name="pedido_precio" type="text" class="an50 texto_der w130" id="pedido_precio" value="0.00" size="50" readonly>
-        </fieldset>
-        
-        </div>
-        
-        <fieldset class="margin_0">
-            <input name="btnenviar" type="submit" id="btnenviar" value="Guardar datos">
-            <input name="btncancelar" type="button" id="btncancelar" value="Cancelar">
-            <input name="cliente" id="cliente" type="hidden" value="<?php echo $id_cliente; ?>">
-            <input name="pedido" id="pedido" type="hidden" value="<?php echo $id_pedido; ?>">
-            <input name="pedido_final" id="pedido_final" type="hidden" value="<?php echo $id_pedido_final; ?>">
-            <input name="cod_unico" id="cod_unico" type="hidden" value="<?php echo $codigo_unico; ?>">
-            <input name="cod_unico_final" id="cod_unico_final" type="hidden" value="<?php echo $codigo_unico_final; ?>">
-        </fieldset>
-                
-    </form>
-    
-</div>
 
 </body>
 </html>

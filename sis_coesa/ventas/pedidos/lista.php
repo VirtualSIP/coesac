@@ -11,7 +11,7 @@ $notificacion=$_REQUEST["m"];
 $aux=0;
 
 //ARTICULOS
-$rst_pedidos=mysql_query("SELECT * FROM syCoesa_pedidos ORDER BY id_pedido ASC;", $conexion);
+$rst_pedidos=mysql_query("SELECT * FROM syCoesa_pedidos_cliente ORDER BY id_pedido ASC;", $conexion);
 
 //CLIENTE
 $rst_cliente=mysql_query("SELECT * FROM syCoesa_datos_tecnicos ORDER BY id_cliente ASC;", $conexion);
@@ -185,9 +185,8 @@ if(confirm("¿Está seguro de borrar este registro?\n"+nombre)) {
                 <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
                     <thead>
                         <tr>
-                            <th width="20%">Pedido</th>
-                            <th width="60%">Cliente</th>
-                            <th width="20%">Acciones</th>
+                            <th width="70%">Cliente</th>
+                            <th width="30%">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -195,18 +194,15 @@ if(confirm("¿Está seguro de borrar este registro?\n"+nombre)) {
                     	<?php while($fila_pedidos=mysql_fetch_array($rst_pedidos)){
 							$pedido_id=$fila_pedidos["id_pedido"];
 							$pedido_cliente=seleccionTabla($fila_pedidos["id_cliente"], "id_cliente", "syCoesa_clientes", $conexion);
+							$pedido_cod=$fila_pedidos["cod_unico"];
 						?>
                         <tr>
-                            <td align="center"><?php echo $pedido_id; ?></td>
                             <td class="center"><?php echo $pedido_cliente["nombre_cliente"]; ?></td>
                             <td class="center">
-                            	<a href="form-editar.php?id=<?php echo $pedido_id; ?>" title="Modificar Registro">
-                                <img src="/imagenes/icons/icon-editar.png" width="20" height="20" alt="Editar"></a>
-                                &nbsp;
                                 <a onclick="eliminarRegistro(<?php echo $pedido_id ?>, '<?php echo $pedido_cliente["nombre_cliente"]; ?>');" href="javascript:;">
                               	<img src="/imagenes/icons/icon-eliminar.png" width="20" height="20" alt="Eliminar"></a>
                                 &nbsp;
-                                <a href="articulos/lista.php?id=<?php echo $pedido_id; ?>&clt=<?php echo $pedido_cliente["id_cliente"]; ?>">
+                                <a href="articulos/lista-ped.php?id=<?php echo $pedido_id; ?>&clt=<?php echo $pedido_cliente["id_cliente"]; ?>&cun=<?php echo $pedido_cod; ?>">
                               	<img src="/imagenes/icons/icon-producto.png" width="20" height="20" alt="Eliminar"></a>
                             </td>
                         </tr>
@@ -215,7 +211,6 @@ if(confirm("¿Está seguro de borrar este registro?\n"+nombre)) {
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>&nbsp;</th>
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
                         </tr>

@@ -8,7 +8,7 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 $pedido_id=$_REQUEST["id"];
 
 //ELIMINAR
-$rst_eliminar=mysql_query("DELETE FROM syCoesa_pedidos WHERE id_pedido=$pedido_id;", $conexion);
+$rst_eliminar=mysql_query("DELETE FROM syCoesa_pedidos_cliente WHERE id_pedido=$pedido_id;", $conexion);
 	
 if (mysql_errno()!=0){
 	echo "ERROR: ".mysql_errno()." - ".mysql_error();
