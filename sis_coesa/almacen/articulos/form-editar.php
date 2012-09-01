@@ -24,6 +24,7 @@ $articulo_precio=floatval($fila_articulo["precio_articulo"]);
 $articulo_solido=floatval($fila_articulo["solido_tinta"]);
 $articulo_unidad_medida=$fila_articulo["unidad_medida_articulo"];
 $articulo_observaciones=$fila_articulo["observaciones_articulo"];
+$articulo_cod_unico_historia=$fila_articulo["cod_unico_historia"];
 
 //TIPOS DE ARTICULO
 $rst_articulo_tipo=mysql_query("SELECT * FROM syCoesa_articulo_tipo ORDER BY nombre_tipo_articulo;", $conexion);
@@ -236,6 +237,7 @@ jmenu(document).ready(function(){
                         
                         <fieldset>
                         	<input name="almart_id" type="hidden" id="almart_id" value="<?php echo $articulo_id; ?>">
+                            <input name="cod_unico" type="hidden" id="cod_unico" value="<?php echo $articulo_cod_unico_historia; ?>">
                             <input name="dtp_btnenviar" type="submit" id="dtp_btnenviar" value="Guardar datos">
                             <input name="dtp_btnenviar" type="button" id="dtp_btnenviar" value="Cancelar" onClick="parent.location='lista.php'">
                         </fieldset>

@@ -15,23 +15,50 @@ $articulo_precio=$_POST["almart_precio"];
 if($_POST["almart_solido"]<>""){ $articulo_solido=$_POST["almart_solido"]; }else{ $articulo_solido=0; }
 $articulo_unidad_medida=$_POST["almart_unidad_medida"];
 $articulo_observaciones=$_POST["almart_observaciones"];
+$producto_terminado="I";
+$articulo_codUnico=$_POST["cod_unico"]; //HISTORIA
+$codigo_unico=codigoAleatorio(20, true, true, false);
+$mostrar=1;
+$mostrar_anterior=2;
 
 //DATOS USUARIO
 $dato_fecha=$fechaActual;
 $dato_usuario=$usuario_user;
 
-//ACTUALIZAR
-$rst_guardar=mysql_query("UPDATE syCoesa_articulo SET id_tipo_articulo=$articulo_tipo_articulo,
-nombre_articulo='".htmlspecialchars($articulo_nombre)."', 
-abreviado_articulo='".htmlspecialchars($articulo_abreviacion)."', 
-grm2_articulo=$articulo_grm2, 
-ancho_articulo=$articulo_ancho, 
-precio_articulo=$articulo_precio, 
-solido_tinta=$articulo_solido,
-unidad_medida_articulo=$articulo_unidad_medida,
-observaciones_articulo='".htmlspecialchars($articulo_observaciones)."',
-dato_fecha='$dato_fecha',
-dato_usuario='$dato_usuario' WHERE id_articulo=$articulo_id;", $conexion);
+//CAMBIAR MOSTRAR ARTICULO A ANTERIOR
+$rst_upd=mysql_query("UPDATE syCoesa_articulo SET mostrar_articulo=$mostrar_anterior WHERE id_articulo=$articulo_id;", $conexion);
+
+//GUARDAR
+$rst_guardar=mysql_query("INSERT INTO syCoesa_articulo (id_tipo_articulo, 
+nombre_articulo, 
+abreviado_articulo, 
+grm2_articulo, 
+ancho_articulo, 
+precio_articulo,
+solido_tinta, 
+unidad_medida_articulo,
+observaciones_articulo,
+producto_terminado,
+mostrar_articulo,
+cod_unico,
+cod_unico_historia,
+dato_fecha,
+dato_usuario)
+VALUES ($articulo_tipo_articulo, 
+'".htmlspecialchars($articulo_nombre)."', 
+'".htmlspecialchars($articulo_abreviacion)."', 
+$articulo_grm2, 
+$articulo_ancho, 
+$articulo_precio, 
+$articulo_solido,
+$articulo_unidad_medida,
+'".htmlspecialchars($articulo_observaciones)."',
+'$producto_terminado',
+$mostrar,
+'$codigo_unico',
+'$articulo_codUnico',
+'$dato_fecha',
+'$dato_usuario')", $conexion);
 
 if (mysql_errno()!=0){
 	header("Location:lista.php?m=4");

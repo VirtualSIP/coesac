@@ -8,7 +8,7 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 $notificacion=$_REQUEST["m"];
 
 //ARTICULOS
-$rst_articulos=mysql_query("SELECT * FROM syCoesa_articulo WHERE producto_terminado='I' ORDER BY id_articulo DESC;", $conexion);
+$rst_articulos=mysql_query("SELECT * FROM syCoesa_articulo WHERE producto_terminado='I' AND mostrar_articulo=1 ORDER BY id_articulo DESC;", $conexion);
 
 ?>
 <!DOCTYPE HTML>
@@ -177,8 +177,11 @@ if(confirm("¿Está seguro de borrar este registro?\n"+nombre)) {
                             	<a href="form-editar.php?id=<?php echo $articulo_id; ?>" title="Modificar Registro">
                                 <img src="/imagenes/icons/icon-editar.png" width="20" height="20" alt="Editar"></a>
                                 &nbsp;
-                                <a onclick="eliminarRegistro(<?php echo $articulo_id ?>, '<?php echo $articulo_nombre; ?>');" href="javascript:;">
+                                <a onclick="eliminarRegistro(<?php echo $articulo_id ?>, '<?php echo $articulo_nombre; ?>');" href="javascript:;" title="Eliminar">
                               	<img src="/imagenes/icons/icon-eliminar.png" width="20" height="20" alt="Eliminar"></a>
+                                &nbsp;
+                                <a href="hist.php?id=<?php echo $articulo_id; ?>" title="Historia de Insumo">
+                              	<img src="/imagenes/icons/icon-historia.png" width="20" height="20" alt="Historia de Insumo"></a>
                             </td>
                         </tr>
                         <?php } ?>

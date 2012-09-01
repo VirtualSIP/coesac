@@ -14,7 +14,9 @@ $articulo_precio=$_POST["almart_precio"];
 $articulo_solido=$_POST["almart_solido"];
 $articulo_unidad_medida=$_POST["almart_unidad_medida"];
 $articulo_observaciones=$_POST["almart_observaciones"];
+$mostrar=1;
 $producto_terminado="I";
+$codigo_unico=codigoAleatorio(20, true, true, false);
 
 //DATOS USUARIO
 $dato_fecha=$fechaActual;
@@ -31,6 +33,9 @@ solido_tinta,
 unidad_medida_articulo,
 observaciones_articulo,
 producto_terminado,
+mostrar_articulo,
+cod_unico,
+cod_unico_historia,
 dato_fecha,
 dato_usuario)
 VALUES ($articulo_tipo_articulo, 
@@ -43,6 +48,9 @@ $articulo_solido,
 $articulo_unidad_medida,
 '".htmlspecialchars($articulo_observaciones)."',
 '$producto_terminado',
+$mostrar,
+'$codigo_unico',
+'$codigo_unico',
 '$dato_fecha',
 '$dato_usuario')", $conexion);
 
