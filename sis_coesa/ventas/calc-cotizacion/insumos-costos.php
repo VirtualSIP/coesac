@@ -36,6 +36,9 @@ if($tipo=="tinta" and $idInsumo<>""){
 	
 	//TOTAL DE COSTOS
 	$TotalCosto=$AgregadoEstruc * $insumo_precio;
+?>
+<input name="insumotinta" id="insumotinta" type="hidden" value="<?php echo $idInsumo; ?>">
+<?php
 }elseif($tipo=="tinta"){
 	//TINTA
 	$rst_insTinta=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=2 ORDER BY precio_articulo DESC;", $conexion);
