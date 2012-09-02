@@ -11,7 +11,7 @@ $aux=0;
 $rst_cliente=mysql_query("SELECT * FROM syCoesa_datos_tecnicos ORDER BY id_cliente ASC;", $conexion);
 
 //PRODUCTO TERMINADO
-$rst_prodterminado=mysql_query("SELECT * FROM syCoesa_articulo ORDER BY id_articulo DESC;", $conexion);
+$rst_prodterminado=mysql_query("SELECT * FROM syCoesa_articulo ORDER BY dato_fecha DESC;", $conexion);
 
 ?>
 <!DOCTYPE HTML>
@@ -174,8 +174,11 @@ jefform(document).ready(function(){
 								$prodterminado_id=$fila_prodterminado["id_articulo"];
 								$prodterminado_nombre=$fila_prodterminado["nombre_articulo"];
 								$prodterminado_cliente=$fila_prodterminado["id_cliente"];
+								$prodterminado_fecha_hora=explode(" ", $fila_prodterminado["dato_fecha"]);
+								$prodterminado_fecha=explode("-", $prodterminado_fecha_hora[0]);
+								$prodterminado_fecha_final=$prodterminado_fecha[2]."/".$prodterminado_fecha[1]."/".$prodterminado_fecha[0];
 							?>
-                            <option value=<?php echo $prodterminado_id; ?> class="<?php echo $prodterminado_cliente; ?>"><?php echo $prodterminado_nombre; ?></option>
+                            <option value=<?php echo $prodterminado_id; ?> class="<?php echo $prodterminado_cliente; ?>"><?php echo $prodterminado_nombre." (".$prodterminado_fecha_final.")"; ?></option>
                             <?php } ?>
                           </select>
                           <span class="selectInvalidMsg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*)</span>
