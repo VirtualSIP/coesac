@@ -8,7 +8,7 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 $notificacion=$_REQUEST["m"];
 
 //DATOS TECNICOS
-$rst_dtecnicos=mysql_query("SELECT * FROM syCoesa_datos_tecnicos ORDER BY id_datos_tecnicos DESC;", $conexion);
+$rst_dtecnicos=mysql_query("SELECT * FROM syCoesa_datos_tecnicos WHERE mostrar_dtb=1 ORDER BY id_datos_tecnicos DESC;", $conexion);
 
 ?>
 <!DOCTYPE HTML>
@@ -114,9 +114,9 @@ jNotify(document).ready(function (){
 
 <!-- ELIMINAR -->
 <script type="text/javascript">
-function eliminarRegistro(registro, nombre) {
+function eliminarRegistro(registro, nombre, articulo) {
 if(confirm("¿Está seguro de borrar este registro?\n"+nombre)) {
-	document.location.href="eliminar.php?id="+registro;
+	document.location.href="eliminar.php?id="+registro+"&art="+articulo;
 	}
 }
 </script>
@@ -170,7 +170,7 @@ if(confirm("¿Está seguro de borrar este registro?\n"+nombre)) {
                             	<a href="form-editar.php?id=<?php echo $dtecnicos_id; ?>" title="Modificar">
                                 <img src="/imagenes/icons/icon-editar.png" width="20" height="20" alt="Editar"></a>
                                 &nbsp;
-                                <a onclick="eliminarRegistro(<?php echo $dtecnicos_id ?>, '<?php echo $dtecnicos_cliente["nombre_cliente"]; ?>');" href="javascript:;" title="Eliminar">
+                                <a onclick="eliminarRegistro(<?php echo $dtecnicos_id ?>, '<?php echo $dtecnicos_cliente["nombre_cliente"]; ?>', <?php echo $dtecnicos_articulo["id_articulo"]; ?>);" href="javascript:;" title="Eliminar">
                               	<img src="/imagenes/icons/icon-eliminar.png" width="20" height="20" alt="Eliminar"></a>
                                 &nbsp;
                                 <a href="dtecnicos-laminas/lista.php?did=<?php echo $dtecnicos_id; ?>&dart=<?php echo $dtecnicos_articulo["id_articulo"]; ?>&clt=<?php echo $dtecnicos_cliente["id_cliente"]; ?>" title="Laminas">

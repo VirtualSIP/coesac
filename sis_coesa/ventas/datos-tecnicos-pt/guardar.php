@@ -22,6 +22,7 @@ $dtecnicos_estado="I"; //SE ACTIVA CUANDO SE RELLENAN LOS DATOS EN DATOS BASICOS
 $dtecnicos_imagen=guardarArchivo("../../../imagenes/upload/", $_FILES["dtecnicos_imagen"]);
 $codigo_unico=codigoAleatorio(20,true,true,false);
 $producto_terminado="A"; //ES "A" CUANDO SE CREA EL PRODUCTO DIRECTAMENTE PARA EL CLIENTE
+$mostrar_dtb=1;
 
 //USUARIO
 $datoFecha=$fechaActual;
@@ -35,7 +36,11 @@ ancho_articulo,
 unidad_medida_articulo,
 observaciones_articulo,
 producto_terminado,
-cod_unico)
+mostrar_articulo,
+cod_unico,
+cod_unico_historia,
+dato_fecha,
+dato_usuario)
 VALUES ($dtecnicos_cliente,
 '".htmlspecialchars($dtecnicos_articulo)."', 
 $dtecnicos_grm2, 
@@ -43,7 +48,11 @@ $dtecnicos_ancho_final,
 $dtecnicos_unidad_medida,
 '$dtecnicos_observaciones',
 '$producto_terminado',
-'$codigo_unico')", $conexion);
+$mostrar_dtb,
+'$codigo_unico',
+'$codigo_unico',
+'$datoFecha',
+'$datoUsuario')", $conexion);
 
 //EXTRAER ID DEL NUEVO ARTICULO
 $rst_articulo=mysql_query("SELECT * FROM syCoesa_articulo WHERE cod_unico='".$codigo_unico."';", $conexion);
@@ -63,7 +72,9 @@ if($articulo_id<>""){
 	cilindro, 
 	sentido_bobina_dtecnicos, 
 	estado_datos_tecnicos, 
-	cod_unico, 
+	mostrar_dtb,
+	cod_unico,
+	cod_unico_historia,
 	dato_fecha, 
 	dato_usuario)
 	VALUES ($articulo_id, 
@@ -77,7 +88,9 @@ if($articulo_id<>""){
 	$dtecnicos_cilindro, 
 	$dtecnicos_sentido_bobina, 
 	'$dtecnicos_estado', 
+	$mostrar_dtb,
 	'$codigo_unico', 
+	'$codigo_unico',
 	'$datoFecha', 
 	'$datoUsuario');", $conexion);
 	

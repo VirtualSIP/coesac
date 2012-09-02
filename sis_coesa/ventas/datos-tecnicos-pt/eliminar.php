@@ -6,12 +6,14 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 
 //VARIABLES
 $dtecnicos_id=$_REQUEST["id"];
+$dtecnicos_art=$_REQUEST["art"];
 
 //ELIMINAR
 $rst_eliminar=mysql_query("DELETE FROM syCoesa_datos_tecnicos WHERE id_datos_tecnicos=$dtecnicos_id;", $conexion);
+
+$rst_eliminar_art=mysql_query("DELETE FROM syCoesa_articulo WHERE id_articulo=$dtecnicos_art;", $conexion);
 	
 if (mysql_errno()!=0){
-	echo "ERROR: ".mysql_errno()." - ".mysql_error();
 	mysql_close($conexion);
 	header("Location:lista.php?m=6");
 } else {

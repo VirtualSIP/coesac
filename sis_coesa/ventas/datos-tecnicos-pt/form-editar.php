@@ -25,6 +25,7 @@ $dtecnicos_sentbob=$fila_dtecnicos["sentido_bobina_dtecnicos"];
 $dtecnicos_repeticion=$fila_dtecnicos["distancia_repeticion"];
 $dtecnicos_frecuencia=$fila_dtecnicos["frecuencia"];
 $dtecnicos_cilindro=$fila_dtecnicos["cilindro"];
+$dtecnicos_cod_unico=$fila_dtecnicos["cod_unico_historia"];
 
 //CLIENTES Y ARTICULO
 $cliente=seleccionTabla($dtecnicos_cliente, "id_cliente", "syCoesa_clientes", $conexion);
@@ -379,6 +380,7 @@ jFrec(document).ready(function(){
                             <input name="dtp_btnenviar" type="submit" id="dtp_btnenviar" value="Guardar datos">
                             <input name="dtp_btnenviar" type="button" id="dtp_btnenviar" value="Cancelar" onClick="parent.location='lista.php'">
                             <input id="dt_basico" name="dt_basico" type="hidden" value="<?php echo $id_registro; ?>">
+                            <input id="cod_unico" name="cod_unico" type="hidden" value="<?php echo $dtecnicos_cod_unico; ?>">
                         </fieldset>
                     
                     </div><!-- FIN PANEL DERECHA -->
