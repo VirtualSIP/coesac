@@ -114,17 +114,41 @@ function UrlAmigable($s){
 }
 
 function Sumar2Tiempos($h1,$h2){
-	$h2h = date('H', strtotime($h2));
-	$h2m = date('i', strtotime($h2));
-	$h2s = date('s', strtotime($h2));
-	$hora2 =$h2h." hour ". $h2m ." min ".$h2s ." second";
 	
-	$horas_sumadas= $h1." + ". $hora2;
-	$text=date('H:i:s', strtotime($horas_sumadas)) ;
-	return $text;
+	/* HORA1 */
+	$hora1=explode(":", $h1);
+	if( count($hora1) < 3 ){ $hora1[2] = 0; }
+	//PASAMOS LA HORA1 A SEGUNDOS
+	$hora1[0] = $hora1[0] * 60 * 60;
+	$hora1[1] = $hora1[1] * 60;
+	$hora1_minutos=(($hora1[0] + $hora1[1] + $hora1[2]) / 60);
+	
+	/* HORA 2 */
+	$hora2=explode(":", $h2);
+	if( count($hora2) < 3 ){ $hora2[2] = 0; }
+	//PASAMOS LA HORA1 A SEGUNDOS
+	$hora2[0] = $hora2[0] * 60 * 60;
+	$hora2[1] = $hora2[1] * 60;
+	$hora2_minutos=(($hora2[0] + $hora2[1] + $hora2[2]) / 60);
+	
+	$total_minutos=$hora1_minutos + $hora2_minutos;
+	
+	/* CONVERTIR MINUTOS A HORAS */
+	$hours = floor($total_minutos / 60);
+	$minutes = ($total_minutos) - ($hours * 60);
+
+	if (!$minutes) {
+		$minutes = "00";
+	}
+	else if ($minutes <= 9) {
+		$minutes = "0" . $minutes;
+	}
+	
+	return ("{$hours}:{$minutes}");
+
 }
 
-function PorcRefile($anchoarticulo, $anchofinal, $nrobandas){ return ($anchoarticulo - ($anchofinal * $nrobandas) / $anchoarticulo); }
+function PorcRefile($anchoarticulo, $anchofinal, $nrobandas){ return round((($anchoarticulo - ($anchofinal * $nrobandas)) / $anchoarticulo) * 100)." %"; }
 function CostoLamina($num1, $num2){ $total=$num1 * $num2; return $total; }
 function Division2Num($num1, $num2){ $total=($num1 / $num2); return $total; }
 function BuscarPalabraLamina($palabra, $lamina1, $lamina2, $lamina3){	
