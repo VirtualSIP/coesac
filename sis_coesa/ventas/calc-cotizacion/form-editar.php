@@ -339,10 +339,7 @@ jFrec(document).ready(function(){
                           <input name="dtecnicos_articulo" type="text" id="dtecnicos_articulo" value="<?php echo $cotizacion_producto; ?>">
 						</fieldset>
                         
-                        <fieldset class="alto50 w180">
-                          <label for="dtecnicos_grm2">Gr / m2:</label>
-                          <input name="dtecnicos_grm2" type="text" id="dtecnicos_grm2" class="w130" value="<?php echo $cotizacion_grm2; ?>">
-						</fieldset>
+                        <input name="dtecnicos_grm2" type="hidden" value="0">
                         
                         <fieldset class="alto50 w180">
                           <label for="dtecnicos_cilindro">Cilindro (mm):</label>
@@ -486,6 +483,14 @@ jFrec(document).ready(function(){
                                 </fieldset>
                                 
                                 <fieldset class="w235">
+                                	<?php if($cotizacion_lamina1_rebobinado==1){ ?>
+                                    <label><input checked id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
+                                    <?php }else{ ?>
+                                    <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
+                                    <?php } ?>
+                                </fieldset>
+                                
+                                <fieldset class="w235">
                                 	<?php if($cotizacion_lamina1_bilaminado==1){ ?>
                                     <label><input checked id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado1" type="checkbox" value="1">&nbsp;Bilaminado</label>
                                     <?php }else{ ?>
@@ -501,27 +506,13 @@ jFrec(document).ready(function(){
                                     <?php } ?>
                                 </fieldset>
                                 
-                                <fieldset class="w235">
-                                	<?php if($cotizacion_lamina1_rebobinado==1){ ?>
-                                    <label><input checked id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
-                                    <?php }else{ ?>
-                                    <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
-                                    <?php } ?>
-                                </fieldset>
-                                
-                                <fieldset class="w235">
-                                	<?php if($cotizacion_lamina1_habilitado==1){ ?>
-                                    <label><input checked id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado1" type="checkbox" value="1">&nbsp;Habilitado</label>
-                                    <?php }else{ ?>
-                                    <label><input id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado1" type="checkbox" value="1">&nbsp;Habilitado</label>
-                                    <?php } ?>
-                                </fieldset>
+							    <input name="habilitado1" type="hidden" value="0">
                                 
                                 <fieldset class="w235">
                                 	<?php if($cotizacion_lamina1_cortefinal==1){ ?>
-                                    <label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte Final</label>
+                                    <label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte</label>
                                     <?php }else{ ?>
-                                    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte Final</label>
+                                    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte</label>
                                     <?php } ?>
                                 </fieldset>
                                 
@@ -587,27 +578,15 @@ jFrec(document).ready(function(){
                                     <?php } ?>
                                 </fieldset>
                                                                 
-                                <fieldset class="w235">
-                                	<?php if($cotizacion_lamina2_rebobinado==1){ ?>
-                                    <label><input checked id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado2" type="checkbox" value="1">&nbsp;Rebobinado</label>
-                                    <?php }else{ ?>
-                                    <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado2" type="checkbox" value="1">&nbsp;Rebobinado</label>
-                                    <?php } ?>
-                                </fieldset>
-                                
-                                <fieldset class="w235">
-                                	<?php if($cotizacion_lamina2_habilitado==1){ ?>
-                                    <label><input checked id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado2" type="checkbox" value="1">&nbsp;Habilitado</label>
-                                    <?php }else{ ?>
-                                    <label><input id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado2" type="checkbox" value="1">&nbsp;Habilitado</label>
-                                    <?php } ?>
-                                </fieldset>
+                                <input name="rebobinado2" type="hidden" value="0">
+    
+    							<input name="habilitado2" type="hidden" value="0">
                                 
                                 <fieldset class="w235">
                                 	<?php if($cotizacion_lamina2_cortefinal==1){ ?>
-                                    <label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal2" type="checkbox" value="1">&nbsp;Corte Final</label>
+                                    <label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal2" type="checkbox" value="1">&nbsp;Corte</label>
                                     <?php }else{ ?>
-                                    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal2" type="checkbox" value="1">&nbsp;Corte Final</label>
+                                    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal2" type="checkbox" value="1">&nbsp;Corte</label>
                                     <?php } ?>
                                 </fieldset>
                                 
@@ -665,27 +644,15 @@ jFrec(document).ready(function(){
                                   <input class="w140 texto_der" name="trilaminado_proceso_3" type="text" id="trilaminado_proceso_3" value="<?php echo $cotizacion_lamina3_trilaminado_grm2; ?>">
                                 </fieldset>
                                 
-                                <fieldset class="w235">
-                                	<?php if($cotizacion_lamina3_rebobinado==1){ ?>
-                                    <label><input checked id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado3" type="checkbox" value="1">&nbsp;Rebobinado</label>
-                                    <?php }else{ ?>
-                                    <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado3" type="checkbox" value="1">&nbsp;Rebobinado</label>
-                                    <?php } ?>
-                                </fieldset>
-                                
-                                <fieldset class="w235">
-                                	<?php if($cotizacion_lamina3_habilitado==1){ ?>
-                                    <label><input checked id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado3" type="checkbox" value="1">&nbsp;Habilitado</label>
-                                    <?php }else{ ?>
-                                    <label><input id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado3" type="checkbox" value="1">&nbsp;Habilitado</label>
-                                    <?php } ?>
-                                </fieldset>
+                                <input name="rebobinado2" type="hidden" value="0">
+    
+    							<input name="habilitado2" type="hidden" value="0">
                                 
                                 <fieldset class="w235">
                                 	<?php if($cotizacion_lamina3_cortefinal==1){ ?>
-                                    <label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal3" type="checkbox" value="1">&nbsp;Corte Final</label>
+                                    <label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal3" type="checkbox" value="1">&nbsp;Corte</label>
                                     <?php }else{ ?>
-                                    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal3" type="checkbox" value="1">&nbsp;Corte Final</label>
+                                    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal3" type="checkbox" value="1">&nbsp;Corte</label>
                                     <?php } ?>
                                 </fieldset>
                                 
@@ -709,7 +676,7 @@ jFrec(document).ready(function(){
                         	
                             <fieldset class="alto50 w180 float_left">
                                 <label for="dtecnicos_grm2_total">Gr / m2:</label>
-                                <input name="dtecnicos_grm2_total" type="text" id="dtecnicos_grm2_total" class="w130" value="<?php echo $cotizacion_grm2total; ?>">
+                                <input name="dtecnicos_grm2_total" type="text" id="dtecnicos_grm2_total" class="w130" value="<?php echo number_format($cotizacion_grm2total,1); ?>">
                             </fieldset>
                             
                             <fieldset class="alto50 w180 float_left">
@@ -758,14 +725,8 @@ jFrec(document).ready(function(){
 											var extrusion1 = <?php echo $cotizacion_lamina1_extrusion; ?>;
 											var extrusion2 = <?php echo $cotizacion_lamina2_extrusion; ?>;
 											var extrusion3 = <?php echo $cotizacion_lamina3_extrusion; ?>;
-											var impresion1 = <?php echo $cotizacion_lamina1_impresion; ?>;
-											var impresion2 = <?php echo $cotizacion_lamina2_impresion; ?>;
-											var impresion3 = <?php echo $cotizacion_lamina3_impresion; ?>;
-											var bilaminado1 = <?php echo $cotizacion_lamina1_bilaminado; ?>;
+											var impresion1 = <?php echo $cotizacion_lamina1_impresion; ?>;										
 											var bilaminado2 = <?php echo $cotizacion_lamina2_bilaminado; ?>;
-											var bilaminado3 = <?php echo $cotizacion_lamina3_bilaminado; ?>;
-											var trilaminado1 = <?php echo $cotizacion_lamina1_trilaminado; ?>;
-											var trilaminado2 = <?php echo $cotizacion_lamina2_trilaminado; ?>;
 											var trilaminado3 = <?php echo $cotizacion_lamina3_trilaminado; ?>;
 											var cortefinal1 = <?php echo $cotizacion_lamina1_cortefinal; ?>;
 											var cortefinal2 = <?php echo $cotizacion_lamina2_cortefinal; ?>;
@@ -774,15 +735,14 @@ jFrec(document).ready(function(){
 											var bilaminado = <?php echo $proc_bilaminado; ?>;
 											var trilaminado = <?php echo $proc_trilaminado; ?>;
 											var cortefinal = <?php echo $proc_cortefinal; ?>;
+											var sellado = <?php echo $proc_sellado; ?>;
 											var maq = jcmbPro1("select#maquina_1 option:selected").val();
 											var metrosproducir = jcmbPro1("#dtecnicos_metrosproducir").val();
 											jcmbPro1.post("consulta-maquinas-datos.php", {dt_articulo1: lamina1, dt_articulo2: lamina2, dt_articulo3: lamina3,
-											maquina: maq, metroproducir: metrosproducir, extrusion1: extrusion1, 
-											extrusion2: extrusion2, extrusion3: extrusion3, impresio1: impresion1, impresion2: impresion2, impresion3: impresion3,
-											bilaminado1: bilaminado1, bilaminado2: bilaminado2, bilaminado3: bilaminado3, trilaminado1: trilaminado1, trilaminado2: trilaminado2,
-											trilaminado3: trilaminado3, cortefinal1: cortefinal1, cortefinal2: cortefinal2, cortefinal3: cortefinal3,
-											impresion: impresion, bilaminado: bilaminado, trilaminado: trilaminado, 
-											cortefinal: cortefinal, metrosproducir: metrosproducir},
+											maquina: maq, metroproducir: metrosproducir, extrusion1: extrusion1, extrusion2: extrusion2, extrusion3: extrusion3, 
+											impresio1: impresion1, bilaminado2: bilaminado2, trilaminado3: trilaminado3, cortefinal1: cortefinal1, cortefinal2: cortefinal2, 
+											cortefinal3: cortefinal3, impresion: impresion, bilaminado: bilaminado, trilaminado: trilaminado, cortefinal: cortefinal, 
+											sellado: sellado, metrosproducir: metrosproducir},
 												function(data){
 													jcmbPro1("#progressbar").addClass("ocultar");
 													jcmbPro1('.datos_maquina_1').html(data);
@@ -798,13 +758,7 @@ jFrec(document).ready(function(){
 												var extrusion2 = <?php echo $cotizacion_lamina2_extrusion; ?>;
 												var extrusion3 = <?php echo $cotizacion_lamina3_extrusion; ?>;
 												var impresion1 = <?php echo $cotizacion_lamina1_impresion; ?>;
-												var impresion2 = <?php echo $cotizacion_lamina2_impresion; ?>;
-												var impresion3 = <?php echo $cotizacion_lamina3_impresion; ?>;
-												var bilaminado1 = <?php echo $cotizacion_lamina1_bilaminado; ?>;
 												var bilaminado2 = <?php echo $cotizacion_lamina2_bilaminado; ?>;
-												var bilaminado3 = <?php echo $cotizacion_lamina3_bilaminado; ?>;
-												var trilaminado1 = <?php echo $cotizacion_lamina1_trilaminado; ?>;
-												var trilaminado2 = <?php echo $cotizacion_lamina2_trilaminado; ?>;
 												var trilaminado3 = <?php echo $cotizacion_lamina3_trilaminado; ?>;
 												var cortefinal1 = <?php echo $cotizacion_lamina1_cortefinal; ?>;
 												var cortefinal2 = <?php echo $cotizacion_lamina2_cortefinal; ?>;
@@ -817,9 +771,8 @@ jFrec(document).ready(function(){
 												var metrosproducir = jcmbPro1("#dtecnicos_metrosproducir").val();
 												jcmbPro1.post("consulta-maquinas-datos.php", {dt_articulo1: lamina1, dt_articulo2: lamina2, dt_articulo3: lamina3,
 												maquina: maq, metroproducir: metrosproducir, extrusion1: extrusion1, 
-												extrusion2: extrusion2, extrusion3: extrusion3, impresio1: impresion1, impresion2: impresion2, impresion3: impresion3,
-												bilaminado1: bilaminado1, bilaminado2: bilaminado2, bilaminado3: bilaminado3, trilaminado1: trilaminado1, trilaminado2: trilaminado2,
-												trilaminado3: trilaminado3, cortefinal1: cortefinal1, cortefinal2: cortefinal2, cortefinal3: cortefinal3,
+												extrusion2: extrusion2, extrusion3: extrusion3, impresio1: impresion1, bilaminado2: bilaminado2, trilaminado3: trilaminado3, 
+												cortefinal1: cortefinal1, cortefinal2: cortefinal2, cortefinal3: cortefinal3,
 												impresion: impresion, bilaminado: bilaminado, trilaminado: trilaminado, 
 												cortefinal: cortefinal, metrosproducir: metrosproducir},
 													function(data){
@@ -865,8 +818,9 @@ jFrec(document).ready(function(){
 											var impresion = <?php echo $proc_impresion; ?>;
 											var maq = jcmbPro2("select#maquina_2 option:selected").val();
 											var mtrprod = <?php echo $mtrprod_impresion; ?>;
+											var cantcolores = jcmbPro2("select#dtecnicos_numcolores option:selected").val();
 											
-											jcmbPro2.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, impresion: impresion},
+											jcmbPro2.post("consulta-maquinas-datos.php", {colores: cantcolores, maquina: maq, metroproducir: mtrprod, impresion: impresion},
 												function(data){
 													jcmbPro2("#progressbar").addClass("ocultar");
 													jcmbPro2('.datos_maquina_2').html(data);
@@ -876,9 +830,10 @@ jFrec(document).ready(function(){
                                                 jcmbPro2("#progressbar").removeClass("ocultar");
 												var impresion = <?php echo $proc_impresion; ?>;
                                                 var maq = jcmbPro2("select#maquina_2 option:selected").val();
-                                                var mtrprod = jcmbPro2("#dtecnicos_metrosproducir").val();
+                                                var mtrprod = <?php echo $mtrprod_impresion; ?>;
+												var cantcolores = jcmbPro2("select#dtecnicos_numcolores option:selected").val();
                                                 
-                                                jcmbPro2.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, impresion: impresion},
+                                                jcmbPro2.post("consulta-maquinas-datos.php", {colores: cantcolores, maquina: maq, metroproducir: mtrprod, impresion: impresion},
                                                     function(data){
                                                         jcmbPro2("#progressbar").addClass("ocultar");
                                                         jcmbPro2('.datos_maquina_2').html(data);
@@ -910,6 +865,65 @@ jFrec(document).ready(function(){
                                 </div>
                                 <div class="datos_maquina_2"></div>
                             <?php } ?>
+                            
+                            <?php if($proc_rebobinado>0){ ?>
+                                <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Rebobinado</div>
+                                <div style="width:13%; height:20px; padding:1% 0;" class="float_left texto_cen">
+                                        
+                                        <!-- SELECCIONAR -->
+                                  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+                                  <script>
+                                        var jcmbPro7 = jQuery.noConflict();
+                                        jcmbPro7(document).ready(function(){
+											var rebobinado = <?php echo $proc_rebobinado; ?>;
+											var maq = jcmbPro7("select#maquina_7 option:selected").val();
+											var mtrprod = <?php echo $mtrprod_rebobinado; ?>;
+											
+											jcmbPro7.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, rebobinado: rebobinado},
+												function(data){
+													jcmbPro7("#progressbar").addClass("ocultar");
+													jcmbPro7('.datos_maquina_7').html(data);
+												});
+											
+                                            jcmbPro7("#maquina_7").change(function() {
+                                                jcmbPro7("#progressbar").removeClass("ocultar");
+                                                //VALORES
+												var rebobinado = <?php echo $proc_rebobinado; ?>;
+                                                var maq = jcmbPro7("select#maquina_7 option:selected").val();
+                                                var mtrprod = <?php echo $mtrprod_rebobinado; ?>;
+                                                
+                                                jcmbPro7.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, rebobinado: rebobinado},
+                                                    function(data){
+                                                        jcmbPro7("#progressbar").addClass("ocultar");
+                                                        jcmbPro7('.datos_maquina_7').html(data);
+                                                    });
+                                            });
+                                        });
+                                        </script>
+                                        
+                                        <select name="maquina7" id="maquina_7" class="w130">
+                                            <option value="0">------------------</option>
+                                            <?php
+                                            
+                                            //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
+                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1", $conexion);
+                                            while($fila_maq=mysql_fetch_array($rst_maq)){
+                                
+                                                $maq_procesos=$fila_maq["procesos_productivos_maquina"];
+                                                $maquina=seleccionTabla($fila_maq["id_maquina"],"id_maquina", "syCoesa_mantenimiento_maquinas", $conexion);
+                                            
+                                                if(ereg(9, $maq_procesos)){
+													if($proc_rebobinado==$maquina["id_maquina"]){
+											?>
+                                                <option selected value="<?php echo $maquina["id_maquina"]; ?>"><?php echo $maquina["nombre_maquina"]; ?></option>
+                                                <?php }else{ ?>
+                                            	<option value="<?php echo $maquina["id_maquina"]; ?>"><?php echo $maquina["nombre_maquina"]; ?></option>
+                                            <?php }}} ?>
+                                            
+                                        </select>
+                                </div>
+                                <div class="datos_maquina_7"></div>
+                            <?php } ?>
                                 
                             <?php if($proc_bilaminado>0){ ?>
                                 <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Bilaminado</div>
@@ -935,7 +949,7 @@ jFrec(document).ready(function(){
                                                 //VALORES
 												var bilaminado = <?php echo $proc_bilaminado; ?>;
                                                 var maq = jcmbPro3("select#maquina_3 option:selected").val();
-                                                var mtrprod = jcmbPro3("#dtecnicos_metrosproducir").val();
+                                                var mtrprod = <?php echo $mtrprod_bilaminado; ?>;
                                                                     
                                                 jcmbPro3.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, bilaminado: bilaminado},
                                                     function(data){
@@ -993,7 +1007,7 @@ jFrec(document).ready(function(){
                                                 //VALORES
 												var trilaminado = <?php echo $proc_trilaminado; ?>;
                                                 var maq = jcmbPro4("select#maquina_4 option:selected").val();
-                                                var mtrprod = jcmbPro4("#dtecnicos_metrosproducir").val();
+                                                var mtrprod = <?php echo $mtrprod_trilaminado; ?>;
                                                                     
                                                 jcmbPro4.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, trilaminado: trilaminado},
                                                     function(data){
@@ -1027,66 +1041,7 @@ jFrec(document).ready(function(){
                                 <div class="datos_maquina_4"></div>
                             <?php } ?>
                             
-                            <?php if($proc_rebobinado>0){ ?>
-                                <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Rebobinado</div>
-                                <div style="width:13%; height:20px; padding:1% 0;" class="float_left texto_cen">
-                                        
-                                        <!-- SELECCIONAR -->
-                                  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-                                  <script>
-                                        var jcmbPro7 = jQuery.noConflict();
-                                        jcmbPro7(document).ready(function(){
-											var rebobinado = <?php echo $proc_rebobinado; ?>;
-											var maq = jcmbPro7("select#maquina_7 option:selected").val();
-											var mtrprod = <?php echo $mtrprod_rebobinado; ?>;
-											
-											jcmbPro7.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, rebobinado: rebobinado},
-												function(data){
-													jcmbPro7("#progressbar").addClass("ocultar");
-													jcmbPro7('.datos_maquina_7').html(data);
-												});
-											
-                                            jcmbPro7("#maquina_7").change(function() {
-                                                jcmbPro7("#progressbar").removeClass("ocultar");
-                                                //VALORES
-												var rebobinado = <?php echo $proc_rebobinado; ?>;
-                                                var maq = jcmbPro7("select#maquina_7 option:selected").val();
-                                                var mtrprod = jcmbPro7("#dtecnicos_metrosproducir").val();
-                                                
-                                                jcmbPro7.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, rebobinado: rebobinado},
-                                                    function(data){
-                                                        jcmbPro7("#progressbar").addClass("ocultar");
-                                                        jcmbPro7('.datos_maquina_7').html(data);
-                                                    });
-                                            });
-                                        });
-                                        </script>
-                                        
-                                        <select name="maquina7" id="maquina_7" class="w130">
-                                            <option value="0">------------------</option>
-                                            <?php
-                                            
-                                            //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
-                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1", $conexion);
-                                            while($fila_maq=mysql_fetch_array($rst_maq)){
-                                
-                                                $maq_procesos=$fila_maq["procesos_productivos_maquina"];
-                                                $maquina=seleccionTabla($fila_maq["id_maquina"],"id_maquina", "syCoesa_mantenimiento_maquinas", $conexion);
-                                            
-                                                if(ereg(9, $maq_procesos)){
-													if($proc_rebobinado==$maquina["id_maquina"]){
-											?>
-                                                <option selected value="<?php echo $maquina["id_maquina"]; ?>"><?php echo $maquina["nombre_maquina"]; ?></option>
-                                                <?php }else{ ?>
-                                            	<option value="<?php echo $maquina["id_maquina"]; ?>"><?php echo $maquina["nombre_maquina"]; ?></option>
-                                            <?php }}} ?>
-                                            
-                                        </select>
-                                </div>
-                                <div class="datos_maquina_7"></div>
-                            <?php } ?>
-                            
-                            <?php if($proc_habilitado>0){ ?>
+                            <?php if($proc_habilitado==1656548){ ?>
                                 <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Habilitado</div>
                                 <div style="width:13%; height:20px; padding:1% 0;" class="float_left texto_cen">
                                         
@@ -1110,7 +1065,7 @@ jFrec(document).ready(function(){
                                                 //VALORES
 												var habilitado = <?php echo $proc_habilitado; ?>;
                                                 var maq = jcmbPro8("select#maquina_8 option:selected").val();
-                                                var mtrprod = jcmbPro8("#dtecnicos_metrosproducir").val();
+                                                var mtrprod = <?php echo $mtrprod_habilitado; ?>;
                                                 
                                                 jcmbPro8.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, habilitado: habilitado},
                                                     function(data){
@@ -1146,7 +1101,7 @@ jFrec(document).ready(function(){
                             <?php } ?>
                             
                             <?php if($proc_cortefinal>0){ ?>
-                                <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Corte Final</div>
+                                <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Corte</div>
                                 <div style="width:13%; height:20px; padding:1% 0;" class="float_left texto_cen">
                                         
                                         <!-- SELECCIONAR -->
@@ -1169,7 +1124,7 @@ jFrec(document).ready(function(){
                                                 //VALORES
 												var cortefinal = <?php echo $proc_cortefinal; ?>;
                                                 var maq = jcmbPro5("select#maquina_5 option:selected").val();
-                                                var mtrprod = jcmbPro5("#dtecnicos_metrosproducir").val();
+                                                var mtrprod = <?php echo $mtrprod_cortefinal; ?>;
                                                 
                                                 jcmbPro5.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, cortefinal: cortefinal},
                                                     function(data){
@@ -1215,9 +1170,12 @@ jFrec(document).ready(function(){
                                         jcmbPro6(document).ready(function(){
 											var sellado = <?php echo $proc_sellado; ?>;
 											var maq = jcmbPro6("select#maquina_6 option:selected").val();
-											var mtrprod = <?php echo $mtrprod_sellado; ?>;
-																
-											jcmbPro6.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, sellado: sellado},
+											var mtrprod = jcmbPro6("#dtecnicos_metrosproducir").val();
+											var unidadmedida = jcmbPro6("select#dtecnicos_unidadmedida option:selected").val();
+											var nrobandas = jcmbPro6("select#dtecnicos_numbandas option:selected").val();
+											var repeticion = jcmbPro6("#dtecnicos_repeticion").val();
+																						
+											jcmbPro6.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, sellado: sellado, unidadmedida: unidadmedida, nrobandas: nrobandas, repeticion: repeticion},
 												function(data){
 													jcmbPro6("#progressbar").addClass("ocultar");
 													jcmbPro6('.datos_maquina_6').html(data);
@@ -1226,10 +1184,14 @@ jFrec(document).ready(function(){
                                             jcmbPro6("#maquina_6").change(function() {
                                                 jcmbPro6("#progressbar").removeClass("ocultar");
                                                 //VALORES
+												var sellado = <?php echo $proc_sellado; ?>;
                                                 var maq = jcmbPro6("select#maquina_6 option:selected").val();
                                                 var mtrprod = jcmbPro6("#dtecnicos_metrosproducir").val();
+												var unidadmedida = jcmbPro6("select#dtecnicos_unidadmedida option:selected").val();
+												var nrobandas = jcmbPro6("select#dtecnicos_numbandas option:selected").val();
+												var repeticion = jcmbPro6("#dtecnicos_repeticion").val();
                                                                     
-                                                jcmbPro6.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod},
+                                                jcmbPro6.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: mtrprod, sellado: sellado, unidadmedida: unidadmedida, nrobandas: nrobandas, repeticion: repeticion},
                                                     function(data){
                                                         jcmbPro6("#progressbar").addClass("ocultar");
                                                         jcmbPro6('.datos_maquina_6').html(data);
@@ -1350,7 +1312,7 @@ jFrec(document).ready(function(){
                                         <select name="insumo2" id="insumo2" class="w180">
                                             <option value="0">------------------</option>
                                             <?php
-											$rst_insumo=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=4 ORDER BY nombre_articulo ASC;", $conexion);
+											$rst_insumo=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=4 AND mostrar_articulo=1 ORDER BY nombre_articulo ASC;", $conexion);
                                             while($fila_insumo=mysql_fetch_array($rst_insumo)){
                                                 $insumo_id=$fila_insumo["id_articulo"];
                                                 $insumo_nombre=$fila_insumo["nombre_articulo"];
@@ -1410,7 +1372,7 @@ jFrec(document).ready(function(){
                                         <select name="insumo3" id="insumo3" class="w180">
                                             <option value="0">------------------</option>
                                             <?php
-											$rst_insumo=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=4 ORDER BY nombre_articulo ASC;", $conexion);
+											$rst_insumo=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=4 AND mostrar_articulo=1 ORDER BY nombre_articulo ASC;", $conexion);
                                             while($fila_insumo=mysql_fetch_array($rst_insumo)){
                                                 $insumo_id=$fila_insumo["id_articulo"];
                                                 $insumo_nombre=$fila_insumo["nombre_articulo"];
@@ -1473,7 +1435,7 @@ jFrec(document).ready(function(){
                                         <select name="insumo4" id="insumo4" class="w180">
                                             <option value="0">------------------</option>
                                             <?php
-											$rst_insumo=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=8 ORDER BY nombre_articulo ASC;", $conexion);
+											$rst_insumo=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=8 AND mostrar_articulo=1 ORDER BY nombre_articulo ASC;", $conexion);
                                             while($fila_insumo=mysql_fetch_array($rst_insumo)){
                                                 $insumo_id=$fila_insumo["id_articulo"];
                                                 $insumo_nombre=$fila_insumo["nombre_articulo"];
@@ -1536,7 +1498,7 @@ jFrec(document).ready(function(){
                                         <select name="insumo5" id="insumo5" class="w180">
                                             <option value="0">------------------</option>
                                             <?php
-											$rst_insumo=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=11 ORDER BY nombre_articulo ASC;", $conexion);
+											$rst_insumo=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=11 AND mostrar_articulo=1 ORDER BY nombre_articulo ASC;", $conexion);
                                             while($fila_insumo=mysql_fetch_array($rst_insumo)){
                                                 $insumo_id=$fila_insumo["id_articulo"];
                                                 $insumo_nombre=$fila_insumo["nombre_articulo"];

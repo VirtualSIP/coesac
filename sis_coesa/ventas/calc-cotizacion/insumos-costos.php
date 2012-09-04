@@ -32,7 +32,7 @@ if($tipo=="tinta" and $idInsumo<>""){
 	$KgTintaseca = ($grm2 * $totalKg) / $grm2total;
 	
 	//FORMULA: CANTIDADRQ = KGTINTASECA + (KGTINTASECA * % DE TINTA SOLIDA)
-	$AgregadoEstruc=($KgTintaseca + ($KgTintaseca * ($porcentaje_solido / 100)));
+	$AgregadoEstruc=number_format($KgTintaseca + ($KgTintaseca * ($porcentaje_solido / 100)), 1);
 	
 	//TOTAL DE COSTOS
 	$TotalCosto=$AgregadoEstruc * $insumo_precio;
@@ -54,24 +54,37 @@ if($tipo=="tinta" and $idInsumo<>""){
 	$KgTintaseca = ($grm2 * $totalKg) / $grm2total;
 	
 	//FORMULA: CANTIDADRQ = KGTINTASECA + (KGTINTASECA * % DE TINTA SOLIDA)
-	$AgregadoEstruc=($KgTintaseca + ($KgTintaseca * ($porcentaje_solido / 100)));
+	$AgregadoEstruc=number_format($KgTintaseca + ($KgTintaseca * ($porcentaje_solido / 100)), 1);
 	
 	//TOTAL DE COSTOS
 	$TotalCosto=$AgregadoEstruc * $insumo_precio;
 ?>
 <input name="insumotinta" id="insumotinta" type="hidden" value="<?php echo $insumo_id; ?>">
 <?php
-}elseif($tipo=="cushion" or $tipo=="clises"){
+}elseif($tipo=="cushion"){
 	//SELECCIONAR DATOS DE MAQUINA
 	$rst_insumos=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_articulo=$insumos;", $conexion);
 	$fila_insumos=mysql_fetch_array($rst_insumos);
 	$insumo_precio=$fila_insumos["precio_articulo"];
 
 	//FORMULA: CANTIDADRQ = (( ((Ancho final[mm] / 10) * Bandas) * ((Distancia de repetición[mm] / 10) * Frecuencia)) * 1.10)
-	$AgregadoEstruc = ( ( ( ($anchofinal / 10) * $nrobandas) * ( ($repeticion / 10 ) * $frecuencia) ) * 1.10);
+	$AgregadoEstruc=number_format((((($anchofinal / 10) * $nrobandas) * (($repeticion / 10) * $frecuencia)) * 1.10),0);
+	$Total_AgregadoEstruc=(((($anchofinal / 10) * $nrobandas) * (($repeticion / 10) * $frecuencia)) * 1.10);
 	
 	//TOTAL DE COSTOS
-	$TotalCosto=($AgregadoEstruc * $insumo_precio) * $nrocolores;
+	$TotalCosto=($Total_AgregadoEstruc * $insumo_precio) * $nrocolores;
+}elseif($tipo=="clises"){
+	//SELECCIONAR DATOS DE MAQUINA
+	$rst_insumos=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_articulo=$insumos;", $conexion);
+	$fila_insumos=mysql_fetch_array($rst_insumos);
+	$insumo_precio=$fila_insumos["precio_articulo"];
+
+	//FORMULA: CANTIDADRQ = (( ((Ancho final[mm] / 10) * Bandas) * ((Distancia de repetición[mm] / 10) * Frecuencia)))
+	$AgregadoEstruc = number_format((((($anchofinal / 10) * $nrobandas) * (($repeticion / 10) * $frecuencia))),0);
+	$Total_AgregadoEstruc=(((($anchofinal / 10) * $nrobandas) * (($repeticion / 10) * $frecuencia)));
+	
+	//TOTAL DE COSTOS
+	$TotalCosto=($Total_AgregadoEstruc * $insumo_precio) * $nrocolores;
 }else{
 	//SELECCIONAR DATOS DE MAQUINA
 	$rst_insumos=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_articulo=$insumos;", $conexion);
@@ -82,13 +95,13 @@ if($tipo=="tinta" and $idInsumo<>""){
 	$totalKg = ($metrototal * ($grm2total * ($anchofinal * $nrobandas)) / 1000000);
 	
 	//FORMULA: KG TINTA SECA = (GRM2TINTASECA * TOTAL KG) / TOTAL GRM2
-	$AgregadoEstruc = ($grm2 * $totalKg) / $grm2total;
+	$AgregadoEstruc = number_format((($grm2 * $totalKg) / $grm2total), 1);
 	
 	//TOTAL DE COSTOS
 	$TotalCosto=$AgregadoEstruc * $insumo_precio;
 }
 ?> 
 
-<div style="width:150px; height:20px; padding:1% 0;" class="float_left texto_cen"><?php echo $insumo_precio; ?></div>
-<div style="width:150px; height:20px; padding:1% 0;" class="float_left texto_cen"><?php echo number_format($AgregadoEstruc, 2); ?></div>
-<div style="width:150px; height:20px; padding:1% 0;" class="float_left texto_cen"><?php echo number_format($TotalCosto, 2); ?></div>
+<div style="width:150px; height:20px; padding:1% 0;" class="float_left texto_cen"><?php echo number_format($insumo_precio,3); ?></div>
+<div style="width:150px; height:20px; padding:1% 0;" class="float_left texto_cen"><?php echo $AgregadoEstruc; ?></div>
+<div style="width:150px; height:20px; padding:1% 0;" class="float_left texto_cen"><?php echo number_format($TotalCosto, 3); ?></div>

@@ -137,12 +137,60 @@ function Sumar2Tiempos($h1,$h2){
 	$hours = floor($total_minutos / 60);
 	$minutes = ($total_minutos) - ($hours * 60);
 
-	if (!$minutes) {
-		$minutes = "00";
-	}
-	else if ($minutes <= 9) {
-		$minutes = "0" . $minutes;
-	}
+	if(!$minutes){ $minutes = "00"; }
+	elseif($minutes <= 9){ $minutes = "0".$minutes; }
+	
+	return ("{$hours}:{$minutes}");
+
+}
+
+function Sumar2TiemposColores($h1,$h2,$color){
+	
+	/* HORA1 */
+	$hora1=explode(":", $h1);
+	if( count($hora1) < 3 ){ $hora1[2] = 0; }
+	//PASAMOS LA HORA1 A SEGUNDOS
+	$hora1[0] = $hora1[0] * 60 * 60;
+	$hora1[1] = $hora1[1] * 60 * $color;
+	$hora1_minutos=(($hora1[0] + $hora1[1] + $hora1[2]) / 60);
+	
+	/* HORA 2 */
+	$hora2=explode(":", $h2);
+	if( count($hora2) < 3 ){ $hora2[2] = 0; }
+	//PASAMOS LA HORA1 A SEGUNDOS
+	$hora2[0] = $hora2[0] * 60 * 60;
+	$hora2[1] = $hora2[1] * 60;
+	$hora2_minutos=(($hora2[0] + $hora2[1] + $hora2[2]) / 60);
+	
+	$total_minutos=$hora1_minutos + $hora2_minutos;
+	
+	/* CONVERTIR MINUTOS A HORAS */
+	$hours = floor($total_minutos / 60);
+	$minutes = ($total_minutos) - ($hours * 60);
+
+	if(!$minutes){ $minutes = "00"; }
+	elseif($minutes <= 9){ $minutes = "0".$minutes; }
+	
+	return ("{$hours}:{$minutes}");
+
+}
+
+function HoraMinuto($h1){
+	
+	/* HORA1 */
+	$hora1=explode(":", $h1);
+	if( count($hora1) < 3 ){ $hora1[2] = 0; }
+	//PASAMOS LA HORA1 A SEGUNDOS
+	$hora1[0] = $hora1[0] * 60 * 60;
+	$hora1[1] = $hora1[1] * 60;
+	$hora1_minutos=(($hora1[0] + $hora1[1] + $hora1[2]) / 60);
+	
+	/* CONVERTIR MINUTOS A HORAS */
+	$hours = floor($hora1_minutos / 60);
+	$minutes = ($hora1_minutos) - ($hours * 60);
+
+	if(!$minutes){ $minutes = "00"; }
+	elseif($minutes <= 9){ $minutes = "0".$minutes; }
 	
 	return ("{$hours}:{$minutes}");
 

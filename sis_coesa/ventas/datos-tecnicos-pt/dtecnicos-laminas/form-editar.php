@@ -215,6 +215,11 @@ jProLam(document).ready(function(){
                             </fieldset>
                             
                             <fieldset class="w245">
+                            <?php if($lamina1_rebobinado==1){ ?><label><input checked id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
+                            <?php }else{ ?><label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label><?php } ?>
+                            </fieldset>
+                            
+                            <fieldset class="w245">
                             <?php if($lamina1_bilaminado==1){ ?><label><input checked id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado1" type="checkbox" value="1">&nbsp;Bilaminado</label>
                             <?php }else{ ?><label><input id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado1" type="checkbox" value="1">&nbsp;Bilaminado</label><?php } ?>
                             </fieldset>
@@ -223,19 +228,11 @@ jProLam(document).ready(function(){
                             <?php if($lamina1_trilaminado==1){ ?><label><input checked id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado1" type="checkbox" value="1">&nbsp;Trilaminado</label>
                             <?php }else{ ?><label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado1" type="checkbox" value="1">&nbsp;Trilaminado</label><?php } ?>
                             </fieldset>
+
+							<input name="habilitado1" type="hidden" value="0">
                             
                             <fieldset class="w245">
-                            <?php if($lamina1_rebobinado==1){ ?><label><input checked id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina1_habilitado==1){ ?><label><input checked id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado1" type="checkbox" value="1">&nbsp;Habilitado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado1" type="checkbox" value="1">&nbsp;Habilitado</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina1_cortefinal==1){ ?><label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte Final</label>
+                            <?php if($lamina1_cortefinal==1){ ?><label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte</label>
                             <?php }else{ ?><label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte Final</label><?php } ?>
                             </fieldset>
                             
@@ -293,15 +290,9 @@ jProLam(document).ready(function(){
                             <?php }else{ ?><label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado2" type="checkbox" value="1">&nbsp;Trilaminado</label><?php } ?>
                             </fieldset>
                             
-                            <fieldset class="w245">
-                            <?php if($lamina2_rebobinado==1){ ?><label><input checked id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado2" type="checkbox" value="1">&nbsp;Rebobinado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado2" type="checkbox" value="1">&nbsp;Rebobinado</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina2_habilitado==1){ ?><label><input checked id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado2" type="checkbox" value="1">&nbsp;Habilitado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado2" type="checkbox" value="1">&nbsp;Habilitado</label><?php } ?>
-                            </fieldset>
+                            <input name="rebobinado2" type="hidden" value="0">
+
+							<input name="habilitado2" type="hidden" value="0">
                             
                             <fieldset class="w245">
                             <?php if($lamina2_cortefinal==1){ ?><label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal2" type="checkbox" value="1">&nbsp;Corte Final</label>
@@ -358,15 +349,9 @@ jProLam(document).ready(function(){
                                 <input class="w140 texto_der" id="grm2_trilaminado" type="text" name="grm2_trilaminado" value="<?php echo $lamina3_trilaminado_grm2; ?>">
                             </fieldset>
                             
-                            <fieldset class="w245">
-                            <?php if($lamina3_rebobinado==1){ ?><label><input checked id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado3" type="checkbox" value="1">&nbsp;Rebobinado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado3" type="checkbox" value="1">&nbsp;Rebobinado</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina3_habilitado==1){ ?><label><input checked id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado3" type="checkbox" value="1">&nbsp;Habilitado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado3" type="checkbox" value="1">&nbsp;Habilitado</label><?php } ?>
-                            </fieldset>
+                            <input name="rebobinado2" type="hidden" value="0">
+
+							<input name="habilitado2" type="hidden" value="0">
                             
                             <fieldset class="w245">
                             <?php if($lamina3_cortefinal==1){ ?><label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal3" type="checkbox" value="1">&nbsp;Corte Final</label>

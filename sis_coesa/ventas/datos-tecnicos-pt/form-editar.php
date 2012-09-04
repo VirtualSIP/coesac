@@ -233,13 +233,7 @@ jFrec(document).ready(function(){
                           <span class="textfieldInvalidFormatMsg">(*)</span></span>
                         </fieldset>
                         
-                        <fieldset class="alto50 w180">
-                            <label for="dtecnicos_grm2">Gr x M2:</label>
-                          <span id="spry_dtecnicos_grm2">
-                          <input type="text" name="dtecnicos_grm2" id="dtecnicos_grm2" size="50" class="w130 texto_der" value="<?php echo floatval($producto["grm2_articulo"]); ?>">
-                          <span class="textfieldRequiredMsg">(*)</span>
-                          <span class="textfieldInvalidFormatMsg">(*)</span></span>
-                        </fieldset>
+                        <input id="dtecnicos_grm2" name="dtecnicos_grm2" type="hidden" value="0">
                         
                         <fieldset class="alto50 w180">
                           <label for="dtecnicos_cilindro">Cilindro (mm):</label>
@@ -398,7 +392,6 @@ jFrec(document).ready(function(){
 </section><!-- FIN SECTION -->
 <script type="text/javascript">
 var sprytextfield1 = new Spry.Widget.ValidationTextField("spry_dtecnicos_ancho_final", "real");
-var sprytextfield2 = new Spry.Widget.ValidationTextField("spry_dtecnicos_grm2");
 var spryselect4 = new Spry.Widget.ValidationSelect("spry_dtecnicos_numcolores", {invalidValue:"-1"});
 var spryselect5 = new Spry.Widget.ValidationSelect("spry_dtecnicos_numbandas", {invalidValue:"-1"});
 var spryselect6 = new Spry.Widget.ValidationSelect("spry_dtecnicos_unidad_medida", {invalidValue:"-1"});

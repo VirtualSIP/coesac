@@ -155,10 +155,12 @@ if(confirm("¿Está seguro de borrar este registro?\n"+nombre)) {
                 <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
                     <thead>
                         <tr>
-                            <th width="50%">Registros</th>
-                            <th width="20%">Tipo de Articulo</th>
-                            <th width="15%">Precio</th>
-                            <th width="15%">Acciones</th>
+                            <th width="45%">Registros</th>
+                            <th width="15%">Tipo de Articulo</th>
+                            <th width="10%">Ancho</th>
+                            <th width="10%">Gr / m2</th>
+                            <th width="10%">Precio</th>
+                            <th width="10%">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -167,11 +169,15 @@ if(confirm("¿Está seguro de borrar este registro?\n"+nombre)) {
 							$articulo_id=$fila_articulos["id_articulo"];
 							$articulo_nombre=$fila_articulos["nombre_articulo"];
 							$articulo_precio=$fila_articulos["precio_articulo"];
+							$articulo_ancho=$fila_articulos["ancho_articulo"];
+							$articulo_grm2=$fila_articulos["grm2_articulo"];
 							$articulo_tipo=seleccionTabla($fila_articulos["id_tipo_articulo"], "id_tipo_articulo", "syCoesa_articulo_tipo", $conexion);
 						?>
                         <tr>
                             <td><?php echo $articulo_nombre; ?></td>
                             <td><?php echo $articulo_tipo["nombre_tipo_articulo"]; ?></td>
+                            <td class="center"><?php echo $articulo_ancho; ?></td>
+                            <td class="center"><?php echo $articulo_grm2; ?></td>
                             <td class="center"><?php echo $articulo_precio; ?></td>
                             <td class="center">
                             	<a href="form-editar.php?id=<?php echo $articulo_id; ?>" title="Modificar Registro">
@@ -189,6 +195,8 @@ if(confirm("¿Está seguro de borrar este registro?\n"+nombre)) {
                     </tbody>
                     <tfoot>
                         <tr>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>

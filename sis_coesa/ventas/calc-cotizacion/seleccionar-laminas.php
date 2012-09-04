@@ -65,6 +65,10 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
     </fieldset>
     
     <fieldset class="w245">
+        <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
+    </fieldset>
+    
+    <fieldset class="w245">
         <label><input id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado1" type="checkbox" value="1">&nbsp;Bilaminado</label>
     </fieldset>
     
@@ -72,16 +76,10 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
         <label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado1" type="checkbox" value="1">&nbsp;Trilaminado</label>
     </fieldset>
     
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
-    </fieldset>
+	<input name="habilitado1" type="hidden" value="0">
     
     <fieldset class="w245">
-        <label><input id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado1" type="checkbox" value="1">&nbsp;Habilitado</label>
-    </fieldset>
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte Final</label>
+        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte</label>
     </fieldset>
     
     <fieldset class="w245">
@@ -115,16 +113,6 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
         <label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion2" type="checkbox" value="1">&nbsp;Extrusión</label>
     </fieldset>
     
-    <!--
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_4" class="procesos_maquinas" name="impresion2" type="checkbox" value="1">&nbsp;Impresión</label>
-    </fieldset>
-    <fieldset class="w245">
-        <label for="grm2_tintaseca_2">GR / m2 (Tinta seca)</label>
-        <input class="w140 texto_der" name="grm2_tintaseca_2" type="text" id="grm2_tintaseca_2" value="0">
-    </fieldset>
-     -->
-    
     <fieldset class="w245">
         <label><input id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado2" type="checkbox" value="1">&nbsp;Bilaminado</label>
     </fieldset>
@@ -137,16 +125,12 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
         <label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado2" type="checkbox" value="1">&nbsp;Trilaminado</label>
     </fieldset>
     
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado2" type="checkbox" value="1">&nbsp;Rebobinado</label>
-    </fieldset>
+    <input name="rebobinado2" type="hidden" value="0">
+    
+    <input name="habilitado2" type="hidden" value="0">
     
     <fieldset class="w245">
-        <label><input id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado2" type="checkbox" value="1">&nbsp;Habilitado</label>
-    </fieldset>
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal2" type="checkbox" value="1">&nbsp;Corte Final</label>
+        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal2" type="checkbox" value="1">&nbsp;Corte</label>
     </fieldset>
     
     <fieldset class="w245">
@@ -180,25 +164,6 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
         <label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion3" type="checkbox" value="1">&nbsp;Extrusión</label>
     </fieldset>
     
-    <!--
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_4" class="procesos_maquinas" name="impresion3" type="checkbox" value="1">&nbsp;Impresión</label>
-    </fieldset>
-    
-    <fieldset class="w245">
-        <label for="grm2_tintaseca_3">GR / m2 (Tinta seca)</label>
-        <input class="w140 texto_der" name="grm2_tintaseca_3" type="text" id="grm2_tintaseca_3" value="0">
-    </fieldset>
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado3" type="checkbox" value="1">&nbsp;Bilaminado</label>
-    </fieldset>
-    <fieldset class="w245">
-        <label for="bilaminado_proceso_3">GR / m2</label>
-        <input class="w140 texto_der" name="bilaminado_proceso_3" type="text" id="bilaminado_proceso_3" value="0">
-    </fieldset>
-     -->
-    
     <fieldset class="w245">
         <label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado3" type="checkbox" value="1">&nbsp;Trilaminado</label>
     </fieldset>
@@ -207,16 +172,12 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
         <input class="w140 texto_der" name="trilaminado_proceso_3" type="text" id="trilaminado_proceso_3" value="0">
     </fieldset>
     
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado3" type="checkbox" value="1">&nbsp;Rebobinado</label>
-    </fieldset>
+    <input name="rebobinado3" type="hidden" value="0">
+    
+    <input name="habilitado3" type="hidden" value="0">
     
     <fieldset class="w245">
-        <label><input id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado3" type="checkbox" value="1">&nbsp;Habilitado</label>
-    </fieldset>
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal3" type="checkbox" value="1">&nbsp;Corte Final</label>
+        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal3" type="checkbox" value="1">&nbsp;Corte</label>
     </fieldset>
     
     <fieldset class="w245">

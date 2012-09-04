@@ -55,12 +55,12 @@ $articulo_lamina2=seleccionTabla($fila_ver["lamina2"], "id_articulo", "syCoesa_a
 $articulo_lamina3=seleccionTabla($fila_ver["lamina3"], "id_articulo", "syCoesa_articulo", $conexion);
 
 //TIPOS DE INSUMOS
-$rst_insTinta=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=2 ORDER BY precio_articulo DESC;", $conexion);
+$rst_insTinta=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=2 AND mostrar_articulo=1 ORDER BY precio_articulo DESC;", $conexion);
 $fila_insTinta=mysql_fetch_array($rst_insTinta);
-$rst_insAdhBi=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=4 ORDER BY nombre_articulo ASC;", $conexion);
-$rst_insAdhTri=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=4 ORDER BY nombre_articulo ASC;", $conexion);
-$rst_insCush=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=8 ORDER BY nombre_articulo ASC;", $conexion);
-$rst_insClis=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=11 ORDER BY nombre_articulo ASC;", $conexion);
+$rst_insAdhBi=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=4 AND mostrar_articulo=1 ORDER BY nombre_articulo ASC;", $conexion);
+$rst_insAdhTri=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=4 AND mostrar_articulo=1 ORDER BY nombre_articulo ASC;", $conexion);
+$rst_insCush=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=8 AND mostrar_articulo=1 ORDER BY nombre_articulo ASC;", $conexion);
+$rst_insClis=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=11 AND mostrar_articulo=1 ORDER BY nombre_articulo ASC;", $conexion);
 
 //ARTICULO TERMINADO DE DATOS TECNICOS
 $rst_dtart=mysql_query("SELECT * FROM syCoesa_datos_tecnicos WHERE cod_unico='".$codUnico."';", $conexion);
@@ -696,7 +696,7 @@ jefform(document).ready(function(){
                                         <div class="datos_maquina_7"></div>
                                     <?php } ?>
                                     
-                                    <?php if($lamina1_habilitado>0 or $lamina2_habilitado>0 or $lamina3_habilitado>0){ ?>
+                                    <?php if($lamina1_habilitado==1656548){ ?>
                                       <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Habilitado</div>
                                     <div style="width:13%; height:20px; padding:1% 0;" class="float_left texto_cen">
                                                 

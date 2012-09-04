@@ -31,6 +31,10 @@ $proclamina_tipo=$fila_proclamna["id_tipo_articulo"];
 </fieldset>
 
 <fieldset class="w245">
+    <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado<?php echo $i;?>" type="checkbox" value="1">&nbsp;Rebobinado</label>
+</fieldset>
+
+<fieldset class="w245">
     <label><input id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado<?php echo $i;?>" type="checkbox" value="1">&nbsp;Bilaminado</label>
 </fieldset>
 
@@ -38,16 +42,10 @@ $proclamina_tipo=$fila_proclamna["id_tipo_articulo"];
     <label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado<?php echo $i;?>" type="checkbox" value="1">&nbsp;Trilaminado</label>
 </fieldset>
 
-<fieldset class="w245">
-    <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado<?php echo $i;?>" type="checkbox" value="1">&nbsp;Rebobinado</label>
-</fieldset>
+<input name="habilitado<?php echo $i;?>" type="hidden" value="0">
 
 <fieldset class="w245">
-    <label><input id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado<?php echo $i;?>" type="checkbox" value="1">&nbsp;Habilitado</label>
-</fieldset>
-
-<fieldset class="w245">
-    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal<?php echo $i;?>" type="checkbox" value="1">&nbsp;Corte Final</label>
+    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal<?php echo $i;?>" type="checkbox" value="1">&nbsp;Corte</label>
 </fieldset>
 
 <fieldset class="w245">
@@ -75,16 +73,12 @@ $proclamina_tipo=$fila_proclamna["id_tipo_articulo"];
     <label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado<?php echo $i;?>" type="checkbox" value="1">&nbsp;Trilaminado</label>
 </fieldset>
 
-<fieldset class="w245">
-    <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado<?php echo $i;?>" type="checkbox" value="1">&nbsp;Rebobinado</label>
-</fieldset>
+<input name="rebobinado<?php echo $i;?>" type="hidden" value="0">
+
+<input name="habilitado<?php echo $i;?>" type="hidden" value="0">
 
 <fieldset class="w245">
-    <label><input id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado<?php echo $i;?>" type="checkbox" value="1">&nbsp;Habilitado</label>
-</fieldset>
-
-<fieldset class="w245">
-    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal<?php echo $i;?>" type="checkbox" value="1">&nbsp;Corte Final</label>
+    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal<?php echo $i;?>" type="checkbox" value="1">&nbsp;Corte</label>
 </fieldset>
 
 <fieldset class="w245">
@@ -108,16 +102,12 @@ $proclamina_tipo=$fila_proclamna["id_tipo_articulo"];
     <input class="w140 texto_der" type="text" id="grm2_trilaminado" name="grm2_trilaminado" value="0">
 </fieldset>
 
-<fieldset class="w245">
-    <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado<?php echo $i;?>" type="checkbox" value="1">&nbsp;Rebobinado</label>
-</fieldset>
+<input name="rebobinado<?php echo $i;?>" type="hidden" value="0">
+
+<input name="habilitado<?php echo $i;?>" type="hidden" value="0">
 
 <fieldset class="w245">
-    <label><input id="procesos_maquinas_10" class="procesos_maquinas" name="habilitado<?php echo $i;?>" type="checkbox" value="1">&nbsp;Habilitado</label>
-</fieldset>
-
-<fieldset class="w245">
-    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal<?php echo $i;?>" type="checkbox" value="1">&nbsp;Corte Final</label>
+    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal<?php echo $i;?>" type="checkbox" value="1">&nbsp;Corte</label>
 </fieldset>
 
 <fieldset class="w245">

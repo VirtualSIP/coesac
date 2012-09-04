@@ -182,10 +182,7 @@ jFrec(document).ready(function(){
                           <input name="dtecnicos_articulo" type="text" id="dtecnicos_articulo">
 						</fieldset>
                         
-                        <fieldset class="alto50 w180">
-                          <label for="dtecnicos_grm2">Gr / m2:</label>
-                          <input name="dtecnicos_grm2" type="text" id="dtecnicos_grm2" class="w130" value="0">
-						</fieldset>
+                        <input name="dtecnicos_grm2" type="hidden" value="0">
                         
                         <fieldset class="alto50 w180">
                             <label for="dtecnicos_cilindro">Cilindro (mm):</label>
