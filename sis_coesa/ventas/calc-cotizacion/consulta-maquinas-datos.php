@@ -114,11 +114,7 @@ if($extrusion1>0 or $extrusion2>0 or $extrusion3>0){
 			$mtrprod=(($mtrprod_cortefinal * ($selecLamina10["ancho_articulo"] * $selecLamina10["grm2_articulo"])) / 1000000) + $procprod_merma["merma_proceso"];
 		}
 	}elseif($extrusion2>0){
-		if($impresion2>0){
-			//LAMINA 2
-			$selecLamina2=seleccionTabla($_POST["dt_articulo2"], "id_articulo", "syCoesa_articulo", $conexion);
-			$mtrprod=(($mtrprod_impresion * ($selecLamina2["ancho_articulo"] * $selecLamina2["grm2_articulo"])) / 1000000) + $procprod_merma["merma_proceso"];
-		}elseif($bilaminado2>0){
+		if($bilaminado2>0){
 			//LAMINA 2
 			$selecLamina5=seleccionTabla($_POST["dt_articulo2"], "id_articulo", "syCoesa_articulo", $conexion);
 			$mtrprod=(($mtrprod_bilaminado * ($selecLamina5["ancho_articulo"] * $selecLamina5["grm2_articulo"])) / 1000000) + $procprod_merma["merma_proceso"];
@@ -132,15 +128,7 @@ if($extrusion1>0 or $extrusion2>0 or $extrusion3>0){
 			$mtrprod=(($mtrprod_cortefinal * ($selecLamina11["ancho_articulo"] * $selecLamina11["grm2_articulo"])) / 1000000) + $procprod_merma["merma_proceso"];
 		}
 	}elseif($extrusion3>0){
-		if($impresion3>0){
-			//LAMINA 3
-			$selecLamina3=seleccionTabla($_POST["dt_articulo3"], "id_articulo", "syCoesa_articulo", $conexion);
-			$mtrprod=(($mtrprod_impresion * ($selecLamina3["ancho_articulo"] * $selecLamina3["grm2_articulo"])) / 1000000) + $procprod_merma["merma_proceso"];
-		}elseif($bilaminado3>0){
-			//LAMINA 3
-			$selecLamina6=seleccionTabla($_POST["dt_articulo3"], "id_articulo", "syCoesa_articulo", $conexion);
-			$mtrprod=(($mtrprod_bilaminado * ($selecLamina6["ancho_articulo"] * $selecLamina6["grm2_articulo"])) / 1000000) + $procprod_merma["merma_proceso"];
-		}elseif($trilaminado3>0){
+		if($trilaminado3>0){
 			//LAMINA 3
 			$selecLamina9=seleccionTabla($_POST["dt_articulo3"], "id_articulo", "syCoesa_articulo", $conexion);
 			$mtrprod=(($mtrprod_trilaminado * ($selecLamina9["ancho_articulo"] * $selecLamina9["grm2_articulo"])) / 1000000) + $procprod_merma["merma_proceso"];

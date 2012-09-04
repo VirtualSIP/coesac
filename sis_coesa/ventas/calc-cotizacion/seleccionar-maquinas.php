@@ -34,15 +34,6 @@ $proc_habilitado=$_POST["habilitado1"].$_POST["habilitado2"].$_POST["habilitado3
 $proc_cortefinal=$_POST["cortefinal1"].$_POST["cortefinal2"].$_POST["cortefinal3"];
 $proc_sellado=$_POST["sellado1"].$_POST["sellado2"].$_POST["sellado3"];
 
-//CANTIDAD REQUERIDA
-if($unidad_medida==3){
-	$cantidad_requerida=($cantidad * (1 + ($tolerancia/100)));
-	$TotalFactorConvMillar=($cantidad * $ancho_final * $repeticion) / 1000000;
-	$cantidad_requerida=$cantidad_requerida * $TotalFactorConvMillar;
-}else{
-	$cantidad_requerida=($cantidad * (1 + ($tolerancia/100)));
-}
-
 //GRM2 TOTAL
 if($_POST["dt_articulo1"]<>""){ $lamina1=seleccionTabla($_POST["dt_articulo1"], "id_articulo", "syCoesa_articulo", $conexion); };
 if($_POST["dt_articulo2"]<>""){ $lamina2=seleccionTabla($_POST["dt_articulo2"], "id_articulo", "syCoesa_articulo", $conexion); };
@@ -57,6 +48,15 @@ if($_POST["bilaminado2"]<>""){ $bilaminado_lamina=$_POST["bilaminado_proceso_2"]
 if($_POST["trilaminado3"]<>""){ $trilaminado_lamina=$_POST["trilaminado_proceso_3"]; }
 
 $grm2_total=$grm2_producto + $lamina_grm2 + $tintaseca_lamina + $bilaminado_lamina + $trilaminado_lamina;
+
+//CANTIDAD REQUERIDA
+if($unidad_medida==3){
+	$cantidad_requerida=($cantidad * (1 + ($tolerancia/100)));
+	$TotalFactorConvMillar=($ancho_final * $repeticion * $grm2_total) / 1000000;
+	$cantidad_requerida=$cantidad_requerida * $TotalFactorConvMillar;
+}else{
+	$cantidad_requerida=($cantidad * (1 + ($tolerancia/100)));
+}
 
 //METROS A PRODUCIR
 $mtrprod=round(($cantidad_requerida / ($ancho_final * $nro_bandas) / $grm2_total) * 1000000);
@@ -100,41 +100,27 @@ if($proc_extrusion<>""){ //EXTRUSION
 	
 	if($_POST["extrusion1"]<>""){
 		if($_POST["impresion1"]<>""){
-			//LAMINA 1
 			$totalKg=(($mtrprod_impresion * $lamina1["ancho_articulo"] * $lamina1["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
 		}elseif($_POST["bilaminado1"]<>""){
-			//LAMINA 1
 			$totalKg=(($mtrprod_bilaminado * $lamina1["ancho_articulo"] * $lamina1["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
 		}elseif($_POST["trilaminado1"]<>""){
-			//LAMINA 1
 			$totalKg=(($mtrprod_trilaminado * $lamina1["ancho_articulo"] * $lamina1["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
 		}elseif($_POST["cortefinal1"]<>""){
-			//LAMINA 1
 			$totalKg=(($mtrprod_cortefinal * $lamina1["ancho_articulo"] * $lamina1["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
 		}
 	}elseif($_POST["extrusion2"]<>""){
 		if($_POST["bilaminado2"]<>""){
-			//LAMINA 2
-			$selecLamina5=seleccionTabla($_POST["dt_articulo2"], "id_articulo", "syCoesa_articulo", $conexion);
-			$totalKg=(($mtrprod_bilaminado * $selecLamina5["ancho_articulo"] * $selecLamina5["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+			$totalKg=(($mtrprod_bilaminado * $lamina2["ancho_articulo"] * $lamina2["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
 		}elseif($_POST["trilaminado2"]<>""){
-			//LAMINA 2
-			$selecLamina8=seleccionTabla($_POST["dt_articulo2"], "id_articulo", "syCoesa_articulo", $conexion);
-			$totalKg=(($mtrprod_trilaminado * $selecLamina8["ancho_articulo"] * $selecLamina8["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+			$totalKg=(($mtrprod_trilaminado * $lamina2["ancho_articulo"] * $lamina2["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
 		}elseif($_POST["cortefinal2"]<>""){
-			//LAMINA 2
-			$selecLamina11=seleccionTabla($_POST["dt_articulo2"], "id_articulo", "syCoesa_articulo", $conexion);
-			$totalKg=(($mtrprod_cortefinal * $selecLamina11["ancho_articulo"] * $selecLamina11["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+			$totalKg=(($mtrprod_cortefinal * $lamina2["ancho_articulo"] * $lamina2["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
 		}
 	}elseif($_POST["extrusion3"]<>""){
 		if($_POST["trilaminado3"]<>""){
-			//LAMINA 3
-			$selecLamina9=seleccionTabla($_POST["dt_articulo3"], "id_articulo", "syCoesa_articulo", $conexion);
-			$totalKg=(($mtrprod_trilaminado * $selecLamina9["ancho_articulo"] * $selecLamina9["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+			$totalKg=(($mtrprod_trilaminado * $lamina3["ancho_articulo"] * $lamina3["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
 		}elseif($_POST["cortefinal3"]<>""){
-			//LAMINA 3
-			$selecLamina12=seleccionTabla($_POST["dt_articulo3"], "id_articulo", "syCoesa_articulo", $conexion);
-			$totalKg=(($mtrprod_cortefinal * $selecLamina12["ancho_articulo"] * $selecLamina12["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+			$totalKg=(($mtrprod_cortefinal * $lamina3["ancho_articulo"] * $lamina3["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
 		}
 	}
 
