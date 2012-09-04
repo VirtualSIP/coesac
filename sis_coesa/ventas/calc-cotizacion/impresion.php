@@ -861,7 +861,7 @@ $TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articu
     <th width="115" height="37" scope="col">MAQUINAS</th>
     <th width="5%" height="37" scope="col"><p>MERMA PROCESO</p>
       <p>(Mtr)</p></th>
-    <th width="5%" height="37" scope="col">METROS</th>
+    <th width="5%" height="37" scope="col">CANTIDAD</th>
     <th width="5%" height="37" scope="col">VELOC.</th>
     <th width="5%" height="37" scope="col"><p>PREP./</p>
       <p>REGUL.</p></th>
@@ -885,7 +885,7 @@ $TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articu
   </tr>
   <?php if($proc_extrusion>0){ ?>
   <tr>
-    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">EXTRUSIÓN</th>
+    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">EXTRUSIÓN (KG)</th>
     <th width="115" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_extrusion_nombre["nombre_maquina"]; ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_extrusion_merma); ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_extrusion); ?></th>
@@ -905,7 +905,7 @@ $TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articu
   <?php } ?>
   <?php if($proc_impresion>0){ ?>
   <tr>
-    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">IMPRESIÓN</th>
+    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">IMPRESIÓN (M)</th>
     <th width="115" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_impresion_nombre["nombre_maquina"]; ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_impresion_merma); ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_impresion); ?></th>
@@ -925,7 +925,7 @@ $TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articu
   <?php } ?>
   <?php if($proc_rebobinado>0){ ?>
   <tr>
-    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">REBOBINADO</th>
+    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">REBOBINADO (M)</th>
     <th width="115" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_rebobinado_nombre["nombre_maquina"]; ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_rebobinado_merma); ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_rebobinado); ?></th>
@@ -945,7 +945,7 @@ $TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articu
   <?php } ?>
   <?php if($proc_bilaminado>0){ ?>
   <tr>
-    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">BILAMINADO</th>
+    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">BILAMINADO (M)</th>
     <th width="115" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_bilaminado_nombre["nombre_maquina"]; ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_bilaminado_merma); ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_bilaminado); ?></th>
@@ -965,7 +965,7 @@ $TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articu
   <?php } ?>
   <?php if($proc_trilaminado>0){ ?>
   <tr>
-    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">TRILAMINADO</th>
+    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">TRILAMINADO (M)</th>
     <th width="115" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_trilaminado_nombre["nombre_maquina"]; ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_trilaminado_merma); ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_trilaminado); ?></th>
@@ -986,7 +986,7 @@ $TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articu
   
   <?php if($proc_cortefinal>0){ ?>
   <tr>
-    <th height="23" align="left" class="border_rb1s0" scope="col">CORTE</th>
+    <th height="23" align="left" class="border_rb1s0" scope="col">CORTE (M)</th>
     <th height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_cortefinal_nombre["nombre_maquina"]; ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_cortefinal_merma); ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_cortefinal); ?></th>
@@ -1006,7 +1006,7 @@ $TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articu
   <?php } ?>
   <?php if($proc_sellado>0){ ?>
   <tr>
-    <th height="23" align="left" class="border_rb1s0" scope="col">SELLADO</th>
+    <th height="23" align="left" class="border_rb1s0" scope="col">SELLADO (UN)</th>
     <th height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_sellado_nombre["nombre_maquina"]; ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_sellado_merma); ?></th>
     <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_sellado_total); ?></th>
