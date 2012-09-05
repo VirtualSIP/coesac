@@ -222,8 +222,8 @@ jmenu(document).ready(function(){
 </section><!-- FIN SECTION -->
 <script type="text/javascript">
 var sprytextfield1 = new Spry.Widget.ValidationTextField("spry_almart_articulo");
-var sprytextfield3 = new Spry.Widget.ValidationTextField("spry_almart_grm2", "integer");
-var sprytextfield4 = new Spry.Widget.ValidationTextField("spry_almart_ancho", "integer");
+var sprytextfield3 = new Spry.Widget.ValidationTextField("spry_almart_grm2");
+var sprytextfield4 = new Spry.Widget.ValidationTextField("spry_almart_ancho");
 var sprytextfield5 = new Spry.Widget.ValidationTextField("spry_almart_precio", "real");
 var spryselect1 = new Spry.Widget.ValidationSelect("spry_almart_tipo_articulo", {invalidValue:"-1"});
 var spryselect2 = new Spry.Widget.ValidationSelect("spry_almart_unidad_medida", {invalidValue:"-1"});

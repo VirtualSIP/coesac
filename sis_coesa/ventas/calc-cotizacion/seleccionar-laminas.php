@@ -12,12 +12,13 @@ $fila_maq=mysql_fetch_array($rst_maq);
 $maq_refile=$fila_maq["refile_maquina"];
 
 //FILTRO
-$formula_filtro=$did_ancho_final * $did_nro_bandas + $maq_refile;
+$formula_filtro_lamina=$did_ancho_final * $did_nro_bandas + $maq_refile;
+$formula_filtro_manga=$did_ancho_final * $did_nro_bandas;
 
 //LAMINAS
-$rst_lamina1=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=3 OR id_tipo_articulo=6 ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
-$rst_lamina2=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=3 OR id_tipo_articulo=6 ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
-$rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=3 OR id_tipo_articulo=6 ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
+$rst_lamina1=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo=3 AND mostrar_articulo=1) OR (id_tipo_articulo=6 AND mostrar_articulo=1) OR (id_tipo_articulo=13 AND mostrar_articulo=1) ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
+$rst_lamina2=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo=3 AND mostrar_articulo=1) OR (id_tipo_articulo=6 AND mostrar_articulo=1) OR (id_tipo_articulo=13 AND mostrar_articulo=1) ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
+$rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo=3 AND mostrar_articulo=1) OR (id_tipo_articulo=6 AND mostrar_articulo=1) OR (id_tipo_articulo=13 AND mostrar_articulo=1) ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
 ?> 
 
 <!-- COMBO -->
@@ -44,11 +45,15 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
                 $lamina1_id=$fila_lamina1["id_articulo"];
                 $lamina1_nombre=$fila_lamina1["nombre_articulo"];
                 $lamina1_ancho=$fila_lamina1["ancho_articulo"];
+				$lamina1_tipo=$fila_lamina1["id_tipo_articulo"];
 				
-				if($lamina1_ancho>=$formula_filtro){
-            ?>
+				if($lamina1_tipo<>13){
+					if($lamina1_ancho>=$formula_filtro_lamina){?>
             <option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
-        <?php }} ?>
+        <?php }}elseif($lamina1_tipo==13){
+				if($lamina1_ancho>=$formula_filtro_manga){?>
+        	<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>	
+        <?php }}} ?>
       </select>
     </fieldset>
     
@@ -68,13 +73,9 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
         <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
     </fieldset>
     
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado1" type="checkbox" value="1">&nbsp;Bilaminado</label>
-    </fieldset>
+    <input id="procesos_maquinas_5" name="bilaminado1" type="hidden" value="0">
     
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado1" type="checkbox" value="1">&nbsp;Trilaminado</label>
-    </fieldset>
+    <input id="procesos_maquinas_6" name="trilaminado1" type="hidden" value="0">
     
 	<input name="habilitado1" type="hidden" value="0">
     
@@ -101,11 +102,15 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
                 $lamina2_id=$fila_lamina2["id_articulo"];
                 $lamina2_nombre=$fila_lamina2["nombre_articulo"];
                 $lamina2_ancho=$fila_lamina2["ancho_articulo"];
+				$lamina2_tipo=$fila_lamina1["id_tipo_articulo"];
 				
-				if($lamina2_ancho>=$formula_filtro){
-            ?>
+				if($lamina2_tipo<>13){
+					if($lamina2_ancho>=$formula_filtro_lamina){?>
             <option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
-        <?php }} ?>
+        <?php }}elseif($lamina2_tipo==13){
+				if($lamina2_ancho>=$formula_filtro_manga){?>
+        	<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>	
+        <?php }}} ?>
       </select>
     </fieldset>
     
@@ -121,9 +126,7 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
         <input class="w140 texto_der" name="bilaminado_proceso_2" type="text" id="bilaminado_proceso_2" value="0">
     </fieldset>
     
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado2" type="checkbox" value="1">&nbsp;Trilaminado</label>
-    </fieldset>
+    <input id="procesos_maquinas_6" name="trilaminado2" type="hidden" value="0">
     
     <input name="rebobinado2" type="hidden" value="0">
     
@@ -152,12 +155,16 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
                 $lamina3_id=$fila_lamina3["id_articulo"];
                 $lamina3_nombre=$fila_lamina3["nombre_articulo"];
                 $lamina3_ancho=$fila_lamina3["ancho_articulo"];
+				$lamina3_tipo=$fila_lamina1["id_tipo_articulo"];
 				
-				if($lamina3_ancho>=$formula_filtro){
-            ?>
+				if($lamina3_tipo<>13){
+					if($lamina3_ancho>=$formula_filtro_lamina){?>
             <option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
-        <?php }} ?>
-      </select>
+        <?php }}elseif($lamina3_tipo==13){
+				if($lamina3_ancho>=$formula_filtro_manga){?>
+        	<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>	
+        <?php }}} ?>
+        </select>
     </fieldset>
     
     <fieldset class="w245">

@@ -59,6 +59,7 @@ $cotizacion_lamina3_sellado=$cotizacion["sellado3_cotizacion"];
 $cotizacion_grm2total=$cotizacion["grm2total_cotizacion"];
 $cotizacion_cantproduccion=$cotizacion["cantproduccion_cotizacion"];
 $cotizacion_metrosproducir=$cotizacion["metrosproducir_cotizacion"];
+
 $proc_extrusion=$cotizacion["proc_extrusion_maq_cotizacion"];
 $proc_impresion=$cotizacion["proc_impresion_maq_cotizacion"];
 $proc_bilaminado=$cotizacion["proc_bilaminado_maq_cotizacion"];
@@ -67,6 +68,7 @@ $proc_rebobinado=$cotizacion["proc_rebobinado_maq_cotizacion"];
 $proc_habilitado=$cotizacion["proc_habilitado_maq_cotizacion"];
 $proc_cortefinal=$cotizacion["proc_cortefinal_maq_cotizacion"];
 $proc_sellado=$cotizacion["proc_sellado_maq_cotizacion"];
+
 $insumo_tinta=$cotizacion["insumo_tinta"];
 $insumo_bilaminado=$cotizacion["insumo_bilaminado"];
 $insumo_trilaminado=$cotizacion["insumo_trilaminado"];
@@ -109,6 +111,34 @@ if($proc_impresion>0){ //IMPRESION
 	$mtrprod_impresion=($mtrprod + ($procprod_merma["merma_proceso"] * $cant_colores)) + ($procprod_merma_bilaminado["merma_proceso"]) + ($procprod_merma_trilaminado["merma_proceso"]) + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)) + ($mtrprod * ($procprod_merma_cortefinal["merma_proceso"] / 100));
 }else{ $mtrprod_impresion=0; }
 
+if($proc_extrusion>0){ //EXTRUSION
+	$procprod_merma=seleccionTabla("'extrusion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
+	
+	if($cotizacion_lamina1_extrusion>0){
+		$lamina1=seleccionTabla($cotizacion_lamina1, "id_articulo", "syCoesa_articulo", $conexion);
+		if($cotizacion_lamina1_impresion>0){
+			$totalKg=(($mtrprod_impresion * $lamina1["ancho_articulo"] * $lamina1["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+		}elseif($cotizacion_lamina1_cortefinal>0){
+			$totalKg=(($mtrprod_cortefinal * $lamina1["ancho_articulo"] * $lamina1["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+		}
+	}elseif($cotizacion_lamina2_extrusion>0){
+		$lamina2=seleccionTabla($cotizacion_lamina2, "id_articulo", "syCoesa_articulo", $conexion);
+		if($cotizacion_lamina2_bilaminado>0){
+			$totalKg=(($mtrprod_bilaminado * $lamina2["ancho_articulo"] * $lamina2["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+		}elseif($cotizacion_lamina2_cortefinal>0){
+			$totalKg=(($mtrprod_cortefinal * $lamina2["ancho_articulo"] * $lamina2["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+		}
+	}elseif($cotizacion_lamina3_extrusion>0){
+		$lamina3=seleccionTabla($cotizacion_lamina3, "id_articulo", "syCoesa_articulo", $conexion);
+		if($cotizacion_lamina3_trilaminado>0){
+			$totalKg=(($mtrprod_trilaminado * $lamina3["ancho_articulo"] * $lamina3["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+		}elseif($cotizacion_lamina3_cortefinal>0){
+			$totalKg=(($mtrprod_cortefinal * $lamina3["ancho_articulo"] * $lamina3["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+		}
+	}
+
+}else{ $totalKg=0; }
+
 //UNIDAD DE MEDIDA
 $rst_unmedida=mysql_query("SELECT * FROM syCoesa_unidad_medida WHERE id_unidad_medida=1 OR id_unidad_medida=3 ORDER BY nombre_unidad_medida ASC;", $conexion);
 
@@ -126,7 +156,8 @@ $fila_maq=mysql_fetch_array($rst_maq);
 $maq_refile=$fila_maq["refile_maquina"];
 
 //FILTRO
-$formula_filtro=$cotizacion_anchofinal * $cotizacion_nrobandas + $maq_refile;
+$formula_filtro_lamina=$did_ancho_final * $did_nro_bandas + $maq_refile;
+$formula_filtro_manga=$did_ancho_final * $did_nro_bandas;
 
 //NUMERO DE COLORES
 $rst_mqdt_colores=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos ORDER BY estacion_cuerpo_maquina DESC LIMIT 1;", $conexion);
@@ -134,9 +165,9 @@ $fila_mqdt_colores=mysql_fetch_array($rst_mqdt_colores);
 $mqdt_colores_estacion=$fila_mqdt_colores["estacion_cuerpo_maquina"];
 
 //LAMINAS - POLIETILENO
-$rst_lamina1=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=3 OR id_tipo_articulo=6 ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
-$rst_lamina2=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=3 OR id_tipo_articulo=6 ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
-$rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=3 OR id_tipo_articulo=6 ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
+$rst_lamina1=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo=3 AND mostrar_articulo=1) OR (id_tipo_articulo=6 AND mostrar_articulo=1) OR (id_tipo_articulo=13 AND mostrar_articulo=1) ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
+$rst_lamina2=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo=3 AND mostrar_articulo=1) OR (id_tipo_articulo=6 AND mostrar_articulo=1) OR (id_tipo_articulo=13 AND mostrar_articulo=1) ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
+$rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo=3 AND mostrar_articulo=1) OR (id_tipo_articulo=6 AND mostrar_articulo=1) OR (id_tipo_articulo=13 AND mostrar_articulo=1) ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
 
 //CILINDROS
 $rst_cilindro=mysql_query("SELECT * FROM syCoesa_mantenimiento_cilindro ORDER BY id_cilindro ASC;", $conexion);
@@ -429,18 +460,25 @@ jundmed(document).ready(function(){
                                   <select name="dt_articulo1" id="dt_articulo1" class="cmbSlc w180">
                                     <option value>[ Seleccionar opcion ]</option>
                                     <?php while($fila_lamina1=mysql_fetch_array($rst_lamina1)){
-                                            //VARIABLES
-                                            $lamina1_id=$fila_lamina1["id_articulo"];
-                                            $lamina1_nombre=$fila_lamina1["nombre_articulo"];
-                                            $lamina1_ancho=$fila_lamina1["ancho_articulo"];
-                                            
-                                            if($lamina1_ancho>=$formula_filtro){
-												if ($cotizacion_lamina1==$lamina1_id){
-									?>
-                                            <option selected value=<?php echo $lamina1_id; ?>><?php echo $lamina1_nombre; ?></option>
-                                        	<?php }else{ ?>
-                                            <option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
-                                    <?php }}} ?>
+											//VARIABLES
+											$lamina1_id=$fila_lamina1["id_articulo"];
+											$lamina1_nombre=$fila_lamina1["nombre_articulo"];
+											$lamina1_ancho=$fila_lamina1["ancho_articulo"];
+											$lamina1_tipo=$fila_lamina1["id_tipo_articulo"];
+											
+											if($lamina1_tipo<>13){
+												if($lamina1_ancho>=$formula_filtro_lamina){
+													if($cotizacion_lamina1==$lamina1_id){ ?>
+										<option selected value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
+                                    <?php }else{ ?>
+                                    	<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
+									<?php }}}elseif($lamina1_tipo==13){
+											if($lamina1_ancho>=$formula_filtro_manga){
+												if($cotizacion_lamina1==$lamina1_id){ ?>
+										<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>	
+                                    <?php }else{ ?>
+                                    	<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
+									<?php }}}} ?>
                                   </select>
                                 </fieldset>
                                 
@@ -472,21 +510,9 @@ jundmed(document).ready(function(){
                                     <?php } ?>
                                 </fieldset>
                                 
-                                <fieldset class="w235">
-                                	<?php if($cotizacion_lamina1_bilaminado==1){ ?>
-                                    <label><input checked id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado1" type="checkbox" value="1">&nbsp;Bilaminado</label>
-                                    <?php }else{ ?>
-                                    <label><input id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado1" type="checkbox" value="1">&nbsp;Bilaminado</label>
-                                    <?php } ?>
-                                </fieldset>
-                                
-                                <fieldset class="w235">
-                                	<?php if($cotizacion_lamina1_trilaminado==1){ ?>
-                                    <label><input checked id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado1" type="checkbox" value="1">&nbsp;Trilaminado</label>
-                                    <?php }else{ ?>
-                                    <label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado1" type="checkbox" value="1">&nbsp;Trilaminado</label>
-                                    <?php } ?>
-                                </fieldset>
+                                <input id="procesos_maquinas_5" name="bilaminado1" type="hidden" value="0">
+    
+    							<input id="procesos_maquinas_6" name="trilaminado1" type="hidden" value="0">
                                 
 							    <input name="habilitado1" type="hidden" value="0">
                                 
@@ -517,18 +543,25 @@ jundmed(document).ready(function(){
                                   <select name="dt_articulo2" id="dt_articulo2" class="cmbSlc">
                                     <option value>[ Seleccionar opcion ]</option>
                                     <?php while($fila_lamina2=mysql_fetch_array($rst_lamina2)){
-                                            //VARIABLES
-                                            $lamina2_id=$fila_lamina2["id_articulo"];
-                                            $lamina2_nombre=$fila_lamina2["nombre_articulo"];
-                                            $lamina2_ancho=$fila_lamina2["ancho_articulo"];
-                                            
-                                            if($lamina2_ancho>=$formula_filtro){
-												if($cotizacion_lamina2==$lamina2_id){
-                                        ?>
-                                        <option selected value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
-                                        <?php }else{ ?>
-                                        <option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
-                                    <?php }}} ?>
+											//VARIABLES
+											$lamina2_id=$fila_lamina2["id_articulo"];
+											$lamina2_nombre=$fila_lamina2["nombre_articulo"];
+											$lamina2_ancho=$fila_lamina2["ancho_articulo"];
+											$lamina2_tipo=$fila_lamina2["id_tipo_articulo"];
+											
+											if($lamina2_tipo<>13){
+												if($lamina2_ancho>=$formula_filtro_lamina){
+													if($cotizacion_lamina2==$lamina2_id){ ?>
+										<option selected value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
+                                    <?php }else{ ?>
+                                    	<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
+									<?php }}}elseif($lamina2_tipo==13){
+											if($lamina2_ancho>=$formula_filtro_manga){
+												if($cotizacion_lamina2==$lamina2_id){ ?>
+										<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>	
+                                    <?php }else{ ?>
+                                    	<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
+									<?php }}}} ?>                                    
                                   </select>
                                 </fieldset>
                                 
@@ -552,13 +585,7 @@ jundmed(document).ready(function(){
                                   <input class="w140 texto_der" name="bilaminado_proceso_2" type="text" id="bilaminado_proceso_2" value="<?php echo $cotizacion_lamina2_bilaminado_grm2; ?>">
                                 </fieldset>
                                 
-                                <fieldset class="w235">
-                                	<?php if($cotizacion_lamina2_trilaminado==1){ ?>
-                                    <label><input checked id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado2" type="checkbox" value="1">&nbsp;Trilaminado</label>
-                                    <?php }else{ ?>
-                                    <label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado2" type="checkbox" value="1">&nbsp;Trilaminado</label>
-                                    <?php } ?>
-                                </fieldset>
+                                <input id="procesos_maquinas_6" name="trilaminado2" type="hidden" value="0">
                                                                 
                                 <input name="rebobinado2" type="hidden" value="0">
     
@@ -591,18 +618,25 @@ jundmed(document).ready(function(){
                                   <select name="dt_articulo3" id="dt_articulo3" class="cmbSlc">
                                     <option value>[ Seleccionar opcion ]</option>
                                     <?php while($fila_lamina3=mysql_fetch_array($rst_lamina3)){
-                                            //VARIABLES
-                                            $lamina3_id=$fila_lamina3["id_articulo"];
-                                            $lamina3_nombre=$fila_lamina3["nombre_articulo"];
-                                            $lamina3_ancho=$fila_lamina3["ancho_articulo"];
-                                            
-                                            if($lamina3_ancho>=$formula_filtro){
-												if($cotizacion_lamina3==$lamina3_id){
-                                        ?>
-                                        <option selected value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
-                                        <?php }else{ ?>
-                                        <option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
-                                    <?php }}} ?>
+											//VARIABLES
+											$lamina3_id=$fila_lamina3["id_articulo"];
+											$lamina3_nombre=$fila_lamina3["nombre_articulo"];
+											$lamina3_ancho=$fila_lamina3["ancho_articulo"];
+											$lamina3_tipo=$fila_lamina3["id_tipo_articulo"];
+											
+											if($lamina3_tipo<>13){
+												if($lamina3_ancho>=$formula_filtro_lamina){
+													if($cotizacion_lamina3==$lamina3_id){ ?>
+										<option selected value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
+                                    <?php }else{ ?>
+                                    	<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
+									<?php }}}elseif($lamina3_tipo==13){
+											if($lamina3_ancho>=$formula_filtro_manga){
+												if($cotizacion_lamina3==$lamina3_id){ ?>
+										<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>	
+                                    <?php }else{ ?>
+                                    	<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
+									<?php }}}} ?>
                                   </select>
                                 </fieldset>
                                 
@@ -701,62 +735,18 @@ jundmed(document).ready(function(){
                                   <script>
                                         var jcmbPro1 = jQuery.noConflict();
                                         jcmbPro1(document).ready(function(){
-											var lamina1 = jcmbPro1("#dt_articulo1").val();
-											var lamina2 = jcmbPro1("#dt_articulo2").val();
-											var lamina3 = jcmbPro1("#dt_articulo3").val();
-											var extrusion1 = <?php echo $cotizacion_lamina1_extrusion; ?>;
-											var extrusion2 = <?php echo $cotizacion_lamina2_extrusion; ?>;
-											var extrusion3 = <?php echo $cotizacion_lamina3_extrusion; ?>;
-											var impresion1 = <?php echo $cotizacion_lamina1_impresion; ?>;										
-											var bilaminado2 = <?php echo $cotizacion_lamina2_bilaminado; ?>;
-											var trilaminado3 = <?php echo $cotizacion_lamina3_trilaminado; ?>;
-											var cortefinal1 = <?php echo $cotizacion_lamina1_cortefinal; ?>;
-											var cortefinal2 = <?php echo $cotizacion_lamina2_cortefinal; ?>;
-											var cortefinal3 = <?php echo $cotizacion_lamina3_cortefinal; ?>;
-											var impresion = <?php echo $proc_impresion; ?>;
-											var bilaminado = <?php echo $proc_bilaminado; ?>;
-											var trilaminado = <?php echo $proc_trilaminado; ?>;
-											var cortefinal = <?php echo $proc_cortefinal; ?>;
-											var sellado = <?php echo $proc_sellado; ?>;
 											var maq = jcmbPro1("select#maquina_1 option:selected").val();
-											var metrosproducir = jcmbPro1("#dtecnicos_metrosproducir").val();
-											jcmbPro1.post("consulta-maquinas-datos.php", {dt_articulo1: lamina1, dt_articulo2: lamina2, dt_articulo3: lamina3,
-											maquina: maq, metroproducir: metrosproducir, extrusion1: extrusion1, extrusion2: extrusion2, extrusion3: extrusion3, 
-											impresio1: impresion1, bilaminado2: bilaminado2, trilaminado3: trilaminado3, cortefinal1: cortefinal1, cortefinal2: cortefinal2, 
-											cortefinal3: cortefinal3, impresion: impresion, bilaminado: bilaminado, trilaminado: trilaminado, cortefinal: cortefinal, 
-											sellado: sellado, metrosproducir: metrosproducir},
+											jcmbPro1.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: <?php echo $totalKg; ?>},
 												function(data){
 													jcmbPro1("#progressbar").addClass("ocultar");
 													jcmbPro1('.datos_maquina_1').html(data);
 												});
-											
+																						
                                             jcmbPro1("#maquina_1").change(function() {
 												jcmbPro1("#progressbar").removeClass("ocultar");
-												//VALORES
-												var lamina1 = jcmbPro1("#dt_articulo1").val();
-												var lamina2 = jcmbPro1("#dt_articulo2").val();
-												var lamina3 = jcmbPro1("#dt_articulo3").val();
-												var extrusion1 = <?php echo $cotizacion_lamina1_extrusion; ?>;
-												var extrusion2 = <?php echo $cotizacion_lamina2_extrusion; ?>;
-												var extrusion3 = <?php echo $cotizacion_lamina3_extrusion; ?>;
-												var impresion1 = <?php echo $cotizacion_lamina1_impresion; ?>;
-												var bilaminado2 = <?php echo $cotizacion_lamina2_bilaminado; ?>;
-												var trilaminado3 = <?php echo $cotizacion_lamina3_trilaminado; ?>;
-												var cortefinal1 = <?php echo $cotizacion_lamina1_cortefinal; ?>;
-												var cortefinal2 = <?php echo $cotizacion_lamina2_cortefinal; ?>;
-												var cortefinal3 = <?php echo $cotizacion_lamina3_cortefinal; ?>;
-												var impresion = <?php echo $proc_impresion; ?>;
-												var bilaminado = <?php echo $proc_bilaminado; ?>;
-												var trilaminado = <?php echo $proc_trilaminado; ?>;
-												var cortefinal = <?php echo $proc_cortefinal; ?>;
 												var maq = jcmbPro1("select#maquina_1 option:selected").val();
-												var metrosproducir = jcmbPro1("#dtecnicos_metrosproducir").val();
-												jcmbPro1.post("consulta-maquinas-datos.php", {dt_articulo1: lamina1, dt_articulo2: lamina2, dt_articulo3: lamina3,
-												maquina: maq, metroproducir: metrosproducir, extrusion1: extrusion1, 
-												extrusion2: extrusion2, extrusion3: extrusion3, impresio1: impresion1, bilaminado2: bilaminado2, trilaminado3: trilaminado3, 
-												cortefinal1: cortefinal1, cortefinal2: cortefinal2, cortefinal3: cortefinal3,
-												impresion: impresion, bilaminado: bilaminado, trilaminado: trilaminado, 
-												cortefinal: cortefinal, metrosproducir: metrosproducir},
+												
+												jcmbPro1.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: <?php echo $totalKg; ?>},
 													function(data){
 														jcmbPro1("#progressbar").addClass("ocultar");
 														jcmbPro1('.datos_maquina_1').html(data);

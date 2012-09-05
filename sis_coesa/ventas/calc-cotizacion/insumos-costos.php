@@ -16,6 +16,7 @@ $repeticion=$_POST["repeticion"];
 $frecuencia=$_POST["frecuencia"];
 $grm2=$_POST["grm2"];
 $tipo=$_POST["tipo"];
+$cantidad=$_POST["cantidad"];
 
 if($tipo=="tinta" and $idInsumo<>""){
 	//TINTA
@@ -41,7 +42,7 @@ if($tipo=="tinta" and $idInsumo<>""){
 <?php
 }elseif($tipo=="tinta"){
 	//TINTA
-	$rst_insTinta=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=2 ORDER BY precio_articulo DESC;", $conexion);
+	$rst_insTinta=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=2 AND mostrar_articulo=1 ORDER BY precio_articulo DESC;", $conexion);
 	$fila_insTinta=mysql_fetch_array($rst_insTinta);
 	$insumo_id=$fila_insTinta["id_articulo"];
 	$insumo_precio=$fila_insTinta["precio_articulo"];
@@ -84,7 +85,11 @@ if($tipo=="tinta" and $idInsumo<>""){
 	$Total_AgregadoEstruc=(((($anchofinal / 10) * $nrobandas) * (($repeticion / 10) * $frecuencia)));
 	
 	//TOTAL DE COSTOS
-	$TotalCosto=($Total_AgregadoEstruc * $insumo_precio) * $nrocolores;
+	$Costo=($Total_AgregadoEstruc * $insumo_precio) * $nrocolores;
+	
+	//FORMULA: (PRECIO TOTAL * CANTIDADREQUERIDA) / 300000
+	$TotalCosto=($Costo * $Total_AgregadoEstruc) / 300000;
+	
 }else{
 	//SELECCIONAR DATOS DE MAQUINA
 	$rst_insumos=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_articulo=$insumos;", $conexion);

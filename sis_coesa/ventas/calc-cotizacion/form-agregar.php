@@ -21,7 +21,7 @@ $fila_mqdt_colores=mysql_fetch_array($rst_mqdt_colores);
 $mqdt_colores_estacion=$fila_mqdt_colores["estacion_cuerpo_maquina"];
 
 //CILINDROS
-$rst_cilindro=mysql_query("SELECT * FROM syCoesa_mantenimiento_cilindro ORDER BY id_cilindro ASC;", $conexion);
+$rst_cilindro=mysql_query("SELECT * FROM syCoesa_mantenimiento_cilindro ORDER BY cilindro ASC;", $conexion);
 
 ?>
 <!DOCTYPE HTML>
@@ -187,7 +187,7 @@ jundmed(document).ready(function(){
 						</fieldset>
                         
                         <fieldset class="alto50 w180">
-                          <label for="dtecnicos_frecuencia">Frecuencia (mm):</label>
+                          <label for="dtecnicos_frecuencia">Nro de Frecuencia (Und):</label>
                           <input name="dtecnicos_frecuencia" type="text" id="dtecnicos_frecuencia" class="w130" value="0">
 						</fieldset>
                         

@@ -195,14 +195,22 @@ if($proc_cortefinal>0){ //CORTE FINAL
 
 if($proc_trilaminado>0){ //TRILAMINADO
 	$procprod_merma_trilaminado=seleccionTabla("'trilaminado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
-	$mtrprod_lamina_trilaminado_f=($mtrprod_cortefinal + $procprod_merma_trilaminado["merma_proceso"]);
+	if($proc_cortefinal>0){
+			$mtrprod_lamina_trilaminado_f=($mtrprod_cortefinal + $procprod_merma_trilaminado["merma_proceso"]);
+		}else{
+			$mtrprod_lamina_trilaminado_f=($mtrprod + $procprod_merma_trilaminado["merma_proceso"]);
+		}
 	$mtrprod_lamina_trilaminado=(($mtrprod_lamina_trilaminado_f * $impresion_lamina3["grm2_articulo"] * $impresion_lamina3["ancho_articulo"]) / 1000000);
 }else{ $mtrprod_lamina_trilaminado=0; }
 
 if($proc_bilaminado>0){ //BILAMINADO
 	if($proc_trilaminado==0){
 		$procprod_merma_bilaminado=seleccionTabla("'bilaminado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
-		$mtrprod_lamina_bilaminado_f=($mtrprod_cortefinal + $procprod_merma_bilaminado["merma_proceso"]);
+		if($proc_cortefinal>0){
+			$mtrprod_lamina_bilaminado_f=($mtrprod_cortefinal + $procprod_merma_bilaminado["merma_proceso"]);
+		}else{
+			$mtrprod_lamina_bilaminado_f=($mtrprod + $procprod_merma_bilaminado["merma_proceso"]);
+		}
 		$mtrprod_lamina_bilaminado=(($mtrprod_lamina_bilaminado_f * $impresion_lamina2["grm2_articulo"] * $impresion_lamina2["ancho_articulo"]) / 1000000);
 	}elseif($proc_trilaminado>0){
 		$procprod_merma_bilaminado=seleccionTabla("'bilaminado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
@@ -215,7 +223,11 @@ if($proc_impresion>0){ //IMPRESION
 	
 	if($proc_bilaminado==0 and $proc_trilaminado==0){
 		$procprod_merma_impr=seleccionTabla("'impresion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
-		$mtrprod_lamina_impresion_f=($mtrprod_cortefinal + ($procprod_merma_impr["merma_proceso"] * $cant_colores));
+		if($proc_cortefinal>0){
+			$mtrprod_lamina_impresion_f=($mtrprod_cortefinal + ($procprod_merma_impr["merma_proceso"] * $cant_colores));
+		}else{
+			$mtrprod_lamina_impresion_f=($mtrprod + ($procprod_merma_impr["merma_proceso"] * $cant_colores));
+		}
 		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1["grm2_articulo"] * $impresion_lamina1["ancho_articulo"]) / 1000000);
 	}elseif($proc_bilaminado>0 and $proc_trilaminado>0){
 		$procprod_merma_impr=seleccionTabla("'impresion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
@@ -402,7 +414,11 @@ if($impresion["insumo_clises"]>0){
 	$AgregadoEstruc_clises=( ( ( ($impresion_anchofinal / 10) * $impresion_nrobandas) * ( ($impresion_repeticion / 10 ) * $impresion_frecuencia) ));
 	
 	//TOTAL DE COSTOS
-	$TotalCosto_clises=($AgregadoEstruc_clises * $insumo_precio) * $impresion_nrocolores;
+	$Costo=($AgregadoEstruc_clises * $insumo_precio) * $impresion_nrocolores;
+	
+	//FORMULA: (PRECIO TOTAL * CANTIDADREQUERIDA) / 300000
+	$TotalCosto_clises=($Costo * $AgregadoEstruc_clises) / 300000;
+	
 }else{ $TotalCosto_clises=0; }
 
 if($impresion["insumo_bilaminado"]>0){
