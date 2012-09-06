@@ -4,6 +4,7 @@
 article, footer, header, section{ display: block;}
 body{ font-size:12px; color:#000; background-image:url(../imagenes/bg.jpg); }
 h1, h2, h3, h4, h5, h6, a, p{ margin:0; padding:0; font-weight:normal; text-decoration:none;}
+a{ text-decoration:none; border:none; }
 p{ line-height:140%;}
 header{ position:fixed; width:100%; height:50px; z-index:2; background-image:url(../imagenes/fondo-cabecera.jpg); min-width:920px;}
 footer{ width:940px; padding:20px; position:relative; z-index:2; background-color:#333; }
@@ -21,6 +22,10 @@ input[type=file]{ width:300px !important; }
 .w450{ width:450px !important; }
 .w180{ width:180px !important; }
 .w130{ width:130px !important; }
+.w120{ width:120px !important; }
+.w100{ width:100px !important; }
+.w110{ width:110px !important; }
+.w85{ width:85px !important; }
 .w140{ width:140px !important; }
 .w150{ width:150px !important; }
 .margin_0{ margin:0 !important; }
@@ -107,6 +112,7 @@ form fieldset select{ width:320px !important; border-radius: 5px; -moz-border-ra
 .frmdt_contenido .frmdtc_acciones{ width:100%; position:relative; float:left; padding:5px 0; margin:0 0 15px 0; }
 #dtecnicos_sentido_bobina label{ float:none; }
 
+a.boton_lamina{ margin:0 7px 0 0 !important; float:right !important; }
 
 /* FORMULARIO SUB */
 #formulario_sub{ width:100%; float:left; position:relative; }

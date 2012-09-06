@@ -16,6 +16,14 @@ $nro_bandas=$_POST["dtecnicos_numbandas"];
 $cantidad=$_POST["dtecnicos_cantrq"];
 $tolerancia=$_POST["dtecnicos_tolerancia"];
 
+//ANCHO Y GRM2 DE LAMINAS
+if($_POST["lamina1_ancho"]<>""){ $lamina1_ancho=$_POST["lamina1_ancho"]; }else{ $lamina1_ancho=0; }
+if($_POST["lamina1_grm2"]<>""){ $lamina1_grm2=$_POST["lamina1_grm2"]; }else{ $lamina1_grm2=0; }
+if($_POST["lamina2_ancho"]<>""){ $lamina2_ancho=$_POST["lamina2_ancho"]; }else{ $lamina2_ancho=0; }
+if($_POST["lamina2_grm2"]<>""){ $lamina2_grm2=$_POST["lamina2_grm2"]; }else{ $lamina2_grm2=0; }
+if($_POST["lamina3_ancho"]<>""){ $lamina3_ancho=$_POST["lamina3_ancho"]; }else{ $lamina3_ancho=0; }
+if($_POST["lamina3_grm2"]<>""){ $lamina3_grm2=$_POST["lamina3_grm2"]; }else{ $lamina3_grm2=0; }
+
 //TIPOS DE INSUMOS
 $rst_insTinta=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=2 AND mostrar_articulo=1 ORDER BY precio_articulo DESC;", $conexion);
 $fila_insTinta=mysql_fetch_array($rst_insTinta);
@@ -25,7 +33,9 @@ $rst_insCush=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=
 $rst_insClis=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=11 AND mostrar_articulo=1 ORDER BY nombre_articulo ASC;", $conexion);
 
 //PROCESOS SELECCIONADOS
-$proc_extrusion=$_POST["extrusion1"].$_POST["extrusion2"].$_POST["extrusion3"];
+$proc_extrusion_impresion=$_POST["extrusion1"];
+$proc_extrusion_bilaminado=$_POST["extrusion2"];
+$proc_extrusion_trilaminado=$_POST["extrusion3"];
 $proc_impresion=$_POST["impresion1"].$_POST["impresion2"].$_POST["impresion3"];
 $proc_bilaminado=$_POST["bilaminado1"].$_POST["bilaminado2"].$_POST["bilaminado3"];
 $proc_trilaminado=$_POST["trilaminado1"].$_POST["trilaminado2"].$_POST["trilaminado3"];
@@ -34,20 +44,16 @@ $proc_habilitado=$_POST["habilitado1"].$_POST["habilitado2"].$_POST["habilitado3
 $proc_cortefinal=$_POST["cortefinal1"].$_POST["cortefinal2"].$_POST["cortefinal3"];
 $proc_sellado=$_POST["sellado1"].$_POST["sellado2"].$_POST["sellado3"];
 
-//GRM2 TOTAL
-if($_POST["dt_articulo1"]<>""){ $lamina1=seleccionTabla($_POST["dt_articulo1"], "id_articulo", "syCoesa_articulo", $conexion); };
-if($_POST["dt_articulo2"]<>""){ $lamina2=seleccionTabla($_POST["dt_articulo2"], "id_articulo", "syCoesa_articulo", $conexion); };
-if($_POST["dt_articulo3"]<>""){ $lamina3=seleccionTabla($_POST["dt_articulo3"], "id_articulo", "syCoesa_articulo", $conexion); };
+//GRM2 DE LAMINAS
+$lamina_grm2=$lamina1_grm2 + $lamina2_grm2 + $lamina3_grm2;
 
-$grm2_producto=$_POST["dtecnicos_grm2"];
-
-$lamina_grm2=$lamina1["grm2_articulo"] + $lamina2["grm2_articulo"] + $lamina3["grm2_articulo"];
-
+//GRM2 DE TINTAS Y ADHESIVOS
 if($_POST["impresion1"]<>""){ $tintaseca_lamina=$_POST["grm2_tintaseca_1"]; }
 if($_POST["bilaminado2"]<>""){ $bilaminado_lamina=$_POST["bilaminado_proceso_2"]; }
 if($_POST["trilaminado3"]<>""){ $trilaminado_lamina=$_POST["trilaminado_proceso_3"]; }
 
-$grm2_total=$grm2_producto + $lamina_grm2 + $tintaseca_lamina + $bilaminado_lamina + $trilaminado_lamina;
+//GRM2 TOTAL
+$grm2_total=$lamina_grm2 + $tintaseca_lamina + $bilaminado_lamina + $trilaminado_lamina;
 
 //CANTIDAD REQUERIDA
 if($unidad_medida==3){
@@ -95,33 +101,33 @@ if($proc_impresion>0){ //IMPRESION
 	$mtrprod_impresion=($mtrprod + ($procprod_merma["merma_proceso"] * $cant_colores)) + ($procprod_merma_bilaminado["merma_proceso"]) + ($procprod_merma_trilaminado["merma_proceso"]) + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)) + ($mtrprod * ($procprod_merma_cortefinal["merma_proceso"] / 100));
 }else{ $mtrprod_impresion=0; }
 
-if($proc_extrusion<>""){ //EXTRUSION
+if($proc_extrusion_impresion>0 or $proc_extrusion_bilaminado>0 or $proc_extrusion_trilaminado>0){ //EXTRUSION
 	$procprod_merma=seleccionTabla("'extrusion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
 	
-	if($_POST["extrusion1"]>0){
-		$lamina1=seleccionTabla($_POST["dt_articulo1"], "id_articulo", "syCoesa_articulo", $conexion);
+	if($proc_extrusion_impresion>0){
 		if($_POST["impresion1"]>0){
-			$totalKg=(($mtrprod_impresion * $lamina1["ancho_articulo"] * $lamina1["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+			$totalKg_impresion=(($mtrprod_impresion * $lamina1_ancho * $lamina1_grm2) / 1000000) + $procprod_merma["merma_proceso"];
 		}elseif($_POST["cortefinal1"]>0){
-			$totalKg=(($mtrprod_cortefinal * $lamina1["ancho_articulo"] * $lamina1["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+			$totalKg_impresion=(($mtrprod_cortefinal * $lamina1_ancho * $lamina1_grm2) / 1000000) + $procprod_merma["merma_proceso"];
 		}
-	}elseif($_POST["extrusion2"]>0){
-		$lamina2=seleccionTabla($_POST["dt_articulo2"], "id_articulo", "syCoesa_articulo", $conexion);
+	}else{ $totalKg_impresion=0; }
+	
+	if($proc_extrusion_bilaminado>0){
 		if($_POST["bilaminado2"]>0){
-			$totalKg=(($mtrprod_bilaminado * $lamina2["ancho_articulo"] * $lamina2["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+			$totalKg_bilaminado=(($mtrprod_bilaminado * $lamina2_ancho * $lamina2_grm2) / 1000000) + $procprod_merma["merma_proceso"];
 		}elseif($_POST["cortefinal2"]>0){
-			$totalKg=(($mtrprod_cortefinal * $lamina2["ancho_articulo"] * $lamina2["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+			$totalKg_bilaminado=(($mtrprod_cortefinal * $lamina2_ancho * $lamina2_grm2) / 1000000) + $procprod_merma["merma_proceso"];
 		}
-	}elseif($_POST["extrusion3"]>0){
-		$lamina3=seleccionTabla($_POST["dt_articulo3"], "id_articulo", "syCoesa_articulo", $conexion);
+	}else{ $totalKg_bilaminado=0; }
+	
+	if($proc_extrusion_trilaminado>0){
 		if($_POST["trilaminado3"]>0){
-			$totalKg=(($mtrprod_trilaminado * $lamina3["ancho_articulo"] * $lamina3["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+			$totalKg_trilaminado=(($mtrprod_trilaminado * $lamina3_ancho * $lamina3_grm2) / 1000000) + $procprod_merma["merma_proceso"];
 		}elseif($_POST["cortefinal3"]>0){
-			$totalKg=(($mtrprod_cortefinal * $lamina3["ancho_articulo"] * $lamina3["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
+			$totalKg_trilaminado=(($mtrprod_cortefinal * $lamina3_ancho * $lamina3_grm2) / 1000000) + $procprod_merma["merma_proceso"];
 		}
-	}
-
-}else{ $totalKg=0; }
+	}else{ $totalKg_trilaminado=0; }
+}
 
 ?>
 
@@ -163,8 +169,8 @@ if($proc_extrusion<>""){ //EXTRUSION
     
 <div class="float_left" style="width:100%;">
 
-<?php if($proc_extrusion>0){ ?>
-<div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Extrusión</div>
+<?php if($proc_extrusion_impresion>0){ ?>
+<div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Extrusión Impr.</div>
 	<div style="width:13%; height:20px; padding:1% 0;" class="float_left texto_cen">
             
             <!-- SELECCIONAR -->
@@ -176,7 +182,7 @@ if($proc_extrusion<>""){ //EXTRUSION
                 	jcmbPro1("#progressbar").removeClass("ocultar");
 					var maq = jcmbPro1("select#maquina_1 option:selected").val();
 					
-                    jcmbPro1.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: <?php echo $totalKg; ?>},
+                    jcmbPro1.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: <?php echo $totalKg_impresion; ?>},
                         function(data){
 							jcmbPro1("#progressbar").addClass("ocultar");
                             jcmbPro1('.datos_maquina_1').html(data);
@@ -205,6 +211,116 @@ if($proc_extrusion<>""){ //EXTRUSION
             </select>
     </div>
     <div class="datos_maquina_1">
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:6.1%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+    </div>
+<?php } //FIN EXTRUSION ?>
+
+<?php if($proc_extrusion_bilaminado>0){ ?>
+<div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Extrusión Bi.</div>
+<div style="width:13%; height:20px; padding:1% 0;" class="float_left texto_cen">
+            
+            <!-- SELECCIONAR -->
+            <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+            <script>
+            var jcmbProExbi = jQuery.noConflict();
+            jcmbProExbi(document).ready(function(){
+                jcmbProExbi("#maquina_exbi").change(function() {
+                	jcmbProExbi("#progressbar").removeClass("ocultar");
+					var maq = jcmbProExbi("select#maquina_exbi option:selected").val();
+					
+                    jcmbProExbi.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: <?php echo $totalKg_bilaminado; ?>},
+                        function(data){
+							jcmbProExbi("#progressbar").addClass("ocultar");
+                            jcmbProExbi('.datos_maquina_exbi').html(data);
+                        });
+                });
+            });
+            </script>
+            
+            <select name="maquina_exbi" id="maquina_exbi" class="w130">
+                <option value="0">------------------</option>
+                <?php
+                
+                //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
+                $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1 ORDER BY id_maquina ASC", $conexion);
+                while($fila_maq=mysql_fetch_array($rst_maq)){
+    
+                    $maq_procesos=$fila_maq["procesos_productivos_maquina"];
+                    $maquina=seleccionTabla($fila_maq["id_maquina"],"id_maquina", "syCoesa_mantenimiento_maquinas", $conexion);
+                
+                    if(ereg(3, $maq_procesos)){ ?>
+                    
+                    <option value="<?php echo $maquina["id_maquina"]; ?>"><?php echo $maquina["nombre_maquina"]; ?></option>
+                
+                <?php }} ?>
+                
+            </select>
+    </div>
+    <div class="datos_maquina_exbi">
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+        <div style="width:6.1%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
+    </div>
+<?php } //FIN EXTRUSION ?>
+
+<?php if($proc_extrusion_trilaminado>0){ ?>
+<div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_izq">Extrusión Tri.</div>
+<div style="width:13%; height:20px; padding:1% 0;" class="float_left texto_cen">
+            
+            <!-- SELECCIONAR -->
+            <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+            <script>
+            var jcmbProExtri = jQuery.noConflict();
+            jcmbProExtri(document).ready(function(){
+                jcmbProExtri("#maquina_extri").change(function() {
+                	jcmbProExtri("#progressbar").removeClass("ocultar");
+					var maq = jcmbProExtri("select#maquina_extri option:selected").val();
+					
+                    jcmbProExtri.post("consulta-maquinas-datos.php", {maquina: maq, metroproducir: <?php echo $totalKg_trilaminado; ?>},
+                        function(data){
+							jcmbProExtri("#progressbar").addClass("ocultar");
+                            jcmbProExtri('.datos_maquina_extri').html(data);
+                        });
+                });
+            });
+            </script>
+            
+            <select name="maquina_extri" id="maquina_extri" class="w130">
+                <option value="0">------------------</option>
+                <?php
+                
+                //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
+                $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1 ORDER BY id_maquina ASC", $conexion);
+                while($fila_maq=mysql_fetch_array($rst_maq)){
+    
+                    $maq_procesos=$fila_maq["procesos_productivos_maquina"];
+                    $maquina=seleccionTabla($fila_maq["id_maquina"],"id_maquina", "syCoesa_mantenimiento_maquinas", $conexion);
+                
+                    if(ereg(3, $maq_procesos)){ ?>
+                    
+                    <option value="<?php echo $maquina["id_maquina"]; ?>"><?php echo $maquina["nombre_maquina"]; ?></option>
+                
+                <?php }} ?>
+                
+            </select>
+    </div>
+    <div class="datos_maquina_extri">
         <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
         <div style="width:8%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>
         <div style="width:8.3%; height:20px; padding:1% 0;" class="float_left texto_cen"></div>

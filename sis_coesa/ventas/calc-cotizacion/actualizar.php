@@ -24,39 +24,42 @@ $metrosproducir=$_POST["dtecnicos_metrosproducir"];
 
 //LAMINA 1
 if($_POST["dt_articulo1"]==""){ $lamina1=0; }else{ $lamina1=$_POST["dt_articulo1"]; };
+if($_POST["lamina1_ancho"]<>""){ $lamina1_ancho=$_POST["lamina1_ancho"]; }else{ $lamina1_ancho=0; }
+if($_POST["lamina1_grm2"]<>""){ $lamina1_grm2=$_POST["lamina1_grm2"]; }else{ $lamina1_grm2=0; }
 if($_POST["extrusion1"]==""){ $lamina1_extrusion=0; }else{ $lamina1_extrusion=$_POST["extrusion1"]; };
 if($_POST["impresion1"]==""){ $lamina1_impresion=0; }else{ $lamina1_impresion=$_POST["impresion1"]; };
-if($_POST["bilaminado1"]==""){ $lamina1_bilaminado=0; }else{ $lamina1_bilaminado=$_POST["bilaminado1"]; };
-if($_POST["trilaminado1"]==""){ $lamina1_trilaminado=0; }else{ $lamina1_trilaminado=$_POST["trilaminado1"]; };
 if($_POST["rebobinado1"]==""){ $lamina1_rebobinado=0; }else{ $lamina1_rebobinado=$_POST["rebobinado1"]; };
-if($_POST["habilitado1"]==""){ $lamina1_habilitado=0; }else{ $lamina1_habilitado=$_POST["habilitado1"]; };
 if($_POST["cortefinal1"]==""){ $lamina1_cortefinal=0; }else{ $lamina1_cortefinal=$_POST["cortefinal1"]; };
 if($_POST["sellado1"]==""){ $lamina1_sellado=0; }else{ $lamina1_sellado=$_POST["sellado1"]; };
-$lamina1_impresion_grm2=$_POST["grm2_tintaseca_1"];
+if($_POST["grm2_tintaseca_1"]==""){ $lamina1_impresion_grm2=0; }else{ $lamina1_impresion_grm2=$_POST["grm2_tintaseca_1"]; }
 
 //LAMINA 2
 if($_POST["dt_articulo2"]==""){ $lamina2=0; }else{ $lamina2=$_POST["dt_articulo2"]; };
+if($_POST["lamina2_ancho"]<>""){ $lamina2_ancho=$_POST["lamina2_ancho"]; }else{ $lamina2_ancho=0; }
+if($_POST["lamina2_grm2"]<>""){ $lamina2_grm2=$_POST["lamina2_grm2"]; }else{ $lamina2_grm2=0; }
 if($_POST["extrusion2"]==""){ $lamina2_extrusion=0; }else{ $lamina2_extrusion=$_POST["extrusion2"]; };
 if($_POST["bilaminado2"]==""){ $lamina2_bilaminado=0; }else{ $lamina2_bilaminado=$_POST["bilaminado2"]; };
-if($_POST["trilaminado2"]==""){ $lamina2_trilaminado=0; }else{ $lamina2_trilaminado=$_POST["trilaminado2"]; };
 if($_POST["rebobinado2"]==""){ $lamina2_rebobinado=0; }else{ $lamina2_rebobinado=$_POST["rebobinado2"]; };
-if($_POST["habilitado2"]==""){ $lamina2_habilitado=0; }else{ $lamina2_habilitado=$_POST["habilitado2"]; };
 if($_POST["cortefinal2"]==""){ $lamina2_cortefinal=0; }else{ $lamina2_cortefinal=$_POST["cortefinal2"]; };
 if($_POST["sellado2"]==""){ $lamina2_sellado=0; }else{ $lamina2_sellado=$_POST["sellado2"]; };
-$lamina2_bilaminado_grm2=$_POST["bilaminado_proceso_2"];
+if($_POST["bilaminado_proceso_2"]==""){ $lamina2_bilaminado_grm2=0; }else{ $lamina2_bilaminado_grm2=$_POST["bilaminado_proceso_2"]; }
 
 //LAMINA 3
 if($_POST["dt_articulo3"]==""){ $lamina3=0; }else{ $lamina3=$_POST["dt_articulo3"]; };
+if($_POST["lamina3_ancho"]<>""){ $lamina3_ancho=$_POST["lamina3_ancho"]; }else{ $lamina3_ancho=0; }
+if($_POST["lamina3_grm2"]<>""){ $lamina3_grm2=$_POST["lamina3_grm2"]; }else{ $lamina3_grm2=0; }
 if($_POST["extrusion3"]==""){ $lamina3_extrusion=0; }else{ $lamina3_extrusion=$_POST["extrusion3"]; };
 if($_POST["trilaminado3"]==""){ $lamina3_trilaminado=0; }else{ $lamina3_trilaminado=$_POST["trilaminado3"]; };
 if($_POST["rebobinado3"]==""){ $lamina3_rebobinado=0; }else{ $lamina3_rebobinado=$_POST["rebobinado3"]; };
 if($_POST["habilitado3"]==""){ $lamina3_habilitado=0; }else{ $lamina3_habilitado=$_POST["habilitado3"]; };
 if($_POST["cortefinal3"]==""){ $lamina3_cortefinal=0; }else{ $lamina3_cortefinal=$_POST["cortefinal3"]; };
 if($_POST["sellado3"]==""){ $lamina3_sellado=0; }else{ $lamina3_sellado=$_POST["sellado3"]; };
-$lamina3_trilaminado_grm2=$_POST["trilaminado_proceso_3"];
+if($_POST["trilaminado_proceso_3"]==""){ $lamina3_trilaminado_grm2=0; }else{ $lamina3_trilaminado_grm2=$_POST["trilaminado_proceso_3"]; }
 
 //MAQUINAS
-if($_POST["maquina1"]==""){ $maquina1=0; }else{ $maquina1=$_POST["maquina1"]; }; //EXTRUSION
+if($_POST["maquina1"]==""){ $maquina1=0; }else{ $maquina1=$_POST["maquina1"]; }; //EXTRUSION IMPRESION
+if($_POST["maquina_exbi"]==""){ $maquina_exbi=0; }else{ $maquina_exbi=$_POST["maquina_exbi"]; }; //EXTRUSION BILAMINADO
+if($_POST["maquina_extri"]==""){ $maquina_extri=0; }else{ $maquina_extri=$_POST["maquina_extri"]; }; //EXTRUSION TRILAMINADO
 if($_POST["maquina2"]==""){ $maquina2=0; }else{ $maquina2=$_POST["maquina2"]; }; //IMPRESION
 if($_POST["maquina3"]==""){ $maquina3=0; }else{ $maquina3=$_POST["maquina3"]; }; //BILAMINADO
 if($_POST["maquina4"]==""){ $maquina4=0; }else{ $maquina4=$_POST["maquina4"]; }; //TRILAMINADO
@@ -86,36 +89,38 @@ tolerancia_cotizacion=$tolerancia,
 unidad_medida_cotizacion=$unidadmedida,
 precio_cotizacion=$precio,
 lamina1_cotizacion=$lamina1,
+lamina1_ancho_cotizacion=$lamina1_ancho,
+lamina1_grm2_cotizacion=$lamina1_grm2,
 extrusion1_cotizacion=$lamina1_extrusion,
 impresion1_cotizacion=$lamina1_impresion,
 impresion1_grm2_cotizacion=$lamina1_impresion_grm2,
-bilaminado1_cotizacion=$lamina1_bilaminado,
-trilaminado1_cotizacion=$lamina1_trilaminado,
 rebobinado1_cotizacion=$lamina1_rebobinado,
-habilitado1_cotizacion=$lamina1_habilitado,
 cortefinal1_cotizacion=$lamina1_cortefinal,
 sellado1_cotizacion=$lamina1_sellado,
 lamina2_cotizacion=$lamina2,
+lamina2_ancho_cotizacion=$lamina2_ancho,
+lamina2_grm2_cotizacion=$lamina2_grm2,
 extrusion2_cotizacion=$lamina2_extrusion,
 bilaminado2_cotizacion=$lamina2_bilaminado,
 bilaminado2_grm2_cotizacion=$lamina2_bilaminado_grm2,
-trilaminado2_cotizacion=$lamina2_trilaminado,
 rebobinado2_cotizacion=$lamina2_rebobinado,
-habilitado2_cotizacion=$lamina2_habilitado,
 cortefinal2_cotizacion=$lamina2_cortefinal,
 sellado2_cotizacion=$lamina2_sellado,
 lamina3_cotizacion=$lamina3,
+lamina3_ancho_cotizacion=$lamina3_ancho,
+lamina3_grm2_cotizacion=$lamina3_grm2,
 extrusion3_cotizacion=$lamina3_extrusion,
 trilaminado3_cotizacion=$lamina3_trilaminado,
 trilaminado3_grm2_cotizacion=$lamina3_trilaminado_grm2,
 rebobinado3_cotizacion=$lamina3_rebobinado,
-habilitado3_cotizacion=$lamina3_habilitado,
 cortefinal3_cotizacion=$lamina3_cortefinal,
 sellado3_cotizacion=$lamina3_sellado,
 grm2total_cotizacion=$grm2total,
 cantproduccion_cotizacion=$cantproduccion,
 metrosproducir_cotizacion=$metrosproducir,
-proc_extrusion_maq_cotizacion=$maquina1,
+proc_extrusion_impresion_maq_cotizacion=$maquina1, 
+proc_extrusion_bilaminado_maq_cotizacion=$maquina_exbi,
+proc_extrusion_trilaminado_maq_cotizacion=$maquina_extri,
 proc_impresion_maq_cotizacion=$maquina2,
 proc_bilaminado_maq_cotizacion=$maquina3,
 proc_trilaminado_maq_cotizacion=$maquina4,
@@ -130,6 +135,7 @@ insumo_cushion=$insumo_cushion,
 insumo_clises=$insumo_clises WHERE id_cotizacion=$id_cotizacion", $conexion);
 
 if (mysql_errno()!=0){
+	//echo "ERROR: ". mysql_errno() . " - ". mysql_error();
 	mysql_close($conexion);
 	header("Location:lista.php?msj=4");
 } else {

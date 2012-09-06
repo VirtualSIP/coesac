@@ -24,45 +24,52 @@ $impresion_unidadmedida=seleccionTabla($impresion["unidad_medida_cotizacion"], "
 $impresion_precio=$impresion["precio_cotizacion"];
 
 $impresion_lamina1=seleccionTabla($impresion["lamina1_cotizacion"], "id_articulo", "syCoesa_articulo", $conexion);
+$impresion_lamina1_ancho=$impresion["lamina1_ancho_cotizacion"];
+$impresion_lamina1_grm2=$impresion["lamina1_grm2_cotizacion"];
 $impresion_lamina1_extrusion=$impresion["extrusion1_cotizacion"];
 $impresion_lamina1_impresion=$impresion["impresion1_cotizacion"];
 $impresion_lamina1_impresion_grm2=$impresion["impresion1_grm2_cotizacion"];
-$impresion_lamina1_bilaminado=$impresion["bilaminado1_cotizacion"];
-$impresion_lamina1_trilaminado=$impresion["trilaminado1_cotizacion"];
 $impresion_lamina1_rebobinado=$impresion["rebobinado1_cotizacion"];
-$impresion_lamina1_habilitado=$impresion["habilitado1_cotizacion"];
 $impresion_lamina1_cortefinal=$impresion["cortefinal1_cotizacion"];
 $impresion_lamina1_sellado=$impresion["sellado1_cotizacion"];
 
 $impresion_lamina2=seleccionTabla($impresion["lamina2_cotizacion"], "id_articulo", "syCoesa_articulo", $conexion);
+$impresion_lamina2_ancho=$impresion["lamina2_ancho_cotizacion"];
+$impresion_lamina2_grm2=$impresion["lamina2_grm2_cotizacion"];
 $impresion_lamina2_extrusion=$impresion["extrusion2_cotizacion"];
 $impresion_lamina2_impresion=$impresion["impresion2_cotizacion"];
 $impresion_lamina2_bilaminado=$impresion["bilaminado2_cotizacion"];
 $impresion_lamina2_bilaminado_grm2=$impresion["bilaminado2_grm2_cotizacion"];
-$impresion_lamina2_trilaminado=$impresion["trilaminado2_cotizacion"];
 $impresion_lamina2_rebobinado=$impresion["rebobinado2_cotizacion"];
-$impresion_lamina2_habilitado=$impresion["habilitado2_cotizacion"];
 $impresion_lamina2_cortefinal=$impresion["cortefinal2_cotizacion"];
 $impresion_lamina2_sellado=$impresion["sellado2_cotizacion"];
 
 $impresion_lamina3=seleccionTabla($impresion["lamina3_cotizacion"], "id_articulo", "syCoesa_articulo", $conexion);
+$impresion_lamina3_ancho=$impresion["lamina3_ancho_cotizacion"];
+$impresion_lamina3_grm2=$impresion["lamina3_grm2_cotizacion"];
 $impresion_lamina3_extrusion=$impresion["extrusion3_cotizacion"];
-$impresion_lamina3_impresion=$impresion["impresion3_cotizacion"];
-$impresion_lamina3_bilaminado=$impresion["bilaminado3_cotizacion"];
 $impresion_lamina3_trilaminado=$impresion["trilaminado3_cotizacion"];
 $impresion_lamina3_trilaminado_grm2=$impresion["trilaminado3_grm2_cotizacion"];
 $impresion_lamina3_rebobinado=$impresion["rebobinado3_cotizacion"];
-$impresion_lamina3_habilitado=$impresion["habilitado3_cotizacion"];
 $impresion_lamina3_cortefinal=$impresion["cortefinal3_cotizacion"];
 $impresion_lamina3_sellado=$impresion["sellado3_cotizacion"];
+
 $impresion_grm2total=$impresion["grm2total_cotizacion"];
 $impresion_cantproduccion=$impresion["cantproduccion_cotizacion"];
 $impresion_metrosproducir=$impresion["metrosproducir_cotizacion"];
 
 //PROCESOS DE LAMINAS
-$rst_proc_extrusion=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE id_maquina=".$impresion["proc_extrusion_maq_cotizacion"]." AND mostrar_maquina=1;", $conexion);
-$proc_extrusion=mysql_fetch_array($rst_proc_extrusion);
-$proc_extrusion_nombre=seleccionTabla($proc_extrusion["id_maquina"], "id_maquina", "syCoesa_mantenimiento_maquinas", $conexion);
+$rst_proc_extrusion_impresion=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE id_maquina=".$impresion["proc_extrusion_impresion_maq_cotizacion"]." AND mostrar_maquina=1;", $conexion);
+$proc_extrusion_impresion=mysql_fetch_array($rst_proc_extrusion_impresion);
+$proc_extrusion_impresion_nombre=seleccionTabla($proc_extrusion_impresion["id_maquina"], "id_maquina", "syCoesa_mantenimiento_maquinas", $conexion);
+
+$rst_proc_extrusion_bilaminado=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE id_maquina=".$impresion["proc_extrusion_bilaminado_maq_cotizacion"]." AND mostrar_maquina=1;", $conexion);
+$proc_extrusion_bilaminado=mysql_fetch_array($rst_proc_extrusion_bilaminado);
+$proc_extrusion_bilaminado_nombre=seleccionTabla($proc_extrusion_bilaminado["id_maquina"], "id_maquina", "syCoesa_mantenimiento_maquinas", $conexion);
+
+$rst_proc_extrusion_trilaminado=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE id_maquina=".$impresion["proc_extrusion_trilaminado_maq_cotizacion"]." AND mostrar_maquina=1;", $conexion);
+$proc_extrusion_trilaminado=mysql_fetch_array($rst_proc_extrusion_trilaminado);
+$proc_extrusion_trilaminado_nombre=seleccionTabla($proc_extrusion_trilaminado["id_maquina"], "id_maquina", "syCoesa_mantenimiento_maquinas", $conexion);
 
 $rst_proc_impresion=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE id_maquina=".$impresion["proc_impresion_maq_cotizacion"]." AND mostrar_maquina=1;", $conexion);
 $proc_impresion=mysql_fetch_array($rst_proc_impresion);
@@ -152,36 +159,31 @@ if($impresion_lamina1_extrusion>0 or $impresion_lamina2_extrusion>0 or $impresio
 	
 	if($impresion_lamina1_extrusion>0){
 		if($impresion_lamina1_impresion>0){
-			$mtrprod_extrusion=(($mtrprod_impresion * $impresion_lamina1["ancho_articulo"] * $impresion_lamina1["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
-			$proc_extrusion_merma=($proc_extrusion["merma_proceso_permitida"] / $impresion_lamina1["ancho_articulo"] / $impresion_lamina1["grm2_articulo"]) * 1000000;
-		}elseif($impresion_lamina1_bilaminado>0){
-			$mtrprod_extrusion=(($mtrprod_bilaminado * $impresion_lamina1["ancho_articulo"] * $impresion_lamina1["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
-			$proc_extrusion_merma=($proc_extrusion["merma_proceso_permitida"] / $impresion_lamina1["ancho_articulo"] / $impresion_lamina1["grm2_articulo"]) * 1000000;
-		}elseif($impresion_lamina1_trilaminado>0){
-			$mtrprod_extrusion=(($mtrprod_trilaminado * $impresion_lamina1["ancho_articulo"] * $impresion_lamina1["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
-			$proc_extrusion_merma=($proc_extrusion["merma_proceso_permitida"] / $impresion_lamina1["ancho_articulo"] / $impresion_lamina1["grm2_articulo"]) * 1000000;
+			$mtrprod_extrusion_impresion=(($mtrprod_impresion * $impresion_lamina1_ancho * $impresion_lamina1_grm2) / 1000000) + $procprod_merma["merma_proceso"];
+			$proc_extrusion_impresion_merma=($proc_extrusion_impresion["merma_proceso_permitida"] / $impresion_lamina1_ancho / $impresion_lamina1_grm2) * 1000000;
 		}elseif($impresion_lamina1_cortefinal>0){
-			$mtrprod_extrusion=(($mtrprod_cortefinal * $impresion_lamina1["ancho_articulo"] * $impresion_lamina1["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
-			$proc_extrusion_merma=($proc_extrusion["merma_proceso_permitida"] / $impresion_lamina1["ancho_articulo"] / $impresion_lamina1["grm2_articulo"]) * 1000000;
+			$mtrprod_extrusion_impresion=(($mtrprod_cortefinal * $impresion_lamina1_ancho * $impresion_lamina1_grm2) / 1000000) + $procprod_merma["merma_proceso"];
+			$proc_extrusion_impresion_merma=($proc_extrusion_impresion["merma_proceso_permitida"] / $impresion_lamina1_ancho / $impresion_lamina1_grm2) * 1000000;
 		}
-	}elseif($impresion_lamina2_extrusion>0){
+	}
+	
+	if($impresion_lamina2_extrusion>0){
 		if($impresion_lamina2_bilaminado>0){
-			$mtrprod_extrusion=(($mtrprod_bilaminado * $impresion_lamina2["ancho_articulo"] * $impresion_lamina2["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
-			$proc_extrusion_merma=($proc_extrusion["merma_proceso_permitida"] / $impresion_lamina2["ancho_articulo"] / $impresion_lamina2["grm2_articulo"]) * 1000000;
-		}elseif($impresion_lamina2_trilaminado>0){
-			$mtrprod_extrusion=(($mtrprod_trilaminado * $impresion_lamina2["ancho_articulo"] * $impresion_lamina2["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
-			$proc_extrusion_merma=($proc_extrusion["merma_proceso_permitida"] / $impresion_lamina2["ancho_articulo"] / $impresion_lamina2["grm2_articulo"]) * 1000000;
+			$mtrprod_extrusion_bilaminado=(($mtrprod_bilaminado * $impresion_lamina2_ancho * $impresion_lamina2_grm2) / 1000000) + $procprod_merma["merma_proceso"];
+			$proc_extrusion_bilaminado_merma=($proc_extrusion_bilaminado["merma_proceso_permitida"] / $impresion_lamina2_ancho / $impresion_lamina2_grm2) * 1000000;
 		}elseif($impresion_lamina2_cortefinal>0){
-			$mtrprod_extrusion=(($mtrprod_cortefinal * $impresion_lamina2["ancho_articulo"] * $impresion_lamina2["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
-			$proc_extrusion_merma=($proc_extrusion["merma_proceso_permitida"] / $impresion_lamina2["ancho_articulo"] / $impresion_lamina2["grm2_articulo"]) * 1000000;
+			$mtrprod_extrusion_bilaminado=(($mtrprod_cortefinal * $impresion_lamina2_ancho * $impresion_lamina2_grm2) / 1000000) + $procprod_merma["merma_proceso"];
+			$proc_extrusion_bilaminado_merma=($proc_extrusion_bilaminado["merma_proceso_permitida"] / $impresion_lamina2_ancho / $impresion_lamina2_grm2) * 1000000;
 		}
-	}elseif($impresion_lamina3_extrusion>0){
+	}
+	
+	if($impresion_lamina3_extrusion>0){
 		if($impresion_lamina3_trilaminado>0){
-			$mtrprod_extrusion=(($mtrprod_trilaminado * $impresion_lamina3["ancho_articulo"] * $impresion_lamina3["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
-			$proc_extrusion_merma=($proc_extrusion["merma_proceso_permitida"] / $impresion_lamina3["ancho_articulo"] / $impresion_lamina3["grm2_articulo"]) * 1000000;
+			$mtrprod_extrusion_trilaminado=(($mtrprod_trilaminado * $impresion_lamina3_ancho * $impresion_lamina3_grm2) / 1000000) + $procprod_merma["merma_proceso"];
+			$proc_extrusion_trilaminado_merma=($proc_extrusion_trilaminado["merma_proceso_permitida"] / $impresion_lamina3_ancho / $impresion_lamina3_grm2) * 1000000;
 		}elseif($impresion_lamina3_cortefinal>0){
-			$mtrprod_extrusion=(($mtrprod_cortefinal * $impresion_lamina3["ancho_articulo"] * $impresion_lamina3["grm2_articulo"]) / 1000000) + $procprod_merma["merma_proceso"];
-			$proc_extrusion_merma=($proc_extrusion["merma_proceso_permitida"] / $impresion_lamina3["ancho_articulo"] / $impresion_lamina3["grm2_articulo"]) * 1000000;
+			$mtrprod_extrusion_trilaminado=(($mtrprod_cortefinal * $impresion_lamina3_ancho * $impresion_lamina3_grm2) / 1000000) + $procprod_merma["merma_proceso"];
+			$proc_extrusion_trilaminado_merma=($proc_extrusion_trilaminado["merma_proceso_permitida"] / $impresion_lamina3_ancho / $impresion_lamina3_grm2) * 1000000;
 		}
 	}
 }
@@ -200,7 +202,7 @@ if($proc_trilaminado>0){ //TRILAMINADO
 		}else{
 			$mtrprod_lamina_trilaminado_f=($mtrprod + $procprod_merma_trilaminado["merma_proceso"]);
 		}
-	$mtrprod_lamina_trilaminado=(($mtrprod_lamina_trilaminado_f * $impresion_lamina3["grm2_articulo"] * $impresion_lamina3["ancho_articulo"]) / 1000000);
+	$mtrprod_lamina_trilaminado=(($mtrprod_lamina_trilaminado_f * $impresion_lamina3_grm2 * $impresion_lamina3_ancho) / 1000000);
 }else{ $mtrprod_lamina_trilaminado=0; }
 
 if($proc_bilaminado>0){ //BILAMINADO
@@ -211,11 +213,11 @@ if($proc_bilaminado>0){ //BILAMINADO
 		}else{
 			$mtrprod_lamina_bilaminado_f=($mtrprod + $procprod_merma_bilaminado["merma_proceso"]);
 		}
-		$mtrprod_lamina_bilaminado=(($mtrprod_lamina_bilaminado_f * $impresion_lamina2["grm2_articulo"] * $impresion_lamina2["ancho_articulo"]) / 1000000);
+		$mtrprod_lamina_bilaminado=(($mtrprod_lamina_bilaminado_f * $impresion_lamina2_grm2 * $impresion_lamina2_ancho) / 1000000);
 	}elseif($proc_trilaminado>0){
 		$procprod_merma_bilaminado=seleccionTabla("'bilaminado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
 		$mtrprod_lamina_bilaminado_f=($mtrprod_lamina_trilaminado_f + $procprod_merma_bilaminado["merma_proceso"]);
-		$mtrprod_lamina_bilaminado=(($mtrprod_lamina_bilaminado_f * $impresion_lamina2["grm2_articulo"] * $impresion_lamina2["ancho_articulo"]) / 1000000);
+		$mtrprod_lamina_bilaminado=(($mtrprod_lamina_bilaminado_f * $impresion_lamina2_grm2 * $impresion_lamina2_ancho) / 1000000);
 	}
 }else{ $mtrprod_lamina_bilaminado=0; }
 
@@ -228,19 +230,19 @@ if($proc_impresion>0){ //IMPRESION
 		}else{
 			$mtrprod_lamina_impresion_f=($mtrprod + ($procprod_merma_impr["merma_proceso"] * $cant_colores));
 		}
-		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1["grm2_articulo"] * $impresion_lamina1["ancho_articulo"]) / 1000000);
+		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1_grm2 * $impresion_lamina1_ancho) / 1000000);
 	}elseif($proc_bilaminado>0 and $proc_trilaminado>0){
 		$procprod_merma_impr=seleccionTabla("'impresion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
 		$mtrprod_lamina_impresion_f=($mtrprod_lamina_bilaminado_f + ($procprod_merma_impr["merma_proceso"] * $cant_colores));
-		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1["grm2_articulo"] * $impresion_lamina1["ancho_articulo"]) / 1000000);
+		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1_grm2 * $impresion_lamina1_ancho) / 1000000);
 	}elseif($proc_bilaminado>0 and $proc_trilaminado==0){
 		$procprod_merma_impr=seleccionTabla("'impresion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
 		$mtrprod_lamina_impresion_f=($mtrprod_lamina_bilaminado_f + ($procprod_merma_impr["merma_proceso"] * $cant_colores));
-		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1["grm2_articulo"] * $impresion_lamina1["ancho_articulo"]) / 1000000);
+		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1_grm2 * $impresion_lamina1_ancho) / 1000000);
 	}elseif($proc_trilaminado>0 and $proc_bilaminado==0){
 		$procprod_merma_impr=seleccionTabla("'impresion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
 		$mtrprod_lamina_impresion_f=($mtrprod_lamina_trilaminado_f + ($procprod_merma_impr["merma_proceso"] * $cant_colores));
-		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1["grm2_articulo"] * $impresion_lamina1["ancho_articulo"]) / 1000000);
+		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1_grm2 * $impresion_lamina1_ancho) / 1000000);
 	}
 	
 }else{ $mtrprod_lamina_impresion=0; }
@@ -252,17 +254,41 @@ $suma_grm2tlq=0;
 while($fila_grm2tlq=mysql_fetch_array($rst_grm2tlq)){ $suma_grm2tlq=$fila_grm2tlq["solido_tinta"] + $suma_grm2tlq; }
 $TotalTintaLiquida=$impresion_lamina1_impresion_grm2 + ($suma_grm2tlq / $num_grm2tlq);
 
-//VARIABLES PARA EXTRUSION
-$proc_extrusion_prep_reg=Sumar2Tiempos($proc_extrusion["preparacion_maquina"], $proc_extrusion["regulacion_maquina"]);
-$proc_extrusion_tiempo_num=round(Division2Num($mtrprod_extrusion, $proc_extrusion["velocidad_maquina"]));
-$proc_extrusion_tiempo=NumAHora($proc_extrusion_tiempo_num);
-$proc_extrusion_tiempo_produc=Sumar2Tiempos($proc_extrusion_prep_reg, $proc_extrusion_tiempo);
-$proc_extrusion_total_horahombre=number_format(CostoLamina(($proc_extrusion_tiempo_produc), $proc_extrusion["costohora_hombre_maquina"]), 2);
-$proc_extrusion_total_kwhora=number_format(CostoLamina(($proc_extrusion_tiempo_produc), $proc_extrusion["costokw_hora_maquina"]), 2);
-$proc_extrusion_total_deprec=number_format(CostoLamina(($proc_extrusion_tiempo_produc), $proc_extrusion["costodepreciacion_hora_maquina"]), 2);
-$proc_extrusion_total_gastos=number_format(CostoLamina(($proc_extrusion_tiempo_produc), $proc_extrusion["gastosfabrica_hora_maquina"]), 2);
-$proc_extrusion_total_depgas=number_format($proc_extrusion_total_deprec + $proc_extrusion_total_gastos, 2);
-$proc_extrusion_total_costo=($proc_extrusion_total_horahombre + $proc_extrusion_total_kwhora + $proc_extrusion_total_deprec + $proc_extrusion_total_gastos);
+//VARIABLES PARA EXTRUSION DE IMPRESION
+$proc_extrusion_impresion_prep_reg=Sumar2Tiempos($proc_extrusion_impresion["preparacion_maquina"], $proc_extrusion_impresion["regulacion_maquina"]);
+$proc_extrusion_impresion_tiempo_num=round(Division2Num($mtrprod_extrusion_impresion, $proc_extrusion_impresion["velocidad_maquina"]));
+$proc_extrusion_impresion_tiempo=NumAHora($proc_extrusion_impresion_tiempo_num);
+$proc_extrusion_impresion_tiempo_produc=Sumar2Tiempos($proc_extrusion_impresion_prep_reg, $proc_extrusion_impresion_tiempo);
+$proc_extrusion_impresion_total_horahombre=number_format(CostoLamina(($proc_extrusion_impresion_tiempo_produc), $proc_extrusion_impresion["costohora_hombre_maquina"]), 2);
+$proc_extrusion_impresion_total_kwhora=number_format(CostoLamina(($proc_extrusion_impresion_tiempo_produc), $proc_extrusion_impresion["costokw_hora_maquina"]), 2);
+$proc_extrusion_impresion_total_deprec=number_format(CostoLamina(($proc_extrusion_impresion_tiempo_produc), $proc_extrusion_impresion["costodepreciacion_hora_maquina"]), 2);
+$proc_extrusion_impresion_total_gastos=number_format(CostoLamina(($proc_extrusion_impresion_tiempo_produc), $proc_extrusion_impresion["gastosfabrica_hora_maquina"]), 2);
+$proc_extrusion_impresion_total_depgas=number_format($proc_extrusion_impresion_total_deprec + $proc_extrusion_impresion_total_gastos, 2);
+$proc_extrusion_impresion_total_costo=($proc_extrusion_impresion_total_horahombre + $proc_extrusion_impresion_total_kwhora + $proc_extrusion_impresion_total_deprec + $proc_extrusion_impresion_total_gastos);
+
+//VARIABLES PARA EXTRUSION DE BILAMINADO
+$proc_extrusion_bilaminado_prep_reg=Sumar2Tiempos($proc_extrusion_bilaminado["preparacion_maquina"], $proc_extrusion_bilaminado["regulacion_maquina"]);
+$proc_extrusion_bilaminado_tiempo_num=round(Division2Num($mtrprod_extrusion_bilaminado, $proc_extrusion_bilaminado["velocidad_maquina"]));
+$proc_extrusion_bilaminado_tiempo=NumAHora($proc_extrusion_bilaminado_tiempo_num);
+$proc_extrusion_bilaminado_tiempo_produc=Sumar2Tiempos($proc_extrusion_bilaminado_prep_reg, $proc_extrusion_bilaminado_tiempo);
+$proc_extrusion_bilaminado_total_horahombre=number_format(CostoLamina(($proc_extrusion_bilaminado_tiempo_produc), $proc_extrusion_bilaminado["costohora_hombre_maquina"]), 2);
+$proc_extrusion_bilaminado_total_kwhora=number_format(CostoLamina(($proc_extrusion_bilaminado_tiempo_produc), $proc_extrusion_bilaminado["costokw_hora_maquina"]), 2);
+$proc_extrusion_bilaminado_total_deprec=number_format(CostoLamina(($proc_extrusion_bilaminado_tiempo_produc), $proc_extrusion_bilaminado["costodepreciacion_hora_maquina"]), 2);
+$proc_extrusion_bilaminado_total_gastos=number_format(CostoLamina(($proc_extrusion_bilaminado_tiempo_produc), $proc_extrusion_bilaminado["gastosfabrica_hora_maquina"]), 2);
+$proc_extrusion_bilaminado_total_depgas=number_format($proc_extrusion_bilaminado_total_deprec + $proc_extrusion_bilaminado_total_gastos, 2);
+$proc_extrusion_bilaminado_total_costo=($proc_extrusion_bilaminado_total_horahombre + $proc_extrusion_bilaminado_total_kwhora + $proc_extrusion_bilaminado_total_deprec + $proc_extrusion_bilaminado_total_gastos);
+
+//VARIABLES PARA EXTRUSION DE TRILAMINADO
+$proc_extrusion_trilaminado_prep_reg=Sumar2Tiempos($proc_extrusion_trilaminado["preparacion_maquina"], $proc_extrusion_trilaminado["regulacion_maquina"]);
+$proc_extrusion_trilaminado_tiempo_num=round(Division2Num($mtrprod_extrusion_trilaminado, $proc_extrusion_trilaminado["velocidad_maquina"]));
+$proc_extrusion_trilaminado_tiempo=NumAHora($proc_extrusion_trilaminado_tiempo_num);
+$proc_extrusion_trilaminado_tiempo_produc=Sumar2Tiempos($proc_extrusion_trilaminado_prep_reg, $proc_extrusion_trilaminado_tiempo);
+$proc_extrusion_trilaminado_total_horahombre=number_format(CostoLamina(($proc_extrusion_trilaminado_tiempo_produc), $proc_extrusion_trilaminado["costohora_hombre_maquina"]), 2);
+$proc_extrusion_trilaminado_total_kwhora=number_format(CostoLamina(($proc_extrusion_trilaminado_tiempo_produc), $proc_extrusion_trilaminado["costokw_hora_maquina"]), 2);
+$proc_extrusion_trilaminado_total_deprec=number_format(CostoLamina(($proc_extrusion_trilaminado_tiempo_produc), $proc_extrusion_trilaminado["costodepreciacion_hora_maquina"]), 2);
+$proc_extrusion_trilaminado_total_gastos=number_format(CostoLamina(($proc_extrusion_trilaminado_tiempo_produc), $proc_extrusion_trilaminado["gastosfabrica_hora_maquina"]), 2);
+$proc_extrusion_trilaminado_total_depgas=number_format($proc_extrusion_trilaminado_total_deprec + $proc_extrusion_trilaminado_total_gastos, 2);
+$proc_extrusion_trilaminado_total_costo=($proc_extrusion_trilaminado_total_horahombre + $proc_extrusion_trilaminado_total_kwhora + $proc_extrusion_trilaminado_total_deprec + $proc_extrusion_trilaminado_total_gastos);
 
 //VARIABLES PARA IMPRESION
 $proc_impresion_prep_reg=Sumar2TiemposColores($proc_impresion["preparacion_maquina"], $proc_impresion["regulacion_maquina"],$impresion_nrocolores);
@@ -349,7 +375,16 @@ $proc_sellado_total_depgas=number_format($proc_sellado_total_deprec + $proc_sell
 $proc_sellado_total_costo=($proc_sellado_total_horahombre + $proc_sellado_total_kwhora + $proc_sellado_total_deprec + $proc_sellado_total_gastos);
 
 //TOTAL COSTO DE PROCESOS PRODUCTIVOS
-$TotalCostoProcesos=$proc_extrusion_total_costo + $proc_impresion_total_costo + $proc_bilaminado_total_costo + $proc_trilaminado_total_costo + $proc_rebobinado_total_costo + $proc_habilitado_total_costo + $proc_cortefinal_total_costo + $proc_sellado_total_costo;
+$TotalCostoProcesos=$proc_extrusion_impresion_total_costo +
+						$proc_extrusion_bilaminado_total_costo +
+							$proc_extrusion_trilaminado_total_costo +
+								$proc_impresion_total_costo + 
+									$proc_bilaminado_total_costo + 
+										$proc_trilaminado_total_costo + 
+											$proc_rebobinado_total_costo + 
+												$proc_habilitado_total_costo + 
+													$proc_cortefinal_total_costo + 
+														$proc_sellado_total_costo;
 
 //VALORES DE GRM2
 $tintaseca_lamina=$impresion_lamina1_impresion_grm2;
@@ -357,15 +392,15 @@ $bilaminado_lamina=$impresion_lamina2_bilaminado_grm2;
 $trilaminado_lamina=$impresion_lamina3_trilaminado_grm2;
 
 //DATOS IMPRESION
-$Lamina_impresion_refile=(PorcRefile($impresion_lamina1["ancho_articulo"],$impresion_anchofinal, $impresion_nrobandas));
+$Lamina_impresion_refile=(PorcRefile($impresion_lamina1_ancho,$impresion_anchofinal, $impresion_nrobandas));
 $Lamina_impresion_total=(CostoLamina($mtrprod_lamina_impresion, $impresion_lamina1["precio_articulo"]));
 
 //DATOS BILAMINADO
-$Lamina_bilaminado_refile=(PorcRefile($impresion_lamina2["ancho_articulo"],$impresion_anchofinal, $impresion_nrobandas));
+$Lamina_bilaminado_refile=(PorcRefile($impresion_lamina2_ancho,$impresion_anchofinal, $impresion_nrobandas));
 $Lamina_bilaminado_total=(CostoLamina($mtrprod_lamina_bilaminado, $impresion_lamina2["precio_articulo"]));
 
 //DATOS TRILAMINADO
-$Lamina_trilaminado_refile=(PorcRefile($impresion_lamina3["ancho_articulo"],$impresion_anchofinal, $impresion_nrobandas));
+$Lamina_trilaminado_refile=(PorcRefile($impresion_lamina3_ancho,$impresion_anchofinal, $impresion_nrobandas));
 $Lamina_trilaminado_total=(CostoLamina($mtrprod_lamina_trilaminado, $impresion_lamina3["precio_articulo"]));
 
 /*------------- KG REQUERIDOS PARA INSUMOS -------------*/
@@ -531,7 +566,7 @@ $TotalKwHora=$proc_extrusion_total_kwhora + $proc_impresion_total_kwhora + $proc
 $TotalDepGas=$proc_extrusion_total_depgas + $proc_impresion_total_depgas + $proc_bilaminado_total_depgas + $proc_trilaminado_total_depgas + $proc_habilitado_total_depgas + $proc_rebobinado_total_depgas + $proc_cortefinal_total_depgas  + $proc_sellado_total_depgas;
 
 /*------------- TOTAL DE GRM2 -------------*/
-$TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articulo"] + $impresion_lamina3["grm2_articulo"] + $impresion_lamina1_impresion_grm2 + $impresion_lamina2_bilaminado_grm2 + $impresion_lamina3_trilaminado_grm2;
+$TotalGrm2=$impresion_lamina1_grm2 + $impresion_lamina2_grm2 + $impresion_lamina3_grm2 + $impresion_lamina1_impresion_grm2 + $impresion_lamina2_bilaminado_grm2 + $impresion_lamina3_trilaminado_grm2;
 
 ?>
 <!DOCTYPE HTML>
@@ -657,11 +692,11 @@ $TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articu
     <th height="22" align="right" scope="col">IMPRIME</th>
     <th height="22" colspan="6" align="left" class="border_rb1s0" scope="col"><?php echo $impresion_lamina1["nombre_articulo"]; ?></th>
     <th height="22" scope="col">&nbsp;</th>
-    <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($impresion_lamina1["ancho_articulo"],1); ?></th>
+    <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($impresion_lamina1_ancho,1); ?></th>
     <th height="22" scope="col">&nbsp;</th>
     <th height="22" scope="col">&nbsp;</th>
     <th height="22" scope="col">&nbsp;</th>
-    <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($impresion_lamina1["grm2_articulo"],1); ?></th>
+    <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($impresion_lamina1_grm2,1); ?></th>
     <th height="22" scope="col">&nbsp;</th>
     <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($mtrprod_lamina_impresion, 1); ?></th>
     <th height="22" scope="col">&nbsp;</th>
@@ -677,11 +712,11 @@ $TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articu
     <th height="22" align="right" scope="col">BILAMINA</th>
     <th height="22" colspan="6" align="left" class="border_rb1s0" scope="col"><?php echo $impresion_lamina2["nombre_articulo"]; ?></th>
     <th height="22" scope="col">&nbsp;</th>
-    <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($impresion_lamina2["ancho_articulo"],1); ?></th>
+    <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($impresion_lamina2_ancho,1); ?></th>
     <th height="22" scope="col">&nbsp;</th>
     <th height="22" scope="col">&nbsp;</th>
     <th height="22" scope="col">&nbsp;</th>
-    <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($impresion_lamina2["grm2_articulo"],1); ?></th>
+    <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($impresion_lamina2_grm2,1); ?></th>
     <th height="22" scope="col">&nbsp;</th>
     <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($mtrprod_lamina_bilaminado, 1); ?></th>
     <th height="22" scope="col">&nbsp;</th>
@@ -697,11 +732,11 @@ $TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articu
     <th height="22" align="right" scope="col">TRILAMINA</th>
     <th height="22" colspan="6" align="left" class="border_rb1s0" scope="col"><?php echo $impresion_lamina3["nombre_articulo"]; ?></th>
     <th height="22" scope="col">&nbsp;</th>
-    <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($impresion_lamina3["ancho_articulo"],1); ?></th>
+    <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($impresion_lamina3_ancho,1); ?></th>
     <th height="22" scope="col">&nbsp;</th>
     <th height="22" scope="col">&nbsp;</th>
     <th height="22" scope="col">&nbsp;</th>
-    <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($impresion_lamina3["grm2_articulo"],1); ?></th>
+    <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($impresion_lamina3_grm2,1); ?></th>
     <th height="22" scope="col">&nbsp;</th>
     <th height="22" scope="col" class="border_rb1s0"><?php echo number_format($mtrprod_lamina_trilaminado, 1); ?></th>
     <th height="22" scope="col">&nbsp;</th>
@@ -859,215 +894,259 @@ $TotalGrm2=$impresion_lamina1["grm2_articulo"] + $impresion_lamina2["grm2_articu
     <th colspan="16" class="titulo_tabla" scope="col">PROCESOS PRODUCTIVOS</th>
   </tr>
   <tr>
-    <th width="93" height="20" scope="col">&nbsp;</th>
-    <th width="115" height="20" scope="col">&nbsp;</th>
-    <th width="60" height="20" scope="col">&nbsp;</th>
-    <th width="39" height="20" scope="col">&nbsp;</th>
-    <th width="39" height="20" scope="col">&nbsp;</th>
+    <th width="12%" height="20" scope="col">&nbsp;</th>
+    <th width="9%" height="20" scope="col">&nbsp;</th>
+    <th width="4%" height="20" scope="col">&nbsp;</th>
+    <th width="4%" height="20" scope="col">&nbsp;</th>
+    <th width="4%" height="20" scope="col">&nbsp;</th>
     <th height="20" colspan="3" scope="col">TIEMPO</th>
     <th height="20" colspan="2" scope="col">MANO DE OBRA</th>
     <th height="20" colspan="2" scope="col">ENERGIA</th>
-    <th width="39" height="20" scope="col">&nbsp;</th>
-    <th width="63" height="20" scope="col">&nbsp;</th>
-    <th width="57" height="20" scope="col">&nbsp;</th>
-    <th width="134" height="20" scope="col">&nbsp;</th>
+    <th width="4%" height="20" scope="col">&nbsp;</th>
+    <th width="4%" height="20" scope="col">&nbsp;</th>
+    <th width="4%" height="20" scope="col">&nbsp;</th>
+    <th width="10%" height="20" scope="col">&nbsp;</th>
   </tr>
   <tr>
-    <th width="93" height="37" scope="col">PROCESOS</th>
-    <th width="115" height="37" scope="col">MAQUINAS</th>
-    <th width="5%" height="37" scope="col"><p>MERMA PROCESO</p>
+    <th width="12%" height="37" scope="col">PROCESOS</th>
+    <th width="9%" height="37" scope="col">MAQUINAS</th>
+    <th width="4%" height="37" scope="col"><p>MERMA PROCESO</p>
       <p>(Mtr)</p></th>
-    <th width="5%" height="37" scope="col">CANTIDAD</th>
-    <th width="5%" height="37" scope="col">VELOC.</th>
-    <th width="5%" height="37" scope="col"><p>PREP./</p>
+    <th width="4%" height="37" scope="col">CANTIDAD</th>
+    <th width="4%" height="37" scope="col">VELOC.</th>
+    <th width="4%" height="37" scope="col"><p>PREP./</p>
       <p>REGUL.</p></th>
-    <th width="5%" scope="col">PRODUC.</th>
-    <th width="5%" height="37" scope="col">TOTAL</th>
-    <th width="5%" height="37" scope="col"><p>US$ / </p>
+    <th width="4%" scope="col">PRODUC.</th>
+    <th width="4%" height="37" scope="col">TOTAL</th>
+    <th width="4%" height="37" scope="col"><p>US$ / </p>
     <p>HORA</p></th>
-    <th width="5%" height="37" scope="col"><p>TOTAL</p>
+    <th width="4%" height="37" scope="col"><p>TOTAL</p>
       <p> US$</p></th>
-    <th width="5%" height="37" scope="col"><p>US$ / </p>
+    <th width="4%" height="37" scope="col"><p>US$ / </p>
     <p>HORA</p></th>
-    <th width="5%" height="37" scope="col"><p>TOTAL</p>
+    <th width="4%" height="37" scope="col"><p>TOTAL</p>
       <p> US$</p></th>
-    <th width="5%" height="37" scope="col"><p>DEPRE-</p>
+    <th width="4%" height="37" scope="col"><p>DEPRE-</p>
     <p>CIACION</p></th>
-    <th width="5%" height="37" scope="col"><p>GASTOS</p>
+    <th width="4%" height="37" scope="col"><p>GASTOS</p>
       GENERAS</th>
-    <th width="5%" height="37" scope="col"><p>TOTAL</p>
+    <th width="4%" height="37" scope="col"><p>TOTAL</p>
       <p> US$</p></th>
-    <th width="134" height="37" scope="col">COSTO TOTAL US$</th>
+    <th width="10%" height="37" scope="col">COSTO TOTAL US$</th>
   </tr>
-  <?php if($proc_extrusion>0){ ?>
+  <?php if($proc_extrusion_impresion>0){ ?>
   <tr>
-    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">EXTRUSIÓN (KG)</th>
-    <th width="115" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_extrusion_nombre["nombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_extrusion_merma); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_extrusion); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_extrusion["velocidad_maquina"],2); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_prep_reg; ?></th>
-    <th width="5%" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_tiempo; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_tiempo_produc;  ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion["costohora_hombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_total_horahombre; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion["costokw_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_total_kwhora; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion["costodepreciacion_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion["gastosfabrica_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_total_depgas; ?></th>
-    <th width="134" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_extrusion_total_costo, 3); ?></th>
+    <th width="12%" height="23" align="left" class="border_rb1s0" scope="col">EXTRUSIÓN IMP. (KG)</th>
+    <th width="9%" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_extrusion_impresion_nombre["nombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_extrusion_impresion_merma); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_extrusion_impresion); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_extrusion_impresion["velocidad_maquina"],2); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_impresion_prep_reg; ?></th>
+    <th width="4%" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_impresion_tiempo; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_impresion_tiempo_produc;  ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_impresion["costohora_hombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_impresion_total_horahombre; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_impresion["costokw_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_impresion_total_kwhora; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_impresion["costodepreciacion_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_impresion["gastosfabrica_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_impresion_total_depgas; ?></th>
+    <th width="10%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_extrusion_impresion_total_costo, 3); ?></th>
+  </tr>
+  <?php } ?>
+  <?php if($proc_extrusion_bilaminado>0){ ?>
+  <tr>
+    <th width="12%" height="23" align="left" class="border_rb1s0" scope="col">EXTRUSIÓN BI. (KG)</th>
+    <th width="9%" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_extrusion_bilaminado_nombre["nombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_extrusion_bilaminado_merma); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_extrusion_bilaminado); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_extrusion_bilaminado["velocidad_maquina"],2); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_bilaminado_prep_reg; ?></th>
+    <th width="4%" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_bilaminado_tiempo; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_bilaminado_tiempo_produc;  ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_bilaminado["costohora_hombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_bilaminado_total_horahombre; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_bilaminado["costokw_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_bilaminado_total_kwhora; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_bilaminado["costodepreciacion_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_bilaminado["gastosfabrica_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_bilaminado_total_depgas; ?></th>
+    <th width="10%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_extrusion_bilaminado_total_costo, 3); ?></th>
+  </tr>
+  <?php } ?>
+  <?php if($proc_extrusion_trilaminado>0){ ?>  
+  <tr>
+    <th width="12%" height="23" align="left" class="border_rb1s0" scope="col">EXTRUSIÓN TRI. (KG)</th>
+    <th width="9%" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_extrusion_trilaminado_nombre["nombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_extrusion_trilaminado_merma); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_extrusion_trilaminado); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_extrusion_trilaminado["velocidad_maquina"],2); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_trilaminado_prep_reg; ?></th>
+    <th width="4%" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_trilaminado_tiempo; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_trilaminado_tiempo_produc;  ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_trilaminado["costohora_hombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_trilaminado_total_horahombre; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_trilaminado["costokw_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_trilaminado_total_kwhora; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_trilaminado["costodepreciacion_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_trilaminado["gastosfabrica_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_trilaminado_total_depgas; ?></th>
+    <th width="10%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_extrusion_trilaminado_total_costo, 3); ?></th>
   </tr>
   <?php } ?>
   <?php if($proc_impresion>0){ ?>
   <tr>
-    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">IMPRESIÓN (M)</th>
-    <th width="115" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_impresion_nombre["nombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_impresion_merma); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_impresion); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion["velocidad_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion_prep_reg; ?></th>
-    <th width="5%" scope="col" class="border_rb1s0"><?php echo $proc_impresion_tiempo; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_impresion_tiempo_produc;  ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion["costohora_hombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_impresion_total_horahombre; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion["costokw_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_impresion_total_kwhora; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion["costodepreciacion_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion["gastosfabrica_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_impresion_total_depgas; ?></th>
-    <th width="134" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_impresion_total_costo, 3); ?></th>
+    <th width="12%" height="23" align="left" class="border_rb1s0" scope="col">IMPRESIÓN (M)</th>
+    <th width="9%" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_impresion_nombre["nombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_impresion_merma); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_impresion); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion["velocidad_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion_prep_reg; ?></th>
+    <th width="4%" scope="col" class="border_rb1s0"><?php echo $proc_impresion_tiempo; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_impresion_tiempo_produc;  ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion["costohora_hombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_impresion_total_horahombre; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion["costokw_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_impresion_total_kwhora; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion["costodepreciacion_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_impresion["gastosfabrica_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_impresion_total_depgas; ?></th>
+    <th width="10%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_impresion_total_costo, 3); ?></th>
   </tr>
   <?php } ?>
   <?php if($proc_rebobinado>0){ ?>
   <tr>
-    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">REBOBINADO (M)</th>
-    <th width="115" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_rebobinado_nombre["nombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_rebobinado_merma); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_rebobinado); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado["velocidad_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado_prep_reg; ?></th>
-    <th width="5%" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado_tiempo; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_rebobinado_tiempo_produc;  ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado["costohora_hombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_rebobinado_total_horahombre; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado["costokw_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_rebobinado_total_kwhora; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado["costodepreciacion_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado["gastosfabrica_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_rebobinado_total_depgas; ?></th>
-    <th width="134" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_rebobinado_total_costo, 3); ?></th>
+    <th width="12%" height="23" align="left" class="border_rb1s0" scope="col">REBOBINADO (M)</th>
+    <th width="9%" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_rebobinado_nombre["nombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_rebobinado_merma); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_rebobinado); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado["velocidad_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado_prep_reg; ?></th>
+    <th width="4%" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado_tiempo; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_rebobinado_tiempo_produc;  ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado["costohora_hombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_rebobinado_total_horahombre; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado["costokw_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_rebobinado_total_kwhora; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado["costodepreciacion_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_rebobinado["gastosfabrica_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_rebobinado_total_depgas; ?></th>
+    <th width="10%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_rebobinado_total_costo, 3); ?></th>
   </tr>
   <?php } ?>
   <?php if($proc_bilaminado>0){ ?>
   <tr>
-    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">BILAMINADO (M)</th>
-    <th width="115" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_bilaminado_nombre["nombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_bilaminado_merma); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_bilaminado); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado["velocidad_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado_prep_reg; ?></th>
-    <th width="5%" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado_tiempo; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_bilaminado_tiempo_produc;  ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado["costohora_hombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_bilaminado_total_horahombre; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado["costokw_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_bilaminado_total_kwhora; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado["costodepreciacion_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado["gastosfabrica_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_bilaminado_total_depgas; ?></th>
-    <th width="134" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_bilaminado_total_costo, 3); ?></th>
+    <th width="12%" height="23" align="left" class="border_rb1s0" scope="col">BILAMINADO (M)</th>
+    <th width="9%" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_bilaminado_nombre["nombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_bilaminado_merma); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_bilaminado); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado["velocidad_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado_prep_reg; ?></th>
+    <th width="4%" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado_tiempo; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_bilaminado_tiempo_produc;  ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado["costohora_hombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_bilaminado_total_horahombre; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado["costokw_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_bilaminado_total_kwhora; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado["costodepreciacion_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_bilaminado["gastosfabrica_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_bilaminado_total_depgas; ?></th>
+    <th width="10%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_bilaminado_total_costo, 3); ?></th>
   </tr>
   <?php } ?>
   <?php if($proc_trilaminado>0){ ?>
   <tr>
-    <th width="93" height="23" align="left" class="border_rb1s0" scope="col">TRILAMINADO (M)</th>
-    <th width="115" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_trilaminado_nombre["nombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_trilaminado_merma); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_trilaminado); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado["velocidad_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado_prep_reg; ?></th>
-    <th width="5%" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado_tiempo; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_trilaminado_tiempo_produc;  ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado["costohora_hombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_trilaminado_total_horahombre; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado["costokw_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_trilaminado_total_kwhora; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado["costodepreciacion_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado["gastosfabrica_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_trilaminado_total_depgas; ?></th>
-    <th width="134" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_trilaminado_total_costo, 3); ?></th>
+    <th width="12%" height="23" align="left" class="border_rb1s0" scope="col">TRILAMINADO (M)</th>
+    <th width="9%" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_trilaminado_nombre["nombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_trilaminado_merma); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_trilaminado); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado["velocidad_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado_prep_reg; ?></th>
+    <th width="4%" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado_tiempo; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_trilaminado_tiempo_produc;  ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado["costohora_hombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_trilaminado_total_horahombre; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado["costokw_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_trilaminado_total_kwhora; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado["costodepreciacion_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_trilaminado["gastosfabrica_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_trilaminado_total_depgas; ?></th>
+    <th width="10%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_trilaminado_total_costo, 3); ?></th>
   </tr>
   <?php } ?>
   
   <?php if($proc_cortefinal>0){ ?>
   <tr>
-    <th height="23" align="left" class="border_rb1s0" scope="col">CORTE (M)</th>
-    <th height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_cortefinal_nombre["nombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_cortefinal_merma); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_cortefinal); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal["velocidad_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal_prep_reg; ?></th>
-    <th width="5%" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal_tiempo; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_cortefinal_tiempo_produc;  ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal["costohora_hombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_cortefinal_total_horahombre; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal["costokw_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_cortefinal_total_kwhora; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal["costodepreciacion_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal["gastosfabrica_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_cortefinal_total_depgas; ?></th>
-    <th width="134" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_cortefinal_total_costo, 3); ?></th>
+    <th width="12%" height="23" align="left" class="border_rb1s0" scope="col">CORTE (M)</th>
+    <th width="9%" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_cortefinal_nombre["nombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_cortefinal_merma); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_cortefinal); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal["velocidad_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal_prep_reg; ?></th>
+    <th width="4%" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal_tiempo; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_cortefinal_tiempo_produc;  ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal["costohora_hombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_cortefinal_total_horahombre; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal["costokw_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_cortefinal_total_kwhora; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal["costodepreciacion_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_cortefinal["gastosfabrica_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_cortefinal_total_depgas; ?></th>
+    <th width="10%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_cortefinal_total_costo, 3); ?></th>
   </tr>
   <?php } ?>
   <?php if($proc_sellado>0){ ?>
   <tr>
-    <th height="23" align="left" class="border_rb1s0" scope="col">SELLADO (UN)</th>
-    <th height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_sellado_nombre["nombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_sellado_merma); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_sellado_total); ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado["velocidad_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado_prep_reg; ?></th>
-    <th width="5%" scope="col" class="border_rb1s0"><?php echo $proc_sellado_tiempo; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_sellado_tiempo_produc; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado["costohora_hombre_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_sellado_total_horahombre; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado["costokw_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_sellado_total_kwhora; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado["costodepreciacion_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado["gastosfabrica_hora_maquina"]; ?></th>
-    <th width="5%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_sellado_total_depgas; ?></th>
-    <th width="134" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_sellado_total_costo, 3); ?></th>
+    <th width="12%" height="23" align="left" class="border_rb1s0" scope="col">SELLADO (UN)</th>
+    <th width="9%" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_sellado_nombre["nombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_sellado_merma); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_sellado_total); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado["velocidad_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado_prep_reg; ?></th>
+    <th width="4%" scope="col" class="border_rb1s0"><?php echo $proc_sellado_tiempo; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_sellado_tiempo_produc; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado["costohora_hombre_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_sellado_total_horahombre; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado["costokw_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_sellado_total_kwhora; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado["costodepreciacion_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_sellado["gastosfabrica_hora_maquina"]; ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_sellado_total_depgas; ?></th>
+    <th width="10%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_sellado_total_costo, 3); ?></th>
   </tr>
   <?php } ?>
   <tr>
     <th height="10" colspan="16" scope="col"><hr></th>
-  </tr>
+    </tr>
   <tr>
-    <th height="23" scope="col">&nbsp;</th>
-    <th height="23" scope="col">&nbsp;</th>
-    <th height="23" scope="col">&nbsp;</th>
+    <th width="12%" height="23" scope="col">&nbsp;</th>
+    <th width="9%" height="23" scope="col">&nbsp;</th>
+    <th width="4%" height="23" scope="col">&nbsp;</th>
     <th colspan="2" scope="col">TOTAL</th>
-    <th height="23" scope="col" class="border_rb1s0"><?php echo $TotalPrepReg; ?></th>
-    <th scope="col" class="border_rb1s0"><?php echo $TotalTiempoProduccion; ?></th>
-    <th height="23" scope="col" class="border_rb1s0"><?php echo $TotalTiempoTodo; ?></th>
+    <th width="4%" height="23" class="border_rb1s0" scope="col"><?php echo $TotalPrepReg; ?></th>
+    <th width="4%" class="border_rb1s0" scope="col"><?php echo $TotalTiempoProduccion; ?></th>
+    <th width="4%" height="23" class="border_rb1s0" scope="col"><?php echo $TotalTiempoTodo; ?></th>
     <th height="23" colspan="2" class="border_rb1s0" scope="col"><?php echo number_format($TotalHoraHombre, 3); ?></th>
     <th height="23" colspan="2" class="border_rb1s0" scope="col"><?php echo number_format($TotalKwHora, 3); ?></th>
-    <th height="23" scope="col">&nbsp;</th>
+    <th width="4%" height="23" scope="col">&nbsp;</th>
     <th height="23" colspan="2" class="border_rb1s0" scope="col"><?php echo number_format($TotalDepGas, 3); ?></th>
-    <th height="23" scope="col">&nbsp;</th>
+    <th width="10%" height="23" scope="col">&nbsp;</th>
   </tr>
   <tr>
-    <th height="23" scope="col">&nbsp;</th>
-    <th colspan="2" scope="col">&nbsp;</th>
-    <th colspan="2" scope="col">&nbsp;</th>
-    <th height="23" colspan="3" scope="col">&nbsp;</th>
-    <th height="23" scope="col">&nbsp;</th>
-    <th height="23" scope="col">&nbsp;</th>
-    <th height="23" scope="col">&nbsp;</th>
-    <th height="23" scope="col">&nbsp;</th>
+    <th width="12%" height="23" scope="col">&nbsp;</th>
+    <th width="9%" scope="col">&nbsp;</th>
+    <th width="4%" scope="col">&nbsp;</th>
+    <th width="4%" scope="col">&nbsp;</th>
+    <th width="4%" scope="col">&nbsp;</th>
+    <th width="4%" height="23" scope="col">&nbsp;</th>
+    <th width="4%" height="23" scope="col">&nbsp;</th>
+    <th width="4%" height="23" scope="col">&nbsp;</th>
+    <th width="4%" height="23" scope="col">&nbsp;</th>
+    <th width="4%" height="23" scope="col">&nbsp;</th>
+    <th width="4%" height="23" scope="col">&nbsp;</th>
+    <th width="4%" height="23" scope="col">&nbsp;</th>
     <th height="23" colspan="3" scope="col">TOTAL US$ OPERACIONES</th>
-    <th height="23" scope="col" class="border_rb1s0"><?php echo number_format($TotalCostoProcesos, 3); ?></th>
+    <th width="10%" height="23" class="border_rb1s0" scope="col"><?php echo number_format($TotalCostoProcesos, 3); ?></th>
   </tr>
 </table>
 

@@ -32,11 +32,53 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo
 <link rel="stylesheet" href="/libs_js/combo/css-select.css">
 <script src="/libs_js/combo/js-select.js"></script>
 
-<div class="w235 float_left border_der margin_r10">
+<!-- SELECCION DE PROCESOS -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jLamProcSelc=jQuery.noConflict();
+jLamProcSelc(document).ready(function(){
+	
+	jLamProcSelc("#lamina1_select").click(function(){	
+		jLamProcSelc("#progressbar").removeClass("ocultar");
+		var lamina1=jLamProcSelc("#dt_articulo1").val();
+		
+		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina1: lamina1},
+			function(data){
+				jLamProcSelc("#lamina1_procesos").html(data);
+				jLamProcSelc("#progressbar").addClass("ocultar");
+			});
+	});
+	
+	jLamProcSelc("#lamina2_select").click(function(){
+		jLamProcSelc("#progressbar").removeClass("ocultar");
+		var lamina2=jLamProcSelc("#dt_articulo2").val();
+		
+		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina2: lamina2},
+			function(data){
+				jLamProcSelc("#lamina2_procesos").html(data);
+				jLamProcSelc("#progressbar").addClass("ocultar");
+			});
+	});		
+	
+	jLamProcSelc("#lamina3_select").click(function(){
+		jLamProcSelc("#progressbar").removeClass("ocultar");
+		var lamina3=jLamProcSelc("#dt_articulo3").val();
+		
+		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina3: lamina3},
+			function(data){
+				jLamProcSelc("#lamina3_procesos").html(data);
+				jLamProcSelc("#progressbar").addClass("ocultar");
+			});
+	});
+	
+});
+</script>
+
+<div class="w245 float_left border_der margin_r10">
 	
     <h2>Monocapa</h2><br>
                             
-    <fieldset class="alto50 w245">
+    <fieldset class="alto50 w235">
       <label for="dt_articulo1">Laminas:</label>
       <select name="dt_articulo1" id="dt_articulo1" class="cmbSlc">
         <option value>[ Seleccionar opcion ]</option>
@@ -55,45 +97,20 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo
         	<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>	
         <?php }}} ?>
       </select>
+      <a id="lamina1_select" class="boton_lamina"  href="javascript:;">
+      <img src="/imagenes/icons/icon-ok.png" width="24" height="24" alt="Ok">
+      </a>
     </fieldset>
     
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion1" type="checkbox" value="1">&nbsp;Extrusión</label>
-    </fieldset>
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_4" class="procesos_maquinas" name="impresion1" type="checkbox" value="1">&nbsp;Impresión</label>
-    </fieldset>
-    <fieldset class="w245">
-        <label for="grm2_tintaseca_1">GR / m2 (Tinta seca)</label>
-        <input class="w140 texto_der" name="grm2_tintaseca_1" type="text" id="grm2_tintaseca_1" value="0">
-    </fieldset>
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
-    </fieldset>
-    
-    <input id="procesos_maquinas_5" name="bilaminado1" type="hidden" value="0">
-    
-    <input id="procesos_maquinas_6" name="trilaminado1" type="hidden" value="0">
-    
-	<input name="habilitado1" type="hidden" value="0">
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte</label>
-    </fieldset>
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_8" class="procesos_maquinas" name="sellado1" type="checkbox" value="1">&nbsp;Sellado</label>
-    </fieldset>
+    <div id="lamina1_procesos" class="w245 float_left"></div>
     
 </div><!-- FIN LAMINA 1 -->
 
-<div class="w235 float_left border_der margin_r10">
+<div class="w245 float_left border_der margin_r10">
 
 	<h2>Bilaminado</h2><br>
 	
-    <fieldset class="alto50 w245">
+    <fieldset class="alto50 w235">
       <label for="dt_articulo2">Laminas:</label>
       <select name="dt_articulo2" id="dt_articulo2" class="cmbSlc">
         <option value>[ Seleccionar opcion ]</option>
@@ -112,41 +129,20 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo
         	<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>	
         <?php }}} ?>
       </select>
+      <a id="lamina2_select" class="boton_lamina"  href="javascript:;">
+      <img src="/imagenes/icons/icon-ok.png" width="24" height="24" alt="Ok">
+      </a>
     </fieldset>
     
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion2" type="checkbox" value="1">&nbsp;Extrusión</label>
-    </fieldset>
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado2" type="checkbox" value="1">&nbsp;Bilaminado</label>
-    </fieldset>
-    <fieldset class="w245">
-        <label for="bilaminado_proceso_2">GR / m2 (Adhesivo)</label>
-        <input class="w140 texto_der" name="bilaminado_proceso_2" type="text" id="bilaminado_proceso_2" value="0">
-    </fieldset>
-    
-    <input id="procesos_maquinas_6" name="trilaminado2" type="hidden" value="0">
-    
-    <input name="rebobinado2" type="hidden" value="0">
-    
-    <input name="habilitado2" type="hidden" value="0">
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal2" type="checkbox" value="1">&nbsp;Corte</label>
-    </fieldset>
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_8" class="procesos_maquinas" name="sellado2" type="checkbox" value="1">&nbsp;Sellado</label>
-    </fieldset>
+    <div id="lamina2_procesos" class="w245 float_left"></div>
     
 </div><!-- FIN LAMINA 2 -->
 
-<div class="w235 float_left border_der margin_r10">
+<div class="w245 float_left border_der margin_r10">
 	
     <h2>Trilaminado</h2><br>
     
-    <fieldset class="alto50 w245">
+    <fieldset class="alto50 w235">
       <label for="dt_articulo3">Laminas:</label>
       <select name="dt_articulo3" id="dt_articulo3" class="cmbSlc">
         <option value>[ Seleccionar opcion ]</option>
@@ -165,30 +161,11 @@ $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo
         	<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>	
         <?php }}} ?>
         </select>
+        <a id="lamina3_select" class="boton_lamina"  href="javascript:;">
+        	<img src="/imagenes/icons/icon-ok.png" width="24" height="24" alt="Ok">
+        </a>
     </fieldset>
     
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion3" type="checkbox" value="1">&nbsp;Extrusión</label>
-    </fieldset>
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado3" type="checkbox" value="1">&nbsp;Trilaminado</label>
-    </fieldset>
-    <fieldset class="w245">
-        <label for="trilaminado_proceso_3">GR / m2 (Adhesivo)</label>
-        <input class="w140 texto_der" name="trilaminado_proceso_3" type="text" id="trilaminado_proceso_3" value="0">
-    </fieldset>
-    
-    <input name="rebobinado3" type="hidden" value="0">
-    
-    <input name="habilitado3" type="hidden" value="0">
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal3" type="checkbox" value="1">&nbsp;Corte</label>
-    </fieldset>
-    
-    <fieldset class="w245">
-        <label><input id="procesos_maquinas_8" class="procesos_maquinas" name="sellado3" type="checkbox" value="1">&nbsp;Sellado</label>
-    </fieldset>
+    <div id="lamina3_procesos" class="w245 float_left"></div>
     
 </div><!-- FIN LAMINA 3 -->

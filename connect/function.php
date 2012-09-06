@@ -204,5 +204,9 @@ function BuscarPalabraLamina($palabra, $lamina1, $lamina2, $lamina3){
 	if($lamina2<>""){ if(preg_match("/\b".$palabra."\b/i",$lamina2)){ return "X"; }}
 	if($lamina3<>""){ if(preg_match("/\b".$palabra."\b/i",$lamina3)){ return "X"; }}
 }
+function BuscarPalabra($palabra, $texto){
+	if(preg_match("/\b".$palabra."\b/i",$texto)){ return 1;
+	}else{ return 0; }
+}
 
 ?>
