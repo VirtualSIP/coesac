@@ -22,6 +22,11 @@ $impresion_cantcliente=$impresion["cantcliente_cotizacion"];
 $impresion_tolerancia=$impresion["tolerancia_cotizacion"];
 $impresion_unidadmedida=seleccionTabla($impresion["unidad_medida_cotizacion"], "id_unidad_medida", "syCoesa_unidad_medida", $conexion);
 $impresion_precio=$impresion["precio_cotizacion"];
+$impresion_formato=$impresion["formato_cotizacion"];
+
+//TIPO DE REUNION
+if($impresion_formato=1){ $formato="Lamina";}
+elseif($impresion_formato=2){ $formato="Manga"; }
 
 $impresion_lamina1=seleccionTabla($impresion["lamina1_cotizacion"], "id_articulo", "syCoesa_articulo", $conexion);
 $impresion_lamina1_ancho=$impresion["lamina1_ancho_cotizacion"];
@@ -470,9 +475,11 @@ if($impresion["insumo_clises"]>0){
 	//TOTAL DE COSTOS
 	$Costo=($AgregadoEstruc_clises * $insumo_precio) * $impresion_nrocolores;
 	
-	//FORMULA: (PRECIO TOTAL * CANTIDADREQUERIDA) / 300000
-	$TotalCosto_clises=($Costo * $AgregadoEstruc_clises) / 300000;
+	//FORMULA: (CANTIDADREQUERIDA) / 300000
+	$Total_clises=(($AgregadoEstruc_clises) / 300000) * $mtrprod_impresion;
 	
+	//PRECIO TOTAL
+	$TotalCosto_clises=$Total_clises * $insumo_precio;	
 }else{ $TotalCosto_clises=0; }
 
 if($impresion["insumo_bilaminado"]>0){
@@ -511,7 +518,7 @@ if($impresion["insumo_trilaminado"]>0){
 $TotalCostoMaterial=$Lamina_impresion_total + $Lamina_bilaminado_total + $Lamina_trilaminado_total + $TotalCosto_tinta + $TotalCosto_bilaminado + $TotalCosto_trilaminado + $TotalCosto_cushion + $TotalCosto_clises;
 
 /*------------- CANTIDAD REQUERIDA POR EL CLIENTE. CONVERSION DE MILLAR A KILOS -------------*/
-if($impresion_unidadmedida["id_unidad_medida"]==3){
+if($impresion_repeticion>0){
 	$impresion_cantcliente=$impresion_cantcliente;
 	$TotalFactorConvMillar=($impresion_anchofinal * $impresion_repeticion * $impresion_grm2total) / 1000000;
 }else{
@@ -633,8 +640,8 @@ $TotalGrm2=$impresion_lamina1_grm2 + $impresion_lamina2_grm2 + $impresion_lamina
     <th height="18" align="right" scope="col" class="texto_14">CLIENTE</th>
     <th height="18" class="border_rb1s0 texto_14" scope="col"><?php echo $impresion_cliente; ?></th>
     <th height="18" scope="col">&nbsp;</th>
-    <th height="18" scope="col">&nbsp;</th>
-    <th height="18" scope="col">&nbsp;</th>
+    <th height="18" align="right" scope="col" class="texto_14">FORMATO PT</th>
+    <th height="18" class="border_rb1s0" scope="col"><?php echo $formato; ?></th>
     <th height="18" scope="col">&nbsp;</th>
     <th height="18" align="right" class="texto_14" scope="col">TOTAL</th>
     <th height="18" class="border_rb1s0" scope="col"><?php echo $impresion_cantcliente; ?></th>
@@ -662,11 +669,11 @@ $TotalGrm2=$impresion_lamina1_grm2 + $impresion_lamina2_grm2 + $impresion_lamina
     <th width="125" height="20" scope="col">&nbsp;</th>
     <th width="125" height="20" scope="col">NÚMERO DE REPETICIONES</th>
     <th width="125" height="20" class="border_rb1s0" scope="col"><?php echo $impresion_frecuencia; ?></th>
-    <th width="125" height="20" scope="col"><?php if($impresion_unidadmedida["id_unidad_medida"]==3){ ?>
+    <th width="125" height="20" scope="col"><?php if($impresion_repeticion>0){ ?>
       <p>FACTOR DE </p>
       <p>CONVERSION x MILLAR</p>      <?php } ?></th>
-    <th width="125" height="20" <?php if($impresion_unidadmedida["id_unidad_medida"]==3){ ?>class="border_rb1s0"<?php } ?> scope="col">
-		<?php if($impresion_unidadmedida["id_unidad_medida"]==3){ ?>
+    <th width="125" height="20" <?php if($impresion_repeticion>0){ ?>class="border_rb1s0"<?php } ?> scope="col">
+		<?php if($impresion_repeticion>0){ ?>
 		<?php echo number_format($TotalFactorConvMillar, 3); ?>
         <?php } ?>
     </th>
@@ -959,7 +966,7 @@ $TotalGrm2=$impresion_lamina1_grm2 + $impresion_lamina2_grm2 + $impresion_lamina
     <th width="9%" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_extrusion_impresion_nombre["nombre_maquina"]; ?></th>
     <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_extrusion_impresion_merma); ?></th>
     <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_extrusion_impresion); ?></th>
-    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_extrusion_impresion["velocidad_maquina"],2); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_impresion["velocidad_maquina"]; ?></th>
     <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_impresion_prep_reg; ?></th>
     <th width="4%" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_impresion_tiempo; ?></th>
     <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_impresion_tiempo_produc;  ?></th>
@@ -979,7 +986,7 @@ $TotalGrm2=$impresion_lamina1_grm2 + $impresion_lamina2_grm2 + $impresion_lamina
     <th width="9%" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_extrusion_bilaminado_nombre["nombre_maquina"]; ?></th>
     <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_extrusion_bilaminado_merma); ?></th>
     <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_extrusion_bilaminado); ?></th>
-    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_extrusion_bilaminado["velocidad_maquina"],2); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_bilaminado["velocidad_maquina"]; ?></th>
     <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_bilaminado_prep_reg; ?></th>
     <th width="4%" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_bilaminado_tiempo; ?></th>
     <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_bilaminado_tiempo_produc;  ?></th>
@@ -999,7 +1006,7 @@ $TotalGrm2=$impresion_lamina1_grm2 + $impresion_lamina2_grm2 + $impresion_lamina
     <th width="9%" height="23" align="left" class="border_rb1s0" scope="col"><?php echo $proc_extrusion_trilaminado_nombre["nombre_maquina"]; ?></th>
     <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($proc_extrusion_trilaminado_merma); ?></th>
     <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo round($mtrprod_extrusion_trilaminado); ?></th>
-    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo number_format($proc_extrusion_trilaminado["velocidad_maquina"],2); ?></th>
+    <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_trilaminado["velocidad_maquina"]; ?></th>
     <th width="4%" height="23" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_trilaminado_prep_reg; ?></th>
     <th width="4%" scope="col" class="border_rb1s0"><?php echo $proc_extrusion_trilaminado_tiempo; ?></th>
     <th width="4%" height="23" scope="col" class="border_rb1s0 fondo_total"><?php echo $proc_extrusion_trilaminado_tiempo_produc;  ?></th>
@@ -1183,7 +1190,7 @@ $TotalGrm2=$impresion_lamina1_grm2 + $impresion_lamina2_grm2 + $impresion_lamina
   <tr>
     <th height="20" colspan="2" align="left" scope="col"><img src="/imagenes/graficos/pie-2.gif" width="5" height="5"> INSUMOS = <strong class="texto_s12"><?php echo $grafCostoMaterial; ?> %</strong></th>
     <th height="20" scope="col">&nbsp;</th>
-    <th width="178" height="20" scope="col">US$ x KG</th>
+    <th width="178" height="20" scope="col">US$ x <?php echo $impresion_unidadmedida["nombre_unidad_medida"]; ?></th>
     <th width="200" height="20" scope="col">TOTAL US$</th>
   </tr>
   <tr>

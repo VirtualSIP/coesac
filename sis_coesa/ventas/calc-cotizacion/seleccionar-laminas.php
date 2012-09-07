@@ -14,11 +14,13 @@ $maq_refile=$fila_maq["refile_maquina"];
 //FILTRO
 $formula_filtro_lamina=$did_ancho_final * $did_nro_bandas + $maq_refile;
 $formula_filtro_manga=$did_ancho_final * $did_nro_bandas;
+$formula_filtro_polietileno=0;
 
 //LAMINAS
 $rst_lamina1=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo=3 AND mostrar_articulo=1) OR (id_tipo_articulo=6 AND mostrar_articulo=1) OR (id_tipo_articulo=13 AND mostrar_articulo=1) ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
 $rst_lamina2=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo=3 AND mostrar_articulo=1) OR (id_tipo_articulo=6 AND mostrar_articulo=1) OR (id_tipo_articulo=13 AND mostrar_articulo=1) ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
 $rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo=3 AND mostrar_articulo=1) OR (id_tipo_articulo=6 AND mostrar_articulo=1) OR (id_tipo_articulo=13 AND mostrar_articulo=1) ORDER BY nombre_articulo ASC;", $conexion); //LAMINAS
+
 ?> 
 
 <!-- COMBO -->
@@ -89,8 +91,17 @@ jLamProcSelc(document).ready(function(){
                 $lamina1_ancho=$fila_lamina1["ancho_articulo"];
 				$lamina1_tipo=$fila_lamina1["id_tipo_articulo"];
 				
-				if($lamina1_tipo<>13){
-					if($lamina1_ancho>=$formula_filtro_lamina){?>
+				//FILTRO
+				$filtro1_polietileno=BuscarPalabra("POLIETILENO", $lamina1_nombre);
+				$filtro1_pebd=BuscarPalabra("PEBD", $lamina1_nombre);
+				$filtro1_pead=BuscarPalabra("PEAD", $lamina1_nombre);
+				$filtro1_ppp=BuscarPalabra("PPP", $lamina1_nombre);
+				
+		if($filtro1_polietileno==1 or $filtro1_pead==1 or $filtro1_pebd==1 or $filtro1_ppp==1){
+			if($lamina1_ancho>=$formula_filtro_polietileno){ ?>
+			<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
+		<?php }}elseif($lamina1_tipo<>13){
+					if($lamina1_ancho>=$formula_filtro_lamina){ ?>
             <option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
         <?php }}elseif($lamina1_tipo==13){
 				if($lamina1_ancho>=$formula_filtro_manga){?>
@@ -119,11 +130,20 @@ jLamProcSelc(document).ready(function(){
                 $lamina2_ancho=$fila_lamina2["ancho_articulo"];
 				$lamina2_tipo=$fila_lamina1["id_tipo_articulo"];
 				
-				if($lamina2_tipo<>13){
-					if($lamina2_ancho>=$formula_filtro_lamina){?>
+				//FILTRO LAMINA2
+				$filtro2_polietileno=BuscarPalabra("POLIETILENO", $lamina2_nombre);
+				$filtro2_pebd=BuscarPalabra("PEBD", $lamina2_nombre);
+				$filtro2_pead=BuscarPalabra("PEAD", $lamina2_nombre);
+				$filtro2_ppp=BuscarPalabra("PPP", $lamina2_nombre);
+		
+		if($filtro2_polietileno==1 or $filtro2_pead==1 or $filtro2_pebd==1 or $filtro2_ppp==1){
+				if($lamina2_ancho>=$formula_filtro_polietileno){ ?>
+            <option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>	    
+		<?php }}elseif($lamina2_tipo<>13){
+					if($lamina2_ancho>=$formula_filtro_lamina){ ?>
             <option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
         <?php }}elseif($lamina2_tipo==13){
-				if($lamina2_ancho>=$formula_filtro_manga){?>
+				if($lamina2_ancho>=$formula_filtro_manga){ ?>
         	<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>	
         <?php }}} ?>
       </select>
@@ -149,7 +169,16 @@ jLamProcSelc(document).ready(function(){
                 $lamina3_ancho=$fila_lamina3["ancho_articulo"];
 				$lamina3_tipo=$fila_lamina1["id_tipo_articulo"];
 				
-				if($lamina3_tipo<>13){
+				//FILTRO LAMINA3
+				$filtro3_polietileno=BuscarPalabra("POLIETILENO", $lamina3_nombre);
+				$filtro3_pebd=BuscarPalabra("PEBD", $lamina3_nombre);
+				$filtro3_pead=BuscarPalabra("PEAD", $lamina3_nombre);
+				$filtro3_ppp=BuscarPalabra("PPP", $lamina3_nombre);
+				
+		if($filtro3_polietileno==1 or $filtro3_pead==1 or $filtro3_pebd==1 or $filtro3_ppp==1){
+				if($lamina3_ancho>=$formula_filtro_polietileno){ ?>
+			<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
+		<?php }}elseif($lamina3_tipo<>13){
 					if($lamina3_ancho>=$formula_filtro_lamina){?>
             <option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
         <?php }}elseif($lamina3_tipo==13){
