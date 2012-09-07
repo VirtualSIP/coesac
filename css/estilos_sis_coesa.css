@@ -97,7 +97,7 @@ form fieldset .charleft{ width:50px !important; position:absolute; top:0; left:2
 form fieldset label{ width:100%; float:left; padding:0 0 5px 0; font-size:12px; }
 form fieldset select{ padding:5px; }
 form fieldset input[type=text],
-form fieldset input[type=password]{ width:300px; height:15px; padding:5px;
+form fieldset input[type=password]{ width:300px; padding:5px;
 border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border:1px solid lightGrey; background-color:#e6e6e6e;
 background-image:url(/libs_js/jquery_ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png);
 background-repeat:repeat-x; background-position:50% 50%; }
@@ -112,7 +112,18 @@ form fieldset select{ width:320px !important; border-radius: 5px; -moz-border-ra
 .frmdt_contenido .frmdtc_acciones{ width:100%; position:relative; float:left; padding:5px 0; margin:0 0 15px 0; }
 #dtecnicos_sentido_bobina label{ float:none; }
 
-a.boton_lamina{ margin:0 7px 0 0 !important; float:right !important; }
+a.boton_lamina{
+	display:block;
+	float:left;
+	width:24px;
+	height:24px;
+	margin:0 7px 0 0 !important; float:right !important;
+	background:url(../imagenes/icons/icon-ok-inactivo.png) no-repeat;
+}
+
+a.boton_lamina:hover{
+	background:url(../imagenes/icons/icon-ok-activo.png) no-repeat;
+}
 
 /* FORMULARIO SUB */
 #formulario_sub{ width:100%; float:left; position:relative; }

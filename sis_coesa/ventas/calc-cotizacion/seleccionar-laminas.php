@@ -97,9 +97,7 @@ jLamProcSelc(document).ready(function(){
         	<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>	
         <?php }}} ?>
       </select>
-      <a id="lamina1_select" class="boton_lamina"  href="javascript:;">
-      <img src="/imagenes/icons/icon-ok.png" width="24" height="24" alt="Ok">
-      </a>
+      <a id="lamina1_select" class="boton_lamina"  href="javascript:;"></a>
     </fieldset>
     
     <div id="lamina1_procesos" class="w245 float_left"></div>
@@ -129,9 +127,7 @@ jLamProcSelc(document).ready(function(){
         	<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>	
         <?php }}} ?>
       </select>
-      <a id="lamina2_select" class="boton_lamina"  href="javascript:;">
-      <img src="/imagenes/icons/icon-ok.png" width="24" height="24" alt="Ok">
-      </a>
+      <a id="lamina2_select" class="boton_lamina"  href="javascript:;"></a>
     </fieldset>
     
     <div id="lamina2_procesos" class="w245 float_left"></div>
@@ -161,11 +157,22 @@ jLamProcSelc(document).ready(function(){
         	<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>	
         <?php }}} ?>
         </select>
-        <a id="lamina3_select" class="boton_lamina"  href="javascript:;">
-        	<img src="/imagenes/icons/icon-ok.png" width="24" height="24" alt="Ok">
-        </a>
+        <a id="lamina3_select" class="boton_lamina"  href="javascript:;"></a>
     </fieldset>
     
     <div id="lamina3_procesos" class="w245 float_left"></div>
     
 </div><!-- FIN LAMINA 3 -->
+
+<div class="w130 float_left border_der margin_r10">
+                            	
+    <h2>Acabado</h2><br>
+    <fieldset class="w130">
+        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal" type="checkbox" value="1">&nbsp;Corte</label>
+    </fieldset>
+    
+    <fieldset class="w130">
+        <label><input id="procesos_maquinas_8" class="procesos_maquinas" name="sellado" type="checkbox" value="1">&nbsp;Sellado</label>
+    </fieldset>
+
+</div><!-- FIN ACABADO -->

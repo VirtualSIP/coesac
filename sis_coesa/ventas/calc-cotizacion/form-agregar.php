@@ -96,24 +96,88 @@ jnrobd(document).ready(function(){
 
 <!-- SELECCIONAR MAQUINAS -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="/libs_js/jnotify/lib/jquery.jnotify.min.js"></script>
+<link type="text/css" href="/libs_js/jnotify/css/jquery.jnotify.css" rel="stylesheet" title="default" media="all" />
+<link type="text/css" href="/libs_js/jnotify/css/jquery.jnotify-alt.css" rel="alternate stylesheet" title="alt" media="all" />
 <script>
 var jslcmaq = jQuery.noConflict();
 jslcmaq(document).ready(function(){
 	
 	jslcmaq("#dtp_selecmaq").click(function(){
-		var datos = jslcmaq("#formGuardar").serialize();
-		jslcmaq("#progressbar").removeClass("ocultar");
-		jslcmaq.ajax({
-            type: "POST", url: "seleccionar-maquinas.php", data: datos,
-            success: function(data){
-				jslcmaq("#progressbar").addClass("ocultar");
-				jslcmaq("#selccion_procesos_maquinas").html(data);
-            }
-        });
+		if(jslcmaq("#dtecnicos_cliente").val() == ""){
+		    jslcmaq("#dtecnicos_cliente").focus();
+			jslcmaq.jnotify("Ingrese dato del Cliente.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_articulo").val() == ""){
+		    jslcmaq("#dtecnicos_articulo").focus();
+			jslcmaq.jnotify("Ingrese dato del Producto.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_repeticion").val() == 0) {
+		    jslcmaq("#dtecnicos_repeticion").focus();
+			jslcmaq.jnotify("Ingrese Distancia de Repetición.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_cilindro").val() == "") {
+		    jslcmaq("#dtecnicos_cilindro").focus();
+			jslcmaq.jnotify("Seleccione Cilindro.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_anchofinal").val() == 0) {
+		    jslcmaq("#dtecnicos_anchofinal").focus();
+			jslcmaq.jnotify("Ingrese Ancho Final.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_numbandas").val() == "") {
+		    jslcmaq("#dtecnicos_numbandas").focus();
+			jslcmaq.jnotify("Seleccione Número de Bandas.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_numcolores").val() == "") {
+		    jslcmaq("#dtecnicos_numcolores").focus();
+			jslcmaq.jnotify("Seleccione Número de Colores.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_tolerancia").val() == 0) {
+		    jslcmaq("#dtecnicos_tolerancia").focus();
+			jslcmaq.jnotify("Ingrese Porcentaje de Tolerancia.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_unidadmedida").val() == "") {
+		    jslcmaq("#dtecnicos_unidadmedida").focus();
+			jslcmaq.jnotify("Seleccione Unidad de Medida.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_cantrq").val() == 0) {
+		    jslcmaq("#dtecnicos_cantrq").focus();
+			jslcmaq.jnotify("Ingrese Cantidad Requerida.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_precio").val() == 0) {
+		    jslcmaq("#dtecnicos_precio").focus();
+			jslcmaq.jnotify("Ingrese Precio (US$).", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_formato").val() == "") {
+		    jslcmaq("#dtecnicos_formato").focus();
+			jslcmaq.jnotify("Seleccione Formato de Producto Terminado.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#procesos_maquinas_4").attr("checked") == "checked" && jslcmaq("#grm2_tintaseca_1").val() == 0) {
+			jslcmaq("#grm2_tintaseca_1").focus();
+			jslcmaq.jnotify("Ingrese Gr/m2 (Tinta seca) para Impresión.", "error", 5000);
+			return false;
+		}else if(jslcmaq("#procesos_maquinas_5").val() == 1 && jslcmaq("#bilaminado_proceso_2").val() == 0) {
+			jslcmaq("#bilaminado_proceso_2").focus();
+			jslcmaq.jnotify("Ingrese Gr/m2 (Adhesivo) para Bilaminado.", "error", 5000);
+			return false;
+		}else if(jslcmaq("#procesos_maquinas_6").val() == 1 && jslcmaq("#trilaminado_proceso_3").val() == 0) {
+			jslcmaq("#trilaminado_proceso_3").focus();
+			jslcmaq.jnotify("Ingrese Gr/m2 (Adhesivo) para Trilaminado.", "error", 5000);
+			return false;
+		}else{
+			jslcmaq("#progressbar").removeClass("ocultar");
+			var datos = jslcmaq("#formGuardar").serialize();
+			jslcmaq.ajax({
+				type: "POST", url: "seleccionar-maquinas.php", data: datos,
+				success: function(data){
+					jslcmaq("#progressbar").addClass("ocultar");
+					jslcmaq("#selccion_procesos_maquinas").html(data);
+				}
+			});
+		}
 		
 	});
 });
-
 </script>
 
 <!-- UNIDAD DE MEDIDA -->
@@ -132,6 +196,26 @@ jundmed(document).ready(function(){
 	});	
 });
 </script>
+
+<!-- CILINDRO -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jCilRep=jQuery.noConflict();
+jCilRep(document).ready(function(){
+	jCilRep("#dtecnicos_repeticion").change(function(){
+		jCilRep("#progressbar").removeClass("ocultar");
+		var cilindro = jCilRep("#dtecnicos_cilindro").val();
+		var distancia = jCilRep(this).val();
+		var tipo = "repeticion";
+		jCilRep.post("cilindro-repeticion.php", {distancia: distancia, cilindro: cilindro, tipo: tipo},
+			function(data){
+				jCilRep("#dato_nrorepeticion").html(data);
+				jCilRep("#progressbar").addClass("ocultar");
+			});
+	});	
+});
+</script>
+
 
 </head>
 
@@ -171,13 +255,13 @@ jundmed(document).ready(function(){
                         <fieldset class="alto50 w180">
                             <label for="dtecnicos_cilindro">Cilindro (mm):</label>
                             <select name="dtecnicos_cilindro" id="dtecnicos_cilindro" class="w140">
-                              	<option value>Seleccione</option>
-                              	<?php while($fila_cilindro=mysql_fetch_array($rst_cilindro)){
-									$cilindro_id=$fila_cilindro["id_cilindro"];
-									$cilindro_nombre=$fila_cilindro["cilindro"]."/".$fila_cilindro["engranaje"];
-								?>
-                              	<option value="<?php echo $cilindro_id; ?>"><?php echo $cilindro_nombre; ?></option>
-                              	<?php } ?>
+                                <option value>Seleccione</option>
+                                <?php while($fila_cilindro=mysql_fetch_array($rst_cilindro)){
+                                    $cilindro_id=$fila_cilindro["id_cilindro"];
+                                    $cilindro_nombre=$fila_cilindro["cilindro"]."/".$fila_cilindro["engranaje"];
+                                ?>
+                                <option value="<?php echo $cilindro_id; ?>"><?php echo $cilindro_nombre; ?></option>
+                                <?php } ?>
                             </select>
                         </fieldset>
                         
@@ -185,11 +269,13 @@ jundmed(document).ready(function(){
                           <label for="dtecnicos_repeticion">Distancia de repetición (mm):</label>
                           <input name="dtecnicos_repeticion" type="text" id="dtecnicos_repeticion" class="w130" value="0">
 						</fieldset>
-                        
+                                                
+                        <div class="float_left w180" id="dato_nrorepeticion">
                         <fieldset class="alto50 w180">
-                          <label for="dtecnicos_frecuencia">Nro de Frecuencia (Und):</label>
-                          <input name="dtecnicos_frecuencia" type="text" id="dtecnicos_frecuencia" class="w130" value="0">
+                          <label for="dtecnicos_frecuencia">Nro de Repeticiones (Und):</label>
+                          <input name="dtecnicos_frecuencia" type="text" id="dtecnicos_frecuencia" class="w130" value="0" readonly>
 						</fieldset>
+                        </div>
                         
                         <fieldset class="alto50 w180">
                           <label for="dtecnicos_anchofinal">Ancho Final (mm):</label>
@@ -232,14 +318,22 @@ jundmed(document).ready(function(){
 						</fieldset>
                         
                         <fieldset class="alto50 w180">
-                          <div id="dtecnicos_cantrq_texto">
-                          	<label for="dtecnicos_cantrq">Cantidad Requerida:</label></div>
+                          <div id="dtecnicos_cantrq_texto"><label for="dtecnicos_cantrq">Cantidad Requerida:</label></div>
                           <input name="dtecnicos_cantrq" type="text" id="dtecnicos_cantrq" class="w130" value="0">
 						</fieldset>
                         
                         <fieldset class="alto50 w180">
                           <label for="dtecnicos_precio">Precio (US$):</label>
                           <input name="dtecnicos_precio" type="text" id="dtecnicos_precio" class="w130" value="0">
+						</fieldset>
+                        
+                        <fieldset class="alto50 w215">
+                            <label for="dtecnicos_formato">Formato de Producto Terminado:</label>
+                            <select name="dtecnicos_formato" id="dtecnicos_formato" class="w140">
+                              <option value>Seleccione</option>
+                              <option value="1">Lamina</option>
+                              <option value="2">Manga</option>
+                            </select>
 						</fieldset>
                         
                         <div id="datos_lamproc" class="an100 float_left"></div><!-- FIN datos_lamproc -->
@@ -251,7 +345,7 @@ jundmed(document).ready(function(){
                         <div id="selccion_procesos_maquinas" class="an100 float_left padding_tb10"></div>
                             
                     	<fieldset>
-                            <input name="dtp_btnenviar" type="submit" id="dtp_btnenviar" value="Guardar datos">
+                            <input name="dtp_btnenviar" type="submit" id="dtp_btnenviar" value="Guardar datos y mostrar informe">
                             <input name="dtp_btnenviar" type="button" id="dtp_btnenviar" value="Cancelar" onClick="parent.location='lista.php'">
                         </fieldset>
                         

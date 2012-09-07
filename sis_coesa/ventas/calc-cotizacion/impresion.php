@@ -119,13 +119,10 @@ if($proc_cortefinal>0){ //CORTE FINAL
 
 if($proc_sellado>0){ //SELLADO
 	$procprod_merma_sellado=seleccionTabla("'sellado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
-	$mtrprod_sellado=round($mtrprod + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)));
-	$mtrprod_sellado_total=round($mtrprod + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)));
-	$proc_sellado_merma=round($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100));
-	if($impresion["unidad_medida_cotizacion"]==3){
-		$mtrprod_sellado_total=(($mtrprod + $proc_sellado_merma) * $impresion_nrobandas) / ($impresion_repeticion / 1000);
-	}
-}else{ $mtrprod_sellado=0; $procprod_merma_sellado=0; }
+	$mtrprod_sellado=($mtrprod + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)));
+	$proc_sellado_merma=($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100));
+	$mtrprod_sellado_total=(($mtrprod_sellado + $proc_sellado_merma) * $impresion_nrobandas) / ($impresion_repeticion / 1000);
+}else{ $mtrprod_sellado_total=0; $procprod_merma_sellado=0; }
 
 if($proc_trilaminado>0){ //TRILAMINADO
 	$procprod_merma_trilaminado=seleccionTabla("'trilaminado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
@@ -245,7 +242,29 @@ if($proc_impresion>0){ //IMPRESION
 		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1_grm2 * $impresion_lamina1_ancho) / 1000000);
 	}
 	
-}else{ $mtrprod_lamina_impresion=0; }
+}else{
+	if($proc_bilaminado==0 and $proc_trilaminado==0){
+		$procprod_merma_impr=seleccionTabla("'impresion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
+		if($proc_cortefinal>0){
+			$mtrprod_lamina_impresion_f=($mtrprod_cortefinal + ($procprod_merma_impr["merma_proceso"] * $cant_colores));
+		}else{
+			$mtrprod_lamina_impresion_f=($mtrprod + ($procprod_merma_impr["merma_proceso"] * $cant_colores));
+		}
+		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1_grm2 * $impresion_lamina1_ancho) / 1000000);
+	}elseif($proc_bilaminado>0 and $proc_trilaminado>0){
+		$procprod_merma_impr=seleccionTabla("'impresion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
+		$mtrprod_lamina_impresion_f=($mtrprod_lamina_bilaminado_f + ($procprod_merma_impr["merma_proceso"] * $cant_colores));
+		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1_grm2 * $impresion_lamina1_ancho) / 1000000);
+	}elseif($proc_bilaminado>0 and $proc_trilaminado==0){
+		$procprod_merma_impr=seleccionTabla("'impresion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
+		$mtrprod_lamina_impresion_f=($mtrprod_lamina_bilaminado_f + ($procprod_merma_impr["merma_proceso"] * $cant_colores));
+		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1_grm2 * $impresion_lamina1_ancho) / 1000000);
+	}elseif($proc_trilaminado>0 and $proc_bilaminado==0){
+		$procprod_merma_impr=seleccionTabla("'impresion'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
+		$mtrprod_lamina_impresion_f=($mtrprod_lamina_trilaminado_f + ($procprod_merma_impr["merma_proceso"] * $cant_colores));
+		$mtrprod_lamina_impresion=(($mtrprod_lamina_impresion_f * $impresion_lamina1_grm2 * $impresion_lamina1_ancho) / 1000000);
+	}
+}//else{ $mtrprod_lamina_impresion=0; }
 
 //FORMULA GRM2 TINTA LIQUIDA
 $rst_grm2tlq=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=2;", $conexion);
@@ -508,7 +527,7 @@ $TotalFinalUtilidad=($impresion_cantcliente * $impresion_precio) - ($TotalCostoM
 
 $TotalResumen=$TotalResumenCostos + $TotalResumenUtilidad;
 if($impresion["unidad_medida_cotizacion"]==3){
-	$TotalFinal=(($TotalCostoMaterial + $TotalCostoProcesos) + (($impresion_cantcliente * $impresion_precio * $TotalFactorConvMillar) - ($TotalCostoMaterial + $TotalCostoProcesos)));
+	$TotalFinal=(($TotalCostoMaterial + $TotalCostoProcesos) + (($impresion_cantcliente * $impresion_precio) - ($TotalCostoMaterial + $TotalCostoProcesos)));
 }else{
 	$TotalFinal=(($TotalCostoMaterial + $TotalCostoProcesos) + (($impresion_cantcliente * $impresion_precio) - ($TotalCostoMaterial + $TotalCostoProcesos)));
 }
@@ -639,9 +658,9 @@ $TotalGrm2=$impresion_lamina1_grm2 + $impresion_lamina2_grm2 + $impresion_lamina
   <tr>
     <th width="125" height="20" align="right" scope="col">ANCHO FINAL</th>
     <th width="125" height="20" class="border_rb1s0" scope="col"><?php echo $impresion_anchofinal; ?></th>
-    <th width="125" height="20" scope="col">ENGRANAJE</th>
-    <th width="125" height="20" class="border_rb1s0" scope="col"><?php echo $impresion_cilindro["engranaje"]; ?></th>
-    <th width="125" height="20" scope="col">FRECUENCIA</th>
+    <th width="125" height="20" scope="col">&nbsp;</th>
+    <th width="125" height="20" scope="col">&nbsp;</th>
+    <th width="125" height="20" scope="col">NÚMERO DE REPETICIONES</th>
     <th width="125" height="20" class="border_rb1s0" scope="col"><?php echo $impresion_frecuencia; ?></th>
     <th width="125" height="20" scope="col"><?php if($impresion_unidadmedida["id_unidad_medida"]==3){ ?>
       <p>FACTOR DE </p>
@@ -655,8 +674,8 @@ $TotalGrm2=$impresion_lamina1_grm2 + $impresion_lamina2_grm2 + $impresion_lamina
   <tr>
     <th width="125" height="20" align="right" scope="col">BANDAS</th>
     <th width="125" height="20" class="border_rb1s0" scope="col"><?php echo $impresion_nrobandas; ?></th>
-    <th width="125" height="20" scope="col">CILINDRO</th>
-    <th width="125" height="20" class="border_rb1s0" scope="col"><?php echo $impresion_cilindro["cilindro"]; ?></th>
+    <th width="125" height="20" scope="col">&nbsp;</th>
+    <th width="125" height="20" scope="col">&nbsp;</th>
     <th width="125" height="20" scope="col">DISTANCIA REPETICIÓN</th>
     <th width="125" height="20" class="border_rb1s0" scope="col"><?php echo $impresion_repeticion; ?></th>
     <th width="125" height="20" scope="col"><!--INSPECCION --></th>
@@ -685,7 +704,7 @@ $TotalGrm2=$impresion_lamina1_grm2 + $impresion_lamina2_grm2 + $impresion_lamina
     <th width="59" height="22" scope="col"><p>PRECIO </p>
       <p>US$</p></th>
     <th width="1" height="22" scope="col">&nbsp;</th>
-    <th width="122" height="22" scope="col">TOTAL US$</th>
+    <th width="122" height="22" scope="col">IMPORTE  US$</th>
   </tr>
   <?php if($impresion_lamina1>0){ ?>
   <tr>
@@ -932,7 +951,7 @@ $TotalGrm2=$impresion_lamina1_grm2 + $impresion_lamina2_grm2 + $impresion_lamina
       GENERAS</th>
     <th width="4%" height="37" scope="col"><p>TOTAL</p>
       <p> US$</p></th>
-    <th width="10%" height="37" scope="col">COSTO TOTAL US$</th>
+    <th width="10%" height="37" scope="col">IMPORTE US$</th>
   </tr>
   <?php if($proc_extrusion_impresion>0){ ?>
   <tr>
@@ -1143,9 +1162,7 @@ $TotalGrm2=$impresion_lamina1_grm2 + $impresion_lamina2_grm2 + $impresion_lamina
     <th width="4%" height="23" scope="col">&nbsp;</th>
     <th width="4%" height="23" scope="col">&nbsp;</th>
     <th width="4%" height="23" scope="col">&nbsp;</th>
-    <th width="4%" height="23" scope="col">&nbsp;</th>
-    <th width="4%" height="23" scope="col">&nbsp;</th>
-    <th height="23" colspan="3" scope="col">TOTAL US$ OPERACIONES</th>
+    <th height="23" colspan="5" scope="col">TOTAL COSTO PROCESOS PRODUCTIVOS</th>
     <th width="10%" height="23" class="border_rb1s0" scope="col"><?php echo number_format($TotalCostoProcesos, 3); ?></th>
   </tr>
 </table>

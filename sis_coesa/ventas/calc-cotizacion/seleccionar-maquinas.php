@@ -41,8 +41,8 @@ $proc_bilaminado=$_POST["bilaminado1"].$_POST["bilaminado2"].$_POST["bilaminado3
 $proc_trilaminado=$_POST["trilaminado1"].$_POST["trilaminado2"].$_POST["trilaminado3"];
 $proc_rebobinado=$_POST["rebobinado1"].$_POST["rebobinado2"].$_POST["rebobinado3"];
 $proc_habilitado=$_POST["habilitado1"].$_POST["habilitado2"].$_POST["habilitado3"];
-$proc_cortefinal=$_POST["cortefinal1"].$_POST["cortefinal2"].$_POST["cortefinal3"];
-$proc_sellado=$_POST["sellado1"].$_POST["sellado2"].$_POST["sellado3"];
+$proc_cortefinal=$_POST["cortefinal"];
+$proc_sellado=$_POST["sellado"];
 
 //GRM2 DE LAMINAS
 $lamina_grm2=$lamina1_grm2 + $lamina2_grm2 + $lamina3_grm2;
@@ -74,13 +74,10 @@ if($proc_cortefinal>0){ //CORTE FINAL
 
 if($proc_sellado>0){ //SELLADO
 	$procprod_merma_sellado=seleccionTabla("'sellado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
-	$mtrprod_sellado=round($mtrprod + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)));
-	$mtrprod_sellado_total=round($mtrprod + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)));
-	$proc_sellado_merma=round($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100));
-	if($impresion_unidadmedida["unidad_medida"]==3){
-		$mtrprod_sellado_total=(($mtrprod_sellado + $proc_sellado_merma) * $impresion_nrobandas) / ($impresion_repeticion / 1000);
-	}
-}else{ $mtrprod_sellado=0; $procprod_merma_sellado=0; }
+	$mtrprod_sellado=($mtrprod + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)));
+	$proc_sellado_merma=($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100));
+	$mtrprod_sellado_total=(($mtrprod_sellado + $proc_sellado_merma) * $nro_bandas) / ($repeticion / 1000);
+}else{ $mtrprod_sellado_total=0; $procprod_merma_sellado=0; }
 
 if($proc_trilaminado>0){ //TRILAMINADO
 	$procprod_merma_trilaminado=seleccionTabla("'trilaminado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
@@ -146,15 +143,15 @@ if($proc_extrusion_impresion>0 or $proc_extrusion_bilaminado>0 or $proc_extrusio
     <input name="dtecnicos_metrosproducir" type="text" id="dtecnicos_metrosproducir" class="w130" value="<?php echo round($mtrprod); ?>">
 </fieldset>
 
-<div class="float_left an100"><h2>Máquinas</h2></div>
+<div class="float_left an100"><h2>Procesos</h2></div>
 
 <table width="100%" border="1" cellspacing="5" cellpadding="5">
         <thead>
             <tr>
                 <td width="8.3%" class="texto_cen texto_10 fondo_c1 texto_bold">Procesos</td>
                 <td width="13%" class="texto_cen texto_10 fondo_c1 texto_bold">Maquinas</td>
-                <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Metros</td>
-                <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Velocidad <br>Mts/Min</td>
+                <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Cantidad</td>
+                <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Velocidad <br>por minuto</td>
                 <td width="8.3%" class="texto_cen texto_10 fondo_c1 texto_bold">Prepar. <br>(HH:mm)</td>
                 <td width="8.3%" class="texto_cen texto_10 fondo_c1 texto_bold">Regulac. <br>(HH:mm)</td>
                 <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Tiempo <br>(HH:mm)</td>
@@ -162,7 +159,7 @@ if($proc_extrusion_impresion>0 or $proc_extrusion_bilaminado>0 or $proc_extrusio
                 <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Costo <br>Hora / <br>Hombre</td>
                 <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Costo <br>Deprec. <br>/ Hora</td>
                 <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Gastos <br>Fábrica <br>/ Hora </td>
-                <td width="8.3%" class="texto_cen texto_10 fondo_c1 texto_bold">Total</td>
+                <td width="8.3%" class="texto_cen texto_10 fondo_c1 texto_bold">Importe</td>
             </tr>
         </thead>
     </table>
@@ -694,7 +691,6 @@ if($proc_extrusion_impresion>0 or $proc_extrusion_bilaminado>0 or $proc_extrusio
 					var unidadmedida = jcmbPro6("select#dtecnicos_unidadmedida option:selected").val();
 					var nrobandas = jcmbPro6("select#dtecnicos_numbandas option:selected").val();
 					var repeticion = jcmbPro6("#dtecnicos_repeticion").val();
-					var mtrprod = jcmbPro6("#dtecnicos_metrosproducir").val();
 					var sellado = <?php echo $proc_sellado; ?>;
 										
                     jcmbPro6.post("consulta-maquinas-datos.php", {nrobandas: nrobandas, repeticion: repeticion, unidadmedida: unidadmedida, maquina: maq, metroproducir: <?php echo $mtrprod_sellado_total; ?>, sellado: sellado},
@@ -749,7 +745,7 @@ if($proc_extrusion_impresion>0 or $proc_extrusion_bilaminado>0 or $proc_extrusio
             <td width="200" class="texto_cen texto_10 fondo_c1 texto_bold">Insumos</td>
             <td width="150" class="texto_cen texto_10 fondo_c1 texto_bold">Costo</td>
             <td width="150" class="texto_cen texto_10 fondo_c1 texto_bold">Cant. Requerida</td>
-            <td width="150" class="texto_cen texto_10 fondo_c1 texto_bold">Total</td>
+            <td width="150" class="texto_cen texto_10 fondo_c1 texto_bold">Importe</td>
         </tr>
     </thead>
 </table>

@@ -23,6 +23,7 @@ $cotizacion_cantcliente=$cotizacion["cantcliente_cotizacion"];
 $cotizacion_tolerancia=$cotizacion["tolerancia_cotizacion"];
 $cotizacion_unidadmedida=$cotizacion["unidad_medida_cotizacion"];
 $cotizacion_precio=$cotizacion["precio_cotizacion"];
+$cotizacion_formato=$cotizacion["formato_cotizacion"];
 
 $cotizacion_lamina1=$cotizacion["lamina1_cotizacion"];
 $lamina1_dato=seleccionTabla($cotizacion_lamina1, "id_articulo", "syCoesa_articulo", $conexion);
@@ -32,9 +33,6 @@ $cotizacion_lamina1_extrusion=$cotizacion["extrusion1_cotizacion"];
 $cotizacion_lamina1_impresion=$cotizacion["impresion1_cotizacion"];
 $cotizacion_lamina1_impresion_grm2=$cotizacion["impresion1_grm2_cotizacion"];
 $cotizacion_lamina1_rebobinado=$cotizacion["rebobinado1_cotizacion"];
-$cotizacion_lamina1_habilitado=$cotizacion["habilitado1_cotizacion"];
-$cotizacion_lamina1_cortefinal=$cotizacion["cortefinal1_cotizacion"];
-$cotizacion_lamina1_sellado=$cotizacion["sellado1_cotizacion"];
 
 $cotizacion_lamina2=$cotizacion["lamina2_cotizacion"];
 $lamina2_dato=seleccionTabla($cotizacion_lamina2, "id_articulo", "syCoesa_articulo", $conexion);
@@ -44,9 +42,6 @@ $cotizacion_lamina2_extrusion=$cotizacion["extrusion2_cotizacion"];
 $cotizacion_lamina2_bilaminado=$cotizacion["bilaminado2_cotizacion"];
 $cotizacion_lamina2_bilaminado_grm2=$cotizacion["bilaminado2_grm2_cotizacion"];
 $cotizacion_lamina2_rebobinado=$cotizacion["rebobinado2_cotizacion"];
-$cotizacion_lamina2_habilitado=$cotizacion["habilitado2_cotizacion"];
-$cotizacion_lamina2_cortefinal=$cotizacion["cortefinal2_cotizacion"];
-$cotizacion_lamina2_sellado=$cotizacion["sellado2_cotizacion"];
 
 $cotizacion_lamina3=$cotizacion["lamina3_cotizacion"];
 $lamina3_dato=seleccionTabla($cotizacion_lamina3, "id_articulo", "syCoesa_articulo", $conexion);
@@ -56,9 +51,9 @@ $cotizacion_lamina3_extrusion=$cotizacion["extrusion3_cotizacion"];
 $cotizacion_lamina3_trilaminado=$cotizacion["trilaminado3_cotizacion"];
 $cotizacion_lamina3_trilaminado_grm2=$cotizacion["trilaminado3_grm2_cotizacion"];
 $cotizacion_lamina3_rebobinado=$cotizacion["rebobinado3_cotizacion"];
-$cotizacion_lamina3_habilitado=$cotizacion["habilitado3_cotizacion"];
-$cotizacion_lamina3_cortefinal=$cotizacion["cortefinal3_cotizacion"];
-$cotizacion_lamina3_sellado=$cotizacion["sellado3_cotizacion"];
+
+$cotizacion_lamina1_cortefinal=$cotizacion["cortefinal1_cotizacion"];
+$cotizacion_lamina1_sellado=$cotizacion["sellado1_cotizacion"];
 
 $cotizacion_grm2total=$cotizacion["grm2total_cotizacion"];
 $cotizacion_cantproduccion=$cotizacion["cantproduccion_cotizacion"];
@@ -87,16 +82,19 @@ $cant_colores=$cotizacion_nrocolores;
 //FILTRO LAMINA1
 $filtro1_polietileno=BuscarPalabra("POLIETILENO", $lamina1_dato["nombre_articulo"]);
 $filtro1_pebd=BuscarPalabra("PEBD", $lamina1_dato["nombre_articulo"]);
+$filtro1_pead=BuscarPalabra("PEAD", $lamina1_dato["nombre_articulo"]);
 $filtro1_ppp=BuscarPalabra("PPP", $lamina1_dato["nombre_articulo"]);
 
 //FILTRO LAMINA2
 $filtro2_polietileno=BuscarPalabra("POLIETILENO", $lamina2_dato["nombre_articulo"]);
 $filtro2_pebd=BuscarPalabra("PEBD", $lamina2_dato["nombre_articulo"]);
+$filtro2_pead=BuscarPalabra("PEAD", $lamina2_dato["nombre_articulo"]);
 $filtro2_ppp=BuscarPalabra("PPP", $lamina2_dato["nombre_articulo"]);
 
 //FILTRO LAMINA3
 $filtro3_polietileno=BuscarPalabra("POLIETILENO", $lamina3_dato["nombre_articulo"]);
 $filtro3_pebd=BuscarPalabra("PEBD", $lamina3_dato["nombre_articulo"]);
+$filtro3_pead=BuscarPalabra("PEAD", $lamina3_dato["nombre_articulo"]);
 $filtro3_ppp=BuscarPalabra("PPP", $lamina3_dato["nombre_articulo"]);
 
 /*-------------------------- AGREGANDO METROS DE PROCESO + METROS A PRODUCIR --------------------------*/
@@ -107,18 +105,10 @@ if($proc_cortefinal>0){ //CORTE FINAL
 
 if($proc_sellado>0){ //SELLADO
 	$procprod_merma_sellado=seleccionTabla("'sellado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
-	$mtrprod_sellado=$mtrprod + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100));
-}else{ $mtrprod_sellado=0; $procprod_merma_sellado=0; }
-
-if($proc_sellado>0){ //SELLADO
-	$procprod_merma_sellado=seleccionTabla("'sellado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
-	$mtrprod_sellado=round($mtrprod + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)));
-	$mtrprod_sellado_total=round($mtrprod + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)));
-	$proc_sellado_merma=round($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100));
-	if($impresion_unidadmedida["unidad_medida"]==3){
-		$mtrprod_sellado_total=(($mtrprod_sellado + $proc_sellado_merma) * $impresion_nrobandas) / ($impresion_repeticion / 1000);
-	}
-}else{ $mtrprod_sellado=0; $procprod_merma_sellado=0; }
+	$mtrprod_sellado=($mtrprod + ($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100)));
+	$proc_sellado_merma=($mtrprod * ($procprod_merma_sellado["merma_proceso"] / 100));
+	$mtrprod_sellado_total=(($mtrprod_sellado + $proc_sellado_merma) * $cotizacion_nrobandas) / ($cotizacion_repeticion / 1000);
+}else{ $mtrprod_sellado_total=0; $procprod_merma_sellado=0; }
 
 if($proc_trilaminado>0){ //TRILAMINADO
 	$procprod_merma_trilaminado=seleccionTabla("'trilaminado'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
@@ -306,27 +296,6 @@ jlamprocEd(document).ready(function(){
 });
 </script>
 
-<!-- SELECCIONAR MAQUINAS -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-var jslcmaq = jQuery.noConflict();
-jslcmaq(document).ready(function(){
-	
-	jslcmaq("#dtp_selecmaq").click(function(){
-		var datos = jslcmaq("#formGuardar").serialize();
-		jslcmaq("#progressbar").removeClass("ocultar");
-		jslcmaq.ajax({
-            type: "POST", url: "seleccionar-maquinas.php", data: datos,
-            success: function(data){
-				jslcmaq("#progressbar").addClass("ocultar");
-				jslcmaq("#selccion_procesos_maquinas").html(data);
-            }
-        });
-		
-	});
-});
-</script>
-
 <!-- UNIDAD DE MEDIDA -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -394,6 +363,111 @@ jLamProcSelc(document).ready(function(){
 });
 </script>
 
+<!-- CILINDRO -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jCilRep=jQuery.noConflict();
+jCilRep(document).ready(function(){
+	jCilRep("#dtecnicos_repeticion").change(function(){
+		jCilRep("#progressbar").removeClass("ocultar");
+		var cilindro = jCilRep("#dtecnicos_cilindro").val();
+		var distancia = jCilRep(this).val();
+		var tipo = "repeticion";
+		jCilRep.post("cilindro-repeticion.php", {distancia: distancia, cilindro: cilindro, tipo: tipo},
+			function(data){
+				jCilRep("#dato_nrorepeticion").html(data);
+				jCilRep("#progressbar").addClass("ocultar");
+			});
+	});	
+});
+</script>
+
+<!-- SELECCIONAR MAQUINAS -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="/libs_js/jnotify/lib/jquery.jnotify.min.js"></script>
+<link type="text/css" href="/libs_js/jnotify/css/jquery.jnotify.css" rel="stylesheet" title="default" media="all" />
+<link type="text/css" href="/libs_js/jnotify/css/jquery.jnotify-alt.css" rel="alternate stylesheet" title="alt" media="all" />
+<script>
+var jslcmaq = jQuery.noConflict();
+jslcmaq(document).ready(function(){
+	
+	jslcmaq("#dtp_selecmaq").click(function(){
+		if(jslcmaq("#dtecnicos_cliente").val() == ""){
+		    jslcmaq("#dtecnicos_cliente").focus();
+			jslcmaq.jnotify("Ingrese dato del Cliente.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_articulo").val() == ""){
+		    jslcmaq("#dtecnicos_articulo").focus();
+			jslcmaq.jnotify("Ingrese dato del Producto.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_repeticion").val() == 0) {
+		    jslcmaq("#dtecnicos_repeticion").focus();
+			jslcmaq.jnotify("Ingrese Distancia de Repetición.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_cilindro").val() == "") {
+		    jslcmaq("#dtecnicos_cilindro").focus();
+			jslcmaq.jnotify("Seleccione Cilindro.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_anchofinal").val() == 0) {
+		    jslcmaq("#dtecnicos_anchofinal").focus();
+			jslcmaq.jnotify("Ingrese Ancho Final.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_numbandas").val() == "") {
+		    jslcmaq("#dtecnicos_numbandas").focus();
+			jslcmaq.jnotify("Seleccione Número de Bandas.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_numcolores").val() == "") {
+		    jslcmaq("#dtecnicos_numcolores").focus();
+			jslcmaq.jnotify("Seleccione Número de Colores.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_tolerancia").val() == 0) {
+		    jslcmaq("#dtecnicos_tolerancia").focus();
+			jslcmaq.jnotify("Ingrese Porcentaje de Tolerancia.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_unidadmedida").val() == "") {
+		    jslcmaq("#dtecnicos_unidadmedida").focus();
+			jslcmaq.jnotify("Seleccione Unidad de Medida.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_cantrq").val() == 0) {
+		    jslcmaq("#dtecnicos_cantrq").focus();
+			jslcmaq.jnotify("Ingrese Cantidad Requerida.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_precio").val() == 0) {
+		    jslcmaq("#dtecnicos_precio").focus();
+			jslcmaq.jnotify("Ingrese Precio (US$).", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#dtecnicos_formato").val() == "") {
+		    jslcmaq("#dtecnicos_formato").focus();
+			jslcmaq.jnotify("Seleccione Formato de Producto Terminado.", "error", 5000);
+		    return false;
+		}else if(jslcmaq("#procesos_maquinas_4").attr("checked") == "checked" && jslcmaq("#grm2_tintaseca_1").val() == 0) {
+			jslcmaq("#grm2_tintaseca_1").focus();
+			jslcmaq.jnotify("Ingrese Gr/m2 (Tinta seca) para Impresión.", "error", 5000);
+			return false;
+		}else if(jslcmaq("#procesos_maquinas_5").val() == 1 && jslcmaq("#bilaminado_proceso_2").val() == 0) {
+			jslcmaq("#bilaminado_proceso_2").focus();
+			jslcmaq.jnotify("Ingrese Gr/m2 (Adhesivo) para Bilaminado.", "error", 5000);
+			return false;
+		}else if(jslcmaq("#procesos_maquinas_6").val() == 1 && jslcmaq("#trilaminado_proceso_3").val() == 0) {
+			jslcmaq("#trilaminado_proceso_3").focus();
+			jslcmaq.jnotify("Ingrese Gr/m2 (Adhesivo) para Trilaminado.", "error", 5000);
+			return false;
+		}else{
+			jslcmaq("#progressbar").removeClass("ocultar");
+			var datos = jslcmaq("#formGuardar").serialize();
+			jslcmaq.ajax({
+				type: "POST", url: "seleccionar-maquinas.php", data: datos,
+				success: function(data){
+					jslcmaq("#progressbar").addClass("ocultar");
+					jslcmaq("#selccion_procesos_maquinas").html(data);
+				}
+			});
+		}
+		
+	});
+});
+</script>
+
 </head>
 
 <body>	
@@ -449,10 +523,12 @@ jLamProcSelc(document).ready(function(){
                           <input name="dtecnicos_repeticion" type="text" id="dtecnicos_repeticion" class="w130" value="<?php echo $cotizacion_repeticion; ?>">
 						</fieldset>
                         
+                        <div class="float_left w180" id="dato_nrorepeticion">
                         <fieldset class="alto50 w180">
-                          <label for="dtecnicos_frecuencia">Frecuencia (mm):</label>
-                          <input name="dtecnicos_frecuencia" type="text" class="w130" id="dtecnicos_frecuencia" value="<?php echo $cotizacion_frecuencia; ?>">
+                          <label for="dtecnicos_frecuencia">Nro de Repeticiones (Und):</label>
+                          <input name="dtecnicos_frecuencia" type="text" id="dtecnicos_frecuencia" class="w130" value="<?php echo $cotizacion_frecuencia; ?>" readonly>
 						</fieldset>
+                        </div>
                         
                         <fieldset class="alto50 w180">
                           <label for="dtecnicos_anchofinal">Ancho Final (mm):</label>
@@ -510,14 +586,27 @@ jLamProcSelc(document).ready(function(){
 						</fieldset>
                         
                         <fieldset class="alto50 w180">
-                        	<div id="dtecnicos_cantrq_texto">
-                          <label for="dtecnicos_cantrq">Cantidad Requerida:</label></div>
+                        	<div id="dtecnicos_cantrq_texto"><label for="dtecnicos_cantrq">Cantidad Requerida:</label></div>
                           <input name="dtecnicos_cantrq" type="text" id="dtecnicos_cantrq" class="w130" value="<?php echo $cotizacion_cantcliente; ?>">
 						</fieldset>
                         
                         <fieldset class="alto50 w180">
                           <label for="dtecnicos_precio">Precio (US$):</label>
                           <input name="dtecnicos_precio" type="text" id="dtecnicos_precio" class="w130" value="<?php echo $cotizacion_precio; ?>">
+						</fieldset>
+                        
+                        <fieldset class="alto50 w215">
+                            <label for="dtecnicos_formato">Formato de Producto Terminado:</label>
+                            <select name="dtecnicos_formato" id="dtecnicos_formato" class="w140">
+                              <option value>Seleccione</option>
+                              <?php if($cotizacion_formato==1){ ?>
+                              <option selected value="1">Lamina</option>
+                              <option value="2">Manga</option>
+                              <?php }elseif($cotizacion_formato==2){ ?>
+                              <option value="1">Lamina</option>
+                              <option selected value="2">Manga</option>
+                              <?php } ?>
+                            </select>
 						</fieldset>
                         
                         <div id="datos_lamproc" class="an100 float_left">
@@ -552,9 +641,7 @@ jLamProcSelc(document).ready(function(){
 									<?php }}}} ?>
                                   </select>
                                   
-                                    <a id="lamina1_select" class="boton_lamina"  href="javascript:;">
-	                                    <img src="/imagenes/icons/icon-ok.png" width="24" height="24" alt="Ok">
-                                    </a>
+                                    <a id="lamina1_select" class="boton_lamina"  href="javascript:;"></a>
                                   
                                 </fieldset>
 
@@ -572,7 +659,7 @@ jLamProcSelc(document).ready(function(){
                                         <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="<?php echo $cotizacion_lamina1_grm2; ?>">
                                     </fieldset>
                                     
-                                    <?php if($filtro1_polietileno==1 or $filtro1_pebd==1 or $filtro1_ppp==1){ ?>
+                                    <?php if($filtro1_polietileno==1 or $filtro1_pebd==1 or $filtro1_pead==1 or $filtro1_ppp==1){ ?>
                                     <fieldset class="w235">
                                         <?php if($cotizacion_lamina1_extrusion==1){ ?>
                                         <label><input checked id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion1" type="checkbox" value="1">&nbsp;Extrusión</label>
@@ -589,6 +676,7 @@ jLamProcSelc(document).ready(function(){
                                         <label><input id="procesos_maquinas_4" class="procesos_maquinas" name="impresion1" type="checkbox" value="1">&nbsp;Impresión</label>
                                         <?php } ?>
                                     </fieldset>
+                                    
                                     <fieldset class="w235">
                                         <label for="grm2_tintaseca_1">GR / m2 (Tinta seca)</label>
                                       <input class="w140 texto_der" name="grm2_tintaseca_1" type="text" id="grm2_tintaseca_1" value="<?php echo $cotizacion_lamina1_impresion_grm2; ?>">
@@ -599,28 +687,6 @@ jLamProcSelc(document).ready(function(){
                                         <label><input checked id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
                                         <?php }else{ ?>
                                         <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
-                                        <?php } ?>
-                                    </fieldset>
-                                    
-                                    <input id="procesos_maquinas_5" name="bilaminado1" type="hidden" value="0">
-        
-                                    <input id="procesos_maquinas_6" name="trilaminado1" type="hidden" value="0">
-                                    
-                                    <input name="habilitado1" type="hidden" value="0">
-                                    
-                                    <fieldset class="w235">
-                                        <?php if($cotizacion_lamina1_cortefinal==1){ ?>
-                                        <label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte</label>
-                                        <?php }else{ ?>
-                                        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte</label>
-                                        <?php } ?>
-                                    </fieldset>
-                                    
-                                    <fieldset class="w235">
-                                        <?php if($cotizacion_lamina1_sellado==1){ ?>
-                                        <label><input checked id="procesos_maquinas_8" class="procesos_maquinas" name="sellado1" type="checkbox" value="1">&nbsp;Sellado</label>
-                                        <?php }else{ ?>
-                                        <label><input id="procesos_maquinas_8" class="procesos_maquinas" name="sellado1" type="checkbox" value="1">&nbsp;Sellado</label>
                                         <?php } ?>
                                     </fieldset>
                                 	
@@ -660,9 +726,7 @@ jLamProcSelc(document).ready(function(){
 									<?php }}}} ?>                                    
                                   </select>
                                   
-                                    <a id="lamina2_select" class="boton_lamina"  href="javascript:;">
-	                                    <img src="/imagenes/icons/icon-ok.png" width="24" height="24" alt="Ok">
-                                    </a>
+                                    <a id="lamina2_select" class="boton_lamina"  href="javascript:;"></a>
                                   
                                 </fieldset>
                                 
@@ -680,7 +744,7 @@ jLamProcSelc(document).ready(function(){
                                         <input class="w100 texto_der" name="lamina2_grm2" type="text" id="lamina2_grm2" value="<?php echo $cotizacion_lamina2_grm2; ?>">
                                     </fieldset>
                                     
-                                    <?php if($filtro2_polietileno==1 or $filtro2_pebd==1 or $filtro2_ppp==1){ ?>
+                                    <?php if($filtro2_polietileno==1 or $filtro2_pebd==1 or $filtro2_pead==1 or $filtro2_ppp==1){ ?>
                                     <fieldset class="w235">
                                         <?php if($cotizacion_lamina2_extrusion==1){ ?>
                                         <label><input checked id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion2" type="checkbox" value="1">&nbsp;Extrusión</label>
@@ -690,39 +754,14 @@ jLamProcSelc(document).ready(function(){
                                     </fieldset>
                                     <?php } ?>
                                     
-                                    <fieldset class="w235">
-                                        <?php if($cotizacion_lamina2_bilaminado==1){ ?>
-                                        <label><input checked id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado2" type="checkbox" value="1">&nbsp;Bilaminado</label>
-                                        <?php }else{ ?>
-                                        <label><input id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado2" type="checkbox" value="1">&nbsp;Bilaminado</label>
-                                        <?php } ?>
-                                    </fieldset>
+									<input id="procesos_maquinas_5" name="bilaminado2" type="hidden" value="1">
+                                    
                                     <fieldset class="w235">
                                         <label for="bilaminado_proceso_2">GR / m2 (Adhesivo)</label>
                                       <input class="w140 texto_der" name="bilaminado_proceso_2" type="text" id="bilaminado_proceso_2" value="<?php echo $cotizacion_lamina2_bilaminado_grm2; ?>">
                                     </fieldset>
-                                    
-                                    <input id="procesos_maquinas_6" name="trilaminado2" type="hidden" value="0">
                                                                     
                                     <input name="rebobinado2" type="hidden" value="0">
-        
-                                    <input name="habilitado2" type="hidden" value="0">
-                                    
-                                    <fieldset class="w235">
-                                        <?php if($cotizacion_lamina2_cortefinal==1){ ?>
-                                        <label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal2" type="checkbox" value="1">&nbsp;Corte</label>
-                                        <?php }else{ ?>
-                                        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal2" type="checkbox" value="1">&nbsp;Corte</label>
-                                        <?php } ?>
-                                    </fieldset>
-                                    
-                                    <fieldset class="w235">
-                                        <?php if($cotizacion_lamina2_sellado==1){ ?>
-                                        <label><input checked id="procesos_maquinas_8" class="procesos_maquinas" name="sellado2" type="checkbox" value="1">&nbsp;Sellado</label>
-                                        <?php }else{ ?>
-                                        <label><input id="procesos_maquinas_8" class="procesos_maquinas" name="sellado2" type="checkbox" value="1">&nbsp;Sellado</label>
-                                        <?php } ?>
-                                    </fieldset>
                                 	
                                     <?php } ?>
                                     
@@ -760,9 +799,7 @@ jLamProcSelc(document).ready(function(){
 									<?php }}}} ?>
                                   </select>
                                   
-                                    <a id="lamina3_select" class="boton_lamina"  href="javascript:;">
-	                                    <img src="/imagenes/icons/icon-ok.png" width="24" height="24" alt="Ok">
-                                    </a>
+                                    <a id="lamina3_select" class="boton_lamina"  href="javascript:;"></a>
                                   
                                 </fieldset>
                                                             
@@ -780,7 +817,7 @@ jLamProcSelc(document).ready(function(){
                                         <input class="w100 texto_der" name="lamina3_grm2" type="text" id="lamina3_grm2" value="<?php echo $cotizacion_lamina3_grm2; ?>">
                                     </fieldset>
                                     
-                                    <?php if($filtro3_polietileno==1 or $filtro3_pebd==1 or $filtro3_ppp==1){ ?>
+                                    <?php if($filtro3_polietileno==1 or $filtro3_pebd==1 or $filtro3_pead==1 or $filtro3_ppp==1){ ?>
                                     <fieldset class="w235">
                                         <?php if($cotizacion_lamina3_extrusion==1){ ?>
                                         <label><input checked id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion3" type="checkbox" value="1">&nbsp;Extrusión</label>
@@ -790,44 +827,42 @@ jLamProcSelc(document).ready(function(){
                                     </fieldset>
                                     <?php } ?>
                                     
-                                    <fieldset class="w235">
-                                        <?php if($cotizacion_lamina3_trilaminado==1){ ?>
-                                        <label><input checked id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado3" type="checkbox" value="1">&nbsp;Trilaminado</label>
-                                        <?php }else{ ?>
-                                        <label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado3" type="checkbox" value="1">&nbsp;Trilaminado</label>
-                                        <?php } ?>
-                                    </fieldset>
+                                    <input id="procesos_maquinas_6" name="trilaminado3" type="hidden" value="1">
+                                    
                                     <fieldset class="w235">
                                         <label for="trilaminado_proceso_3">GR / m2 (Adhesivo)</label>
                                       <input class="w140 texto_der" name="trilaminado_proceso_3" type="text" id="trilaminado_proceso_3" value="<?php echo $cotizacion_lamina3_trilaminado_grm2; ?>">
                                     </fieldset>
                                     
                                     <input name="rebobinado2" type="hidden" value="0">
-        
-                                    <input name="habilitado2" type="hidden" value="0">
-                                    
-                                    <fieldset class="w235">
-                                        <?php if($cotizacion_lamina3_cortefinal==1){ ?>
-                                        <label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal3" type="checkbox" value="1">&nbsp;Corte</label>
-                                        <?php }else{ ?>
-                                        <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal3" type="checkbox" value="1">&nbsp;Corte</label>
-                                        <?php } ?>
-                                    </fieldset>
-                                    
-                                    <fieldset class="w235">
-                                        <?php if($cotizacion_lamina3_sellado==1){ ?>
-                                        <label><input checked id="procesos_maquinas_8" class="procesos_maquinas" name="sellado3" type="checkbox" value="1">&nbsp;Sellado</label>
-                                        <?php }else{ ?>
-                                        <label><input id="procesos_maquinas_8" class="procesos_maquinas" name="sellado3" type="checkbox" value="1">&nbsp;Sellado</label>
-                                        <?php } ?>
-                                    </fieldset>
                                 	
                                     <?php } ?>
                                     
                                 </div>
                                 
                             </div><!-- FIN LAMINA 3 -->
-                        
+                        	
+                            <div class="w245 float_left border_der margin_r10">
+                            	
+                                <h2>Acabado</h2><br>
+                                <fieldset class="w245">
+                                	<?php if($cotizacion_lamina1_cortefinal==1){ ?>
+                                    <label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal" type="checkbox" value="1">&nbsp;Corte</label>
+                                    <?php }else{ ?>
+                                    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal" type="checkbox" value="1">&nbsp;Corte</label>
+                                    <?php } ?>
+                                </fieldset>
+                                
+                                <fieldset class="w245">
+                                	<?php if($cotizacion_lamina1_sellado==1){ ?>
+                                    <label><input checked id="procesos_maquinas_8" class="procesos_maquinas" name="sellado" type="checkbox" value="1">&nbsp;Sellado</label>
+                                    <?php }else{ ?>
+                                    <label><input id="procesos_maquinas_8" class="procesos_maquinas" name="sellado" type="checkbox" value="1">&nbsp;Sellado</label>
+                                    <?php } ?>
+                                </fieldset>
+                            
+                            </div>
+                            
                 </div><!-- FIN datos_lamproc -->
                         
                         <fieldset class="an100 float_left">
@@ -851,13 +886,15 @@ jLamProcSelc(document).ready(function(){
                                 <input name="dtecnicos_metrosproducir" type="text" id="dtecnicos_metrosproducir" class="w130" value="<?php echo $cotizacion_metrosproducir; ?>">
                             </fieldset>
                             
+                            <div class="float_left an100"><h2>Procesos</h2></div>
+                            
                             <table width="100%" border="1" cellspacing="5" cellpadding="5" class="float_left">
                                     <thead>
                                         <tr>
                                             <td width="8.3%" class="texto_cen texto_10 fondo_c1 texto_bold">Procesos</td>
                                             <td width="13%" class="texto_cen texto_10 fondo_c1 texto_bold">Maquinas</td>
-                                            <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Metros</td>
-                                            <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Velocidad <br>Mts/Min</td>
+                                            <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Cantidad</td>
+                                            <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Velocidad <br>por minuto</td>
                                             <td width="8.3%" class="texto_cen texto_10 fondo_c1 texto_bold">Prepar. <br>(HH:mm)</td>
                                             <td width="8.3%" class="texto_cen texto_10 fondo_c1 texto_bold">Regulac. <br>(HH:mm)</td>
                                             <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Tiempo (HH:mm)</td>
@@ -865,7 +902,7 @@ jLamProcSelc(document).ready(function(){
                                             <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Costo <br>Hora / <br>Hombre</td>
                                             <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Costo <br>Deprec. <br>/ Hora</td>
                                             <td width="8%" class="texto_cen texto_10 fondo_c1 texto_bold">Gastos <br>Fábrica <br>/ Hora </td>
-                                            <td width="8.3%" class="texto_cen texto_10 fondo_c1 texto_bold">Total</td>
+                                            <td width="8.3%" class="texto_cen texto_10 fondo_c1 texto_bold">Importe</td>
                                         </tr>
                                     </thead>
                           </table>
@@ -905,7 +942,7 @@ jLamProcSelc(document).ready(function(){
                                             <option value="0">------------------</option>
                                             <?php
                                             //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
-                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1", $conexion);
+                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1 ORDER BY id_maquina ASC", $conexion);
                                             while($fila_maq=mysql_fetch_array($rst_maq)){
                                 
                                                 $maq_procesos=$fila_maq["procesos_productivos_maquina"];
@@ -957,7 +994,7 @@ jLamProcSelc(document).ready(function(){
                                             <option value="0">------------------</option>
                                             <?php
                                             //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
-                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1", $conexion);
+                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1 ORDER BY id_maquina ASC", $conexion);
                                             while($fila_maq=mysql_fetch_array($rst_maq)){
                                 
                                                 $maq_procesos=$fila_maq["procesos_productivos_maquina"];
@@ -1009,7 +1046,7 @@ jLamProcSelc(document).ready(function(){
                                             <option value="0">------------------</option>
                                             <?php
                                             //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
-                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1", $conexion);
+                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1 ORDER BY id_maquina ASC", $conexion);
                                             while($fila_maq=mysql_fetch_array($rst_maq)){
                                 
                                                 $maq_procesos=$fila_maq["procesos_productivos_maquina"];
@@ -1069,7 +1106,7 @@ jLamProcSelc(document).ready(function(){
                                             <?php
                                             
                                             //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
-                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1", $conexion);
+                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1 ORDER BY id_maquina ASC", $conexion);
                                             while($fila_maq=mysql_fetch_array($rst_maq)){
                                 
                                                 $maq_procesos=$fila_maq["procesos_productivos_maquina"];
@@ -1128,7 +1165,7 @@ jLamProcSelc(document).ready(function(){
                                             <?php
                                             
                                             //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
-                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1", $conexion);
+                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1 ORDER BY id_maquina ASC", $conexion);
                                             while($fila_maq=mysql_fetch_array($rst_maq)){
                                 
                                                 $maq_procesos=$fila_maq["procesos_productivos_maquina"];
@@ -1186,7 +1223,7 @@ jLamProcSelc(document).ready(function(){
                                             <option value="0">------------------</option>
                                             <?php
                                             //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
-                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1", $conexion);
+                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1 ORDER BY id_maquina ASC", $conexion);
                                             while($fila_maq=mysql_fetch_array($rst_maq)){
                                 
                                                 $maq_procesos=$fila_maq["procesos_productivos_maquina"];
@@ -1245,7 +1282,7 @@ jLamProcSelc(document).ready(function(){
                                             <?php
                                             
                                             //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
-                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1", $conexion);
+                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1 ORDER BY id_maquina ASC", $conexion);
                                             while($fila_maq=mysql_fetch_array($rst_maq)){
                                 
                                                 $maq_procesos=$fila_maq["procesos_productivos_maquina"];
@@ -1303,7 +1340,7 @@ jLamProcSelc(document).ready(function(){
                                             <?php
                                             
                                             //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
-                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1", $conexion);
+                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1 ORDER BY id_maquina ASC", $conexion);
                                             while($fila_maq=mysql_fetch_array($rst_maq)){
                                 
                                                 $maq_procesos=$fila_maq["procesos_productivos_maquina"];
@@ -1362,7 +1399,7 @@ jLamProcSelc(document).ready(function(){
                                             <?php
                                             
                                             //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
-                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1", $conexion);
+                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1 ORDER BY id_maquina ASC", $conexion);
                                             while($fila_maq=mysql_fetch_array($rst_maq)){
                                 
                                                 $maq_procesos=$fila_maq["procesos_productivos_maquina"];
@@ -1427,7 +1464,7 @@ jLamProcSelc(document).ready(function(){
                                             <?php
                                             
                                             //EXTRAER MAQUINAS RELACIONADAS AL PROCESO
-                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1", $conexion);
+                                            $rst_maq=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos WHERE mostrar_maquina=1 ORDER BY id_maquina ASC", $conexion);
                                             while($fila_maq=mysql_fetch_array($rst_maq)){
                                 
                                                 $maq_procesos=$fila_maq["procesos_productivos_maquina"];
@@ -1458,7 +1495,7 @@ jLamProcSelc(document).ready(function(){
                                             <td width="200" class="texto_cen texto_11 fondo_c1 texto_bold">Insumos</td>
                                             <td width="150" class="texto_cen texto_11 fondo_c1 texto_bold">Costo</td>
                                             <td width="150" class="texto_cen texto_11 fondo_c1 texto_bold">Cant. Requerida</td>
-                                            <td width="150" class="texto_cen texto_11 fondo_c1 texto_bold">Total</td>
+                                            <td width="150" class="texto_cen texto_11 fondo_c1 texto_bold">Importe</td>
                                         </tr>
                                     </thead>
                                 </table>

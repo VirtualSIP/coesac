@@ -6,15 +6,10 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 
 //VARIABLES DE URL
 $notificacion=$_REQUEST["msj"];
+$impresion=$_REQUEST["imp"];
 
 //COTIZACION
 $rst_cotizacion=mysql_query("SELECT * FROM syCoesa_cotizacion ORDER BY id_cotizacion DESC;", $conexion);
-
-//MENSAJE
-$varMsj=$_REQUEST["msj"];
-if($varMsj=="tcp"){
-	$mensaje="Los datos de la Cotizacion seleccionada, fueron enviados a Costos de Producción.";
-}
 
 ?>
 <!DOCTYPE HTML>
@@ -127,8 +122,10 @@ jNotify(document).ready(function (){
 	jNotify.jnotify("El registro se ha guardado correctamente.", 5000);
 	<?php }elseif($notificacion==2){ ?>
 	jNotify.jnotify("El registro NO se ha guardado correctamente, ingrese nuevamente los datos.", "error", 5000);
+	window.open("impresion.php?imp=<?php echo $impresion; ?>", "_blank", "width=1200, height=800");
 	<?php }elseif($notificacion==3){ ?>
 	jNotify.jnotify("El registro se ha actualizó correctamente.", 5000);
+	window.open("impresion.php?imp=<?php echo $impresion; ?>", "_blank", "width=1200, height=800");
 	<?php }elseif($notificacion==4){ ?>
 	jNotify.jnotify("El registro NO se ha actualizado correctamente, ingrese nuevamente los datos.", "error", 5000);
 	<?php }elseif($notificacion==5){ ?>

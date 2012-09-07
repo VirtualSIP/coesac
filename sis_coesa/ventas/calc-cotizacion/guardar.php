@@ -18,9 +18,15 @@ $cantcliente=$_POST["dtecnicos_cantrq"];
 $tolerancia=$_POST["dtecnicos_tolerancia"];
 $unidadmedida=$_POST["dtecnicos_unidadmedida"];
 $precio=$_POST["dtecnicos_precio"];
+$formato=$_POST["dtecnicos_formato"];
 $grm2total=$_POST["dtecnicos_grm2_total"];
 $cantproduccion=$_POST["dtecnicos_cantrequerida"];
 $metrosproducir=$_POST["dtecnicos_metrosproducir"];
+
+//DATOS
+$dato_fecha=$fechaActual;
+$dato_usuario=$usuario_user;
+$cod_unico=codigoAleatorio(20, true, true, false);
 
 //LAMINA 1
 if($_POST["dt_articulo1"]==""){ $lamina1=0; }else{ $lamina1=$_POST["dt_articulo1"]; };
@@ -29,8 +35,6 @@ if($_POST["lamina1_grm2"]<>""){ $lamina1_grm2=$_POST["lamina1_grm2"]; }else{ $la
 if($_POST["extrusion1"]==""){ $lamina1_extrusion=0; }else{ $lamina1_extrusion=$_POST["extrusion1"]; };
 if($_POST["impresion1"]==""){ $lamina1_impresion=0; }else{ $lamina1_impresion=$_POST["impresion1"]; };
 if($_POST["rebobinado1"]==""){ $lamina1_rebobinado=0; }else{ $lamina1_rebobinado=$_POST["rebobinado1"]; };
-if($_POST["cortefinal1"]==""){ $lamina1_cortefinal=0; }else{ $lamina1_cortefinal=$_POST["cortefinal1"]; };
-if($_POST["sellado1"]==""){ $lamina1_sellado=0; }else{ $lamina1_sellado=$_POST["sellado1"]; };
 if($_POST["grm2_tintaseca_1"]==""){ $lamina1_impresion_grm2=0; }else{ $lamina1_impresion_grm2=$_POST["grm2_tintaseca_1"]; }
 
 //LAMINA 2
@@ -40,8 +44,6 @@ if($_POST["lamina2_grm2"]<>""){ $lamina2_grm2=$_POST["lamina2_grm2"]; }else{ $la
 if($_POST["extrusion2"]==""){ $lamina2_extrusion=0; }else{ $lamina2_extrusion=$_POST["extrusion2"]; };
 if($_POST["bilaminado2"]==""){ $lamina2_bilaminado=0; }else{ $lamina2_bilaminado=$_POST["bilaminado2"]; };
 if($_POST["rebobinado2"]==""){ $lamina2_rebobinado=0; }else{ $lamina2_rebobinado=$_POST["rebobinado2"]; };
-if($_POST["cortefinal2"]==""){ $lamina2_cortefinal=0; }else{ $lamina2_cortefinal=$_POST["cortefinal2"]; };
-if($_POST["sellado2"]==""){ $lamina2_sellado=0; }else{ $lamina2_sellado=$_POST["sellado2"]; };
 if($_POST["bilaminado_proceso_2"]==""){ $lamina2_bilaminado_grm2=0; }else{ $lamina2_bilaminado_grm2=$_POST["bilaminado_proceso_2"]; }
 
 //LAMINA 3
@@ -51,10 +53,11 @@ if($_POST["lamina3_grm2"]<>""){ $lamina3_grm2=$_POST["lamina3_grm2"]; }else{ $la
 if($_POST["extrusion3"]==""){ $lamina3_extrusion=0; }else{ $lamina3_extrusion=$_POST["extrusion3"]; };
 if($_POST["trilaminado3"]==""){ $lamina3_trilaminado=0; }else{ $lamina3_trilaminado=$_POST["trilaminado3"]; };
 if($_POST["rebobinado3"]==""){ $lamina3_rebobinado=0; }else{ $lamina3_rebobinado=$_POST["rebobinado3"]; };
-if($_POST["habilitado3"]==""){ $lamina3_habilitado=0; }else{ $lamina3_habilitado=$_POST["habilitado3"]; };
-if($_POST["cortefinal3"]==""){ $lamina3_cortefinal=0; }else{ $lamina3_cortefinal=$_POST["cortefinal3"]; };
-if($_POST["sellado3"]==""){ $lamina3_sellado=0; }else{ $lamina3_sellado=$_POST["sellado3"]; };
 if($_POST["trilaminado_proceso_3"]==""){ $lamina3_trilaminado_grm2=0; }else{ $lamina3_trilaminado_grm2=$_POST["trilaminado_proceso_3"]; }
+
+//ACABADO
+if($_POST["cortefinal"]==""){ $lamina1_cortefinal=0; }else{ $lamina1_cortefinal=$_POST["cortefinal"]; };
+if($_POST["sellado"]==""){ $lamina1_sellado=0; }else{ $lamina1_sellado=$_POST["sellado"]; };
 
 //MAQUINAS
 if($_POST["maquina1"]==""){ $maquina1=0; }else{ $maquina1=$_POST["maquina1"]; }; //EXTRUSION IMPRESION
@@ -89,6 +92,7 @@ cantcliente_cotizacion,
 tolerancia_cotizacion, 
 unidad_medida_cotizacion, 
 precio_cotizacion, 
+formato_cotizacion, 
 lamina1_cotizacion, 
 lamina1_ancho_cotizacion,
 lamina1_grm2_cotizacion,
@@ -96,8 +100,6 @@ extrusion1_cotizacion,
 impresion1_cotizacion, 
 impresion1_grm2_cotizacion, 
 rebobinado1_cotizacion, 
-cortefinal1_cotizacion, 
-sellado1_cotizacion, 
 lamina2_cotizacion, 
 lamina2_ancho_cotizacion,
 lamina2_grm2_cotizacion,
@@ -105,8 +107,6 @@ extrusion2_cotizacion,
 bilaminado2_cotizacion, 
 bilaminado2_grm2_cotizacion, 
 rebobinado2_cotizacion,  
-cortefinal2_cotizacion, 
-sellado2_cotizacion, 
 lamina3_cotizacion, 
 lamina3_ancho_cotizacion,
 lamina3_grm2_cotizacion,
@@ -114,8 +114,8 @@ extrusion3_cotizacion,
 trilaminado3_cotizacion, 
 trilaminado3_grm2_cotizacion, 
 rebobinado3_cotizacion, 
-cortefinal3_cotizacion, 
-sellado3_cotizacion, 
+cortefinal1_cotizacion, 
+sellado1_cotizacion, 
 grm2total_cotizacion, 
 cantproduccion_cotizacion, 
 metrosproducir_cotizacion, 
@@ -133,7 +133,10 @@ insumo_tinta,
 insumo_bilaminado, 
 insumo_trilaminado, 
 insumo_cushion, 
-insumo_clises) 
+insumo_clises,
+dato_fecha,
+dato_usuario,
+cod_unico) 
 VALUES ('".htmlspecialchars($cliente)."', 
 '".htmlspecialchars($producto)."', 
 $grm2, 
@@ -147,6 +150,7 @@ $cantcliente,
 $tolerancia, 
 $unidadmedida, 
 $precio, 
+$formato,
 $lamina1, 
 $lamina1_ancho,
 $lamina1_grm2,
@@ -154,8 +158,6 @@ $lamina1_extrusion,
 $lamina1_impresion, 
 $lamina1_impresion_grm2, 
 $lamina1_rebobinado, 
-$lamina1_cortefinal, 
-$lamina1_sellado, 
 $lamina2, 
 $lamina2_ancho,
 $lamina2_grm2,
@@ -163,8 +165,6 @@ $lamina2_extrusion,
 $lamina2_bilaminado, 
 $lamina2_bilaminado_grm2, 
 $lamina2_rebobinado, 
-$lamina2_cortefinal, 
-$lamina2_sellado, 
 $lamina3, 
 $lamina3_ancho,
 $lamina3_grm2,
@@ -172,8 +172,8 @@ $lamina3_extrusion,
 $lamina3_trilaminado, 
 $lamina3_trilaminado_grm2, 
 $lamina3_rebobinado, 
-$lamina3_cortefinal, 
-$lamina3_sellado, 
+$lamina1_cortefinal, 
+$lamina1_sellado, 
 $grm2total, 
 $cantproduccion, 
 $metrosproducir, 
@@ -191,7 +191,15 @@ $insumo_tinta,
 $insumo_bilaminado, 
 $insumo_trilaminado, 
 $insumo_cushion, 
-$insumo_clises)", $conexion);
+$insumo_clises,
+'$dato_fecha',
+'$dato_usuario',
+'$cod_unico')", $conexion);
+
+//SELECCIONAR COTIZACION INGRESADA
+$rst_ver=mysql_query("SELECT * FROM syCoesa_cotizacion WHERE cod_unico='$cod_unico'", $conexion);
+$fila_ver=mysql_fetch_array($rst_ver);
+$id_impresion=$fila_ver["id_cotizacion"];
 
 if (mysql_errno()!=0){
 	//echo "ERROR: ". mysql_errno() . " - ". mysql_error();
@@ -199,7 +207,7 @@ if (mysql_errno()!=0){
 	header("Location:lista.php?msj=2");
 } else {
 	mysql_close($conexion);
-	header("Location:lista.php?msj=1");
+	header("Location:lista.php?msj=1&imp=$id_impresion");
 }
-
 ?>
+	
