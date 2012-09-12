@@ -78,25 +78,6 @@ $insumo_clises=$cotizacion["insumo_clises"];
 $mtrprod=$cotizacion_metrosproducir;
 $cant_colores=$cotizacion_nrocolores;
 
-/*-------------------------- FILTRO LAMINAS --------------------------*/
-//FILTRO LAMINA1
-$filtro1_polietileno=BuscarPalabra("POLIETILENO", $lamina1_dato["nombre_articulo"]);
-$filtro1_pebd=BuscarPalabra("PEBD", $lamina1_dato["nombre_articulo"]);
-$filtro1_pead=BuscarPalabra("PEAD", $lamina1_dato["nombre_articulo"]);
-$filtro1_ppp=BuscarPalabra("PPP", $lamina1_dato["nombre_articulo"]);
-
-//FILTRO LAMINA2
-$filtro2_polietileno=BuscarPalabra("POLIETILENO", $lamina2_dato["nombre_articulo"]);
-$filtro2_pebd=BuscarPalabra("PEBD", $lamina2_dato["nombre_articulo"]);
-$filtro2_pead=BuscarPalabra("PEAD", $lamina2_dato["nombre_articulo"]);
-$filtro2_ppp=BuscarPalabra("PPP", $lamina2_dato["nombre_articulo"]);
-
-//FILTRO LAMINA3
-$filtro3_polietileno=BuscarPalabra("POLIETILENO", $lamina3_dato["nombre_articulo"]);
-$filtro3_pebd=BuscarPalabra("PEBD", $lamina3_dato["nombre_articulo"]);
-$filtro3_pead=BuscarPalabra("PEAD", $lamina3_dato["nombre_articulo"]);
-$filtro3_ppp=BuscarPalabra("PPP", $lamina3_dato["nombre_articulo"]);
-
 /*-------------------------- AGREGANDO METROS DE PROCESO + METROS A PRODUCIR --------------------------*/
 if($proc_cortefinal>0){ //CORTE FINAL
 	$procprod_merma_cortefinal=seleccionTabla("'corte-final'", "url", "syCoesa_mantenimiento_procesos_productivos", $conexion);
@@ -177,6 +158,7 @@ $maq_refile=$fila_maq["refile_maquina"];
 //FILTRO
 $formula_filtro_lamina=$cotizacion_anchofinal * $cotizacion_nrobandas + $maq_refile;
 $formula_filtro_manga=$cotizacion_anchofinal * $cotizacion_nrobandas;
+$formula_filtro_polietileno=0;
 
 //NUMERO DE COLORES
 $rst_mqdt_colores=mysql_query("SELECT * FROM syCoesa_mantenimiento_maquinas_datos ORDER BY estacion_cuerpo_maquina DESC LIMIT 1;", $conexion);
@@ -626,19 +608,25 @@ jslcmaq(document).ready(function(){
 											$lamina1_ancho=$fila_lamina1["ancho_articulo"];
 											$lamina1_tipo=$fila_lamina1["id_tipo_articulo"];
 											
-											if($lamina1_tipo<>13){
-												if($lamina1_ancho>=$formula_filtro_lamina){
-													if($cotizacion_lamina1==$lamina1_id){ ?>
+											//FILTRO POLIETILENO
+											$filtro1_polietileno=BuscarPalabra("POLIETILENO", $lamina1_nombre);
+											$filtro1_pebd=BuscarPalabra("PEBD", $lamina1_nombre);
+											$filtro1_pead=BuscarPalabra("PEAD", $lamina1_nombre);
+											$filtro1_ppp=BuscarPalabra("PPP", $lamina1_nombre);
+											
+											if($cotizacion_lamina1==$lamina1_id){?>
 										<option selected value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
-                                    <?php }else{ ?>
-                                    	<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
-									<?php }}}elseif($lamina1_tipo==13){
-											if($lamina1_ancho>=$formula_filtro_manga){
-												if($cotizacion_lamina1==$lamina1_id){ ?>
-										<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>	
-                                    <?php }else{ ?>
-                                    	<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
-									<?php }}}} ?>
+									<?php }elseif($filtro1_polietileno==1 or $filtro1_pead==1 or $filtro1_pebd==1 or $filtro1_ppp==1){
+												if($lamina1_ancho>=$formula_filtro_polietileno){ ?>
+										<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
+                                    <?php }}elseif($lamina1_tipo<>13){
+												if($lamina1_ancho>=$formula_filtro_lamina){ ?>
+										<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
+                                    <?php }}elseif($lamina1_tipo==13){
+												if($lamina1_ancho>=$formula_filtro_manga){?>
+										<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
+                                    <?php }}} ?>
+                                    
                                   </select>
                                   
                                     <a id="lamina1_select" class="boton_lamina"  href="javascript:;"></a>
@@ -711,19 +699,25 @@ jslcmaq(document).ready(function(){
 											$lamina2_ancho=$fila_lamina2["ancho_articulo"];
 											$lamina2_tipo=$fila_lamina2["id_tipo_articulo"];
 											
-											if($lamina2_tipo<>13){
-												if($lamina2_ancho>=$formula_filtro_lamina){
-													if($cotizacion_lamina2==$lamina2_id){ ?>
+											//FILTRO POLIETILENO
+											$filtro2_polietileno=BuscarPalabra("POLIETILENO", $lamina2_nombre);
+											$filtro2_pebd=BuscarPalabra("PEBD", $lamina2_nombre);
+											$filtro2_pead=BuscarPalabra("PEAD", $lamina2_nombre);
+											$filtro2_ppp=BuscarPalabra("PPP", $lamina2_nombre);
+											
+									if($cotizacion_lamina2==$lamina2_id){?>
 										<option selected value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
-                                    <?php }else{ ?>
-                                    	<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
-									<?php }}}elseif($lamina2_tipo==13){
-											if($lamina2_ancho>=$formula_filtro_manga){
-												if($cotizacion_lamina2==$lamina2_id){ ?>
-										<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>	
-                                    <?php }else{ ?>
-                                    	<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
-									<?php }}}} ?>                                    
+									<?php }elseif($filtro2_polietileno==1 or $filtro2_pead==1 or $filtro2_pebd==1 or $filtro2_ppp==1){
+												if($lamina2_ancho>=$formula_filtro_polietileno){ ?>
+										<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
+                                    <?php }}elseif($lamina2_tipo<>13){
+												if($lamina2_ancho>=$formula_filtro_lamina){ ?>
+										<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
+                                    <?php }}elseif($lamina2_tipo==13){
+												if($lamina2_ancho>=$formula_filtro_manga){?>
+										<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
+                                    <?php }}} ?>
+                                                                       
                                   </select>
                                   
                                     <a id="lamina2_select" class="boton_lamina"  href="javascript:;"></a>
@@ -784,19 +778,24 @@ jslcmaq(document).ready(function(){
 											$lamina3_ancho=$fila_lamina3["ancho_articulo"];
 											$lamina3_tipo=$fila_lamina3["id_tipo_articulo"];
 											
-											if($lamina3_tipo<>13){
-												if($lamina3_ancho>=$formula_filtro_lamina){
-													if($cotizacion_lamina3==$lamina3_id){ ?>
+											$filtro3_polietileno=BuscarPalabra("POLIETILENO", $lamina3_nombre);
+											$filtro3_pebd=BuscarPalabra("PEBD", $lamina3_nombre);
+											$filtro3_pead=BuscarPalabra("PEAD", $lamina3_nombre);
+											$filtro3_ppp=BuscarPalabra("PPP", $lamina3_nombre);
+											
+									if($cotizacion_lamina3==$lamina3_id){?>
 										<option selected value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
-                                    <?php }else{ ?>
-                                    	<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
-									<?php }}}elseif($lamina3_tipo==13){
-											if($lamina3_ancho>=$formula_filtro_manga){
-												if($cotizacion_lamina3==$lamina3_id){ ?>
-										<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>	
-                                    <?php }else{ ?>
-                                    	<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
-									<?php }}}} ?>
+									<?php }elseif($filtro3_polietileno==1 or $filtro3_pead==1 or $filtro3_pebd==1 or $filtro3_ppp==1){
+												if($lamina3_ancho>=$formula_filtro_polietileno){ ?>
+										<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
+                                    <?php }}elseif($lamina3_tipo<>13){
+												if($lamina3_ancho>=$formula_filtro_lamina){ ?>
+										<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
+                                    <?php }}elseif($lamina3_tipo==13){
+												if($lamina3_ancho>=$formula_filtro_manga){?>
+										<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
+                                    <?php }}} ?>
+                                    
                                   </select>
                                   
                                     <a id="lamina3_select" class="boton_lamina"  href="javascript:;"></a>
