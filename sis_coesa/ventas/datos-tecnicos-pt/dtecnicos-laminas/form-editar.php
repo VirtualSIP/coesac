@@ -23,7 +23,11 @@ $maq_refile=$fila_maq["refile_maquina"];
 //FORMULA: ANCHO FINAL * BANDAS + REFILE
 $did_ancho_final=$fila_did["ancho_final_datos_tecnicos"];
 $did_nro_bandas=$fila_did["nro_bandas_datos_tecnicos"];
-$formula_filtro=$did_ancho_final * $did_nro_bandas + $maq_refile;
+
+//FILTRO
+$formula_filtro_lamina=$did_ancho_final * $did_nro_bandas + $maq_refile;
+$formula_filtro_manga=$did_ancho_final * $did_nro_bandas;
+$formula_filtro_polietileno=0;
 
 //LAMINAS
 $rst_lamina=mysql_query("SELECT * FROM syCoesa_datos_tecnicos_laminas_procesos WHERE id_laminas_procesos=$id_registro;", $conexion);
@@ -32,42 +36,41 @@ $fila_lamina=mysql_fetch_array($rst_lamina);
 //VARIABLES
 $lamina_datos_tecnicos=$fila_lamina["id_datos_tecnicos"];
 
-//LAMINAS
+//LAMINA 1
 $lamina1=$fila_lamina["lamina1"];
 $lamina1_extrusion=$fila_lamina["lamina1_extrusion"];
 $lamina1_impresion=$fila_lamina["lamina1_impresion"];
 $lamina1_impresion_grm2=$fila_lamina["lamina1_impresion_grm2"];
-$lamina1_bilaminado=$fila_lamina["lamina1_bilaminado"];
-$lamina1_trilaminado=$fila_lamina["lamina1_trilaminado"];
 $lamina1_rebobinado=$fila_lamina["lamina1_rebobinado"];
-$lamina1_habilitado=$fila_lamina["lamina1_habilitado"];
+
+//LAMINA 2
+$lamina2=$fila_lamina["lamina2"];
+$lamina2_extrusion=$fila_lamina["lamina2_extrusion"];
+$lamina2_bilaminado=$fila_lamina["lamina2_bilaminado"];
+$lamina2_bilaminado_grm2=$fila_lamina["lamina2_bilaminado_grm2"];
+
+//LAMINA 3
+$lamina3=$fila_lamina["lamina3"];
+$lamina3_extrusion=$fila_lamina["lamina3_extrusion"];
+$lamina3_trilaminado=$fila_lamina["lamina3_trilaminado"];
+$lamina3_trilaminado_grm2=$fila_lamina["lamina3_trilaminado_grm2"];
+
+//ACBADO
 $lamina1_cortefinal=$fila_lamina["lamina1_cortefinal"];
 $lamina1_sellado=$fila_lamina["lamina1_sellado"];
 
-$lamina2=$fila_lamina["lamina2"];
-$lamina2_extrusion=$fila_lamina["lamina2_extrusion"];
-$lamina2_impresion=$fila_lamina["lamina2_impresion"];
-$lamina2_bilaminado=$fila_lamina["lamina2_bilaminado"];
-$lamina2_bilaminado_grm2=$fila_lamina["lamina2_bilaminado_grm2"];
-$lamina2_trilaminado=$fila_lamina["lamina2_trilaminado"];
-$lamina2_rebobinado=$fila_lamina["lamina2_rebobinado"];
-$lamina2_habilitado=$fila_lamina["lamina2_habilitado"];
-$lamina2_cortefinal=$fila_lamina["lamina2_cortefinal"];
-$lamina2_sellado=$fila_lamina["lamina2_sellado"];
-
-$lamina3=$fila_lamina["lamina3"];
-$lamina3_extrusion=$fila_lamina["lamina3_extrusion"];
-$lamina3_impresion=$fila_lamina["lamina3_impresion"];
-$lamina3_bilaminado=$fila_lamina["lamina3_bilaminado"];
-$lamina3_trilaminado=$fila_lamina["lamina3_trilaminado"];
-$lamina3_trilaminado_grm2=$fila_lamina["lamina3_trilaminado_grm2"];
-$lamina3_rebobinado=$fila_lamina["lamina3_rebobinado"];
-$lamina3_habilitado=$fila_lamina["lamina3_habilitado"];
-$lamina3_cortefinal=$fila_lamina["lamina3_cortefinal"];
-$lamina3_sellado=$fila_lamina["lamina3_sellado"];
+//DATOS DE LAMINA
+$lamina1_dato=seleccionTabla($lamina1, "id_articulo", "syCoesa_articulo", $conexion);
+$lamina2_dato=seleccionTabla($lamina2, "id_articulo", "syCoesa_articulo", $conexion);
+$lamina3_dato=seleccionTabla($lamina3, "id_articulo", "syCoesa_articulo", $conexion);
 
 //PRODUCTO TERMINADO
 $producto_nombre=seleccionTabla($fila_did["id_articulo"], "id_articulo", "syCoesa_articulo", $conexion);
+
+//LAMINAS - POLIETILENO
+$rst_lamina1=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo=3 AND mostrar_articulo=1) OR (id_tipo_articulo=6 AND mostrar_articulo=1) OR (id_tipo_articulo=13 AND mostrar_articulo=1) ORDER BY nombre_articulo ASC;", $conexion);
+$rst_lamina2=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo=3 AND mostrar_articulo=1) OR (id_tipo_articulo=6 AND mostrar_articulo=1) OR (id_tipo_articulo=13 AND mostrar_articulo=1) ORDER BY nombre_articulo ASC;", $conexion);
+$rst_lamina3=mysql_query("SELECT * FROM syCoesa_articulo WHERE (id_tipo_articulo=3 AND mostrar_articulo=1) OR (id_tipo_articulo=6 AND mostrar_articulo=1) OR (id_tipo_articulo=13 AND mostrar_articulo=1) ORDER BY nombre_articulo ASC;", $conexion);
 
 ?>
 <!DOCTYPE HTML>
@@ -109,39 +112,53 @@ jmenu(document).ready(function(){
 });
 </script>
 
-<!-- SELECCIONAR PROCESOS DE LAMINA -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- COMBO -->
+<link rel="stylesheet" href="/libs_js/jquery_ui/themes/base/jquery.ui.all.css">
+<script src="/libs_js/jquery-1.7.2.min.js"></script>
+<script src="/libs_js/jquery_ui/ui/jquery.ui.core.js"></script>
+<script src="/libs_js/jquery_ui/ui/jquery.ui.widget.js"></script>
+<script src="/libs_js/jquery_ui/ui/jquery.ui.button.js"></script>
+<script src="/libs_js/jquery_ui/ui/jquery.ui.position.js"></script>
+<script src="/libs_js/jquery_ui/ui/jquery.ui.autocomplete.js"></script>
+<link rel="stylesheet" href="/libs_js/combo/css-select.css">
+<script src="/libs_js/combo/js-select.js"></script>
+
+<!-- SELECCION DE PROCESOS -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-var jProLam = jQuery.noConflict();
-jProLam(document).ready(function(){
+var jLamProcSelc=jQuery.noConflict();
+jLamProcSelc(document).ready(function(){
 	
-	jProLam("#dt_articulo1").change(function(){
-		jProLam("#progressbar").removeClass("ocultar");
-		var lamina = jProLam(this).val();
-		jProLam.post("seleccionar-procesos.php", {lamina: lamina, rep: 1},
+	jLamProcSelc("#lamina1_select").click(function(){	
+		jLamProcSelc("#progressbar").removeClass("ocultar");
+		var lamina1=jLamProcSelc("#dt_articulo1").val();
+		
+		jLamProcSelc.post("seleccionar-procesos.php", {lamina1: lamina1},
 			function(data){
-				jProLam("#progressbar").addClass("ocultar");
-				jProLam("#procesos_laminas1").html(data);
+				jLamProcSelc("#lamina1_procesos").html(data);
+				jLamProcSelc("#progressbar").addClass("ocultar");
 			});
 	});
 	
-	jProLam("#dt_articulo2").change(function(){
-		jProLam("#progressbar").removeClass("ocultar");
-		var lamina = jProLam(this).val();
-		jProLam.post("seleccionar-procesos.php", {lamina: lamina, rep: 2},
+	jLamProcSelc("#lamina2_select").click(function(){
+		jLamProcSelc("#progressbar").removeClass("ocultar");
+		var lamina2=jLamProcSelc("#dt_articulo2").val();
+		
+		jLamProcSelc.post("seleccionar-procesos.php", {lamina2: lamina2},
 			function(data){
-				jProLam("#progressbar").addClass("ocultar");
-				jProLam("#procesos_laminas2").html(data);
+				jLamProcSelc("#lamina2_procesos").html(data);
+				jLamProcSelc("#progressbar").addClass("ocultar");
 			});
 	});
 	
-	jProLam("#dt_articulo3").change(function(){
-		jProLam("#progressbar").removeClass("ocultar");
-		var lamina = jProLam(this).val();
-		jProLam.post("seleccionar-procesos.php", {lamina: lamina, rep: 3},
+	jLamProcSelc("#lamina3_select").click(function(){
+		jLamProcSelc("#progressbar").removeClass("ocultar");
+		var lamina3=jLamProcSelc("#dt_articulo3").val();
+		
+		jLamProcSelc.post("seleccionar-procesos.php", {lamina3: lamina3},
 			function(data){
-				jProLam("#progressbar").addClass("ocultar");
-				jProLam("#procesos_laminas3").html(data);
+				jLamProcSelc("#lamina3_procesos").html(data);
+				jLamProcSelc("#progressbar").addClass("ocultar");
 			});
 	});
 	
@@ -171,205 +188,269 @@ jProLam(document).ready(function(){
                     
                     <form action="actualizar.php" method="post">
                       
-                      <div class="w250 float_left border_der margin_r10">
-                      	
-                        <h2>Monocapa</h2>
-                        
-                        <?php $rst_articulo1=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=3 OR id_tipo_articulo=6 ORDER BY nombre_articulo ASC;", $conexion); ?>
-                      
-                        <fieldset class="alto50 w245">
-                          <label for="dt_articulo1">Laminas:</label>
-                          <select name="dt_articulo1" id="dt_articulo1" class="w245">
-                                <option value>[ Seleccionar opcion ]</option>
-                                <?php while ($fila_articulo1=mysql_fetch_array($rst_articulo1)){
-                                  //VARIABLES
-                                  $articulo_id=$fila_articulo1["id_articulo"];
-                                  $articulo_nombre=$fila_articulo1["nombre_articulo"];
-								  $articulo_ancho=$fila_articulo1["ancho_articulo"];
-                                ?>
-                                <?php if($articulo_ancho>=$formula_filtro){ ?>
-									<?php if ($lamina1==$articulo_id){ ?>
-                                        <option value=<?php echo $articulo_id ?> selected><?php echo $articulo_nombre ?></option>
-                                    <?php }else{ ?>
-                                        <option value=<?php echo $articulo_id ?>><?php echo $articulo_nombre ?></option>
-                                    <?php }} ?>
-                                <?php } ?>
-                          </select>
-                        </fieldset>
-                        
-                            <div id="procesos_laminas1" class="float_left w250">
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina1_extrusion==1){ ?><label><input checked id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion1" type="checkbox" value="1">&nbsp;Extrusión</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion1" type="checkbox" value="1">&nbsp;Extrusión</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina1_impresion==1){ ?><label><input checked id="procesos_maquinas_4" class="procesos_maquinas" name="impresion1" type="checkbox" value="1">&nbsp;Impresión</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_4" class="procesos_maquinas" name="impresion1" type="checkbox" value="1">&nbsp;Impresión</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                                <label for="grm2_tintaseca_1">GR / m2 (Tinta seca)</label>
-                                <input class="w140 texto_der" type="text" id="grm2_tintaseca" name="grm2_tintaseca" value="<?php echo $lamina1_impresion_grm2; ?>">
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina1_rebobinado==1){ ?><label><input checked id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina1_bilaminado==1){ ?><label><input checked id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado1" type="checkbox" value="1">&nbsp;Bilaminado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado1" type="checkbox" value="1">&nbsp;Bilaminado</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina1_trilaminado==1){ ?><label><input checked id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado1" type="checkbox" value="1">&nbsp;Trilaminado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado1" type="checkbox" value="1">&nbsp;Trilaminado</label><?php } ?>
-                            </fieldset>
+                      <div class="w245 float_left border_der margin_r10">
+                            	
+                                <h2>Monocapa</h2><br>
+                                
+                                <fieldset class="alto50 w235">
+                                  <label for="dt_articulo1">Laminas:</label>
+                                  <select name="dt_articulo1" id="dt_articulo1" class="cmbSlc w180">
+                                    <option value>[ Seleccionar opcion ]</option>
+                                    <?php while($fila_lamina1=mysql_fetch_array($rst_lamina1)){
+											//VARIABLES
+											$lamina1_id=$fila_lamina1["id_articulo"];
+											$lamina1_nombre=$fila_lamina1["nombre_articulo"];
+											$lamina1_ancho=$fila_lamina1["ancho_articulo"];
+											$lamina1_tipo=$fila_lamina1["id_tipo_articulo"];
+											
+											//FILTRO POLIETILENO
+											$filtro1_polietileno=BuscarPalabra("POLIETILENO", $lamina1_nombre);
+											$filtro1_pebd=BuscarPalabra("PEBD", $lamina1_nombre);
+											$filtro1_pead=BuscarPalabra("PEAD", $lamina1_nombre);
+											$filtro1_ppp=BuscarPalabra("PPP", $lamina1_nombre);
+											
+											if($lamina1==$lamina1_id){?>
+										<option selected value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
+									<?php }elseif($filtro1_polietileno==1 or $filtro1_pead==1 or $filtro1_pebd==1 or $filtro1_ppp==1){
+												if($lamina1_ancho>=$formula_filtro_polietileno){ ?>
+										<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
+                                    <?php }}elseif($lamina1_tipo<>13){
+												if($lamina1_ancho>=$formula_filtro_lamina){ ?>
+										<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
+                                    <?php }}elseif($lamina1_tipo==13){
+												if($lamina1_ancho>=$formula_filtro_manga){?>
+										<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
+                                    <?php }}} ?>
+                                    
+                                  </select>
+                                  
+                                    <a id="lamina1_select" class="boton_lamina"  href="javascript:;"></a>
+                                  
+                                </fieldset>
 
-							<input name="habilitado1" type="hidden" value="0">
+                                <div id="lamina1_procesos" class="w245 float_left">
+                                	
+                                    <?php if($lamina1>0){ ?>
+                                    
+                                    <fieldset class="w120">
+                                        <label for="lamina1_ancho">Ancho</label>
+                                        <input class="w100 texto_der" name="lamina1_ancho" type="text" id="lamina1_ancho" value="<?php echo $lamina1_dato["ancho_articulo"]; ?>" readonly>
+                                    </fieldset>
+                                    
+                                    <fieldset class="w120">
+                                        <label for="lamina1_grm2">GR / M2</label>
+                                        <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="<?php echo $lamina1_dato["grm2_articulo"]; ?>" readonly>
+                                    </fieldset>
+                                    
+                                    <fieldset class="w235">
+                                        <?php if($lamina1_extrusion==1){ ?>
+                                        <label><input checked id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion1" type="checkbox" value="1">&nbsp;Extrusión</label>
+                                        <?php }else{ ?>
+                                        <label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion1" type="checkbox" value="1">&nbsp;Extrusión</label>
+                                        <?php } ?>
+                                    </fieldset>
+                                                                        
+                                    <fieldset class="w235">
+                                        <?php if($lamina1_impresion==1){ ?>
+                                        <label><input checked id="procesos_maquinas_4" class="procesos_maquinas" name="impresion1" type="checkbox" value="1">&nbsp;Impresión</label>
+                                        <?php }else{ ?>
+                                        <label><input id="procesos_maquinas_4" class="procesos_maquinas" name="impresion1" type="checkbox" value="1">&nbsp;Impresión</label>
+                                        <?php } ?>
+                                    </fieldset>
+                                    
+                                    <fieldset class="w235">
+                                        <label for="grm2_tintaseca">GR / m2 (Tinta seca)</label>
+                                      <input class="w140 texto_der" name="grm2_tintaseca" type="text" id="grm2_tintaseca" value="<?php echo $lamina1_impresion_grm2; ?>">
+                                    </fieldset>
+                                    
+                                    <fieldset class="w235">
+                                        <?php if($lamina1_rebobinado==1){ ?>
+                                        <label><input checked id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
+                                        <?php }else{ ?>
+                                        <label><input id="procesos_maquinas_9" class="procesos_maquinas" name="rebobinado1" type="checkbox" value="1">&nbsp;Rebobinado</label>
+                                        <?php } ?>
+                                    </fieldset>
+                                	
+                                    <?php } ?>
+                                    
+                                </div>
+                                
+                            </div><!-- FIN LAMINA 1 -->
                             
-                            <fieldset class="w245">
-                            <?php if($lamina1_cortefinal==1){ ?><label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal1" type="checkbox" value="1">&nbsp;Corte Final</label><?php } ?>
-                            </fieldset>
+                            <div class="w245 float_left border_der margin_r10">
+                            	
+                                <h2>Bilaminado</h2><br>
+                                
+                                <fieldset class="alto50 w235">
+                                  <label for="dt_articulo2">Laminas:</label>
+                                  <select name="dt_articulo2" id="dt_articulo2" class="cmbSlc">
+                                    <option value>[ Seleccionar opcion ]</option>
+                                    <?php while($fila_lamina2=mysql_fetch_array($rst_lamina2)){
+											//VARIABLES
+											$lamina2_id=$fila_lamina2["id_articulo"];
+											$lamina2_nombre=$fila_lamina2["nombre_articulo"];
+											$lamina2_ancho=$fila_lamina2["ancho_articulo"];
+											$lamina2_tipo=$fila_lamina2["id_tipo_articulo"];
+											
+											//FILTRO POLIETILENO
+											$filtro2_polietileno=BuscarPalabra("POLIETILENO", $lamina2_nombre);
+											$filtro2_pebd=BuscarPalabra("PEBD", $lamina2_nombre);
+											$filtro2_pead=BuscarPalabra("PEAD", $lamina2_nombre);
+											$filtro2_ppp=BuscarPalabra("PPP", $lamina2_nombre);
+											
+									if($lamina2==$lamina2_id){?>
+										<option selected value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
+									<?php }elseif($filtro2_polietileno==1 or $filtro2_pead==1 or $filtro2_pebd==1 or $filtro2_ppp==1){
+												if($lamina2_ancho>=$formula_filtro_polietileno){ ?>
+										<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
+                                    <?php }}elseif($lamina2_tipo<>13){
+												if($lamina2_ancho>=$formula_filtro_lamina){ ?>
+										<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
+                                    <?php }}elseif($lamina2_tipo==13){
+												if($lamina2_ancho>=$formula_filtro_manga){?>
+										<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
+                                    <?php }}} ?>
+                                                                       
+                                  </select>
+                                  
+                                    <a id="lamina2_select" class="boton_lamina"  href="javascript:;"></a>
+                                  
+                                </fieldset>
+                                
+                                <div id="lamina2_procesos" class="w245 float_left">
+                                	
+                                    <?php if($lamina2>0){ ?>
+                                    
+                                    <fieldset class="w120">
+                                        <label for="lamina2_ancho">Ancho</label>
+                                        <input class="w100 texto_der" name="lamina2_ancho" type="text" id="lamina2_ancho" value="<?php echo $lamina2_dato["ancho_articulo"]; ?>" readonly>
+                                    </fieldset>
+                                    
+                                    <fieldset class="w120">
+                                        <label for="lamina2_grm2">GR / M2</label>
+                                        <input class="w100 texto_der" name="lamina2_grm2" type="text" id="lamina2_grm2" value="<?php echo $lamina2_dato["grm2_articulo"]; ?>" readonly>
+                                    </fieldset>
+                                   
+                                    <fieldset class="w235">
+                                        <?php if($lamina2_extrusion==1){ ?>
+                                        <label><input checked id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion2" type="checkbox" value="1">&nbsp;Extrusión</label>
+                                        <?php }else{ ?>
+                                        <label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion2" type="checkbox" value="1">&nbsp;Extrusión</label>
+                                        <?php } ?>
+                                    </fieldset>
+                                                                                                           
+                                    <fieldset class="w235">
+                                    	<input id="procesos_maquinas_5" name="bilaminado2" type="hidden" value="1">
+                                        <label for="grm2_bilaminado">GR / m2 (Adhesivo)</label>
+                                      <input class="w140 texto_der" name="grm2_bilaminado" type="text" id="grm2_bilaminado" value="<?php echo $lamina2_bilaminado_grm2; ?>">
+                                    </fieldset>
+                                	
+                                    <?php } ?>
+                                    
+                                </div>
+                                
+                            </div><!-- FIN LAMINA 2 -->
                             
-                            <fieldset class="w245">
-                            <?php if($lamina1_sellado==1){ ?><label><input checked id="procesos_maquinas_8" class="procesos_maquinas" name="sellado1" type="checkbox" value="1">&nbsp;Sellado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_8" class="procesos_maquinas" name="sellado1" type="checkbox" value="1">&nbsp;Sellado</label><?php } ?>
-                            </fieldset>
+                            <div class="w245 float_left border_der margin_r10">
+                            	
+                                <h2>Trilaminado</h2><br>
+                            
+                                <fieldset class="alto50 w235">
+                                  <label for="dt_articulo3">Laminas:</label>
+                                  <select name="dt_articulo3" id="dt_articulo3" class="cmbSlc">
+                                    <option value>[ Seleccionar opcion ]</option>
+                                    <?php while($fila_lamina3=mysql_fetch_array($rst_lamina3)){
+											//VARIABLES
+											$lamina3_id=$fila_lamina3["id_articulo"];
+											$lamina3_nombre=$fila_lamina3["nombre_articulo"];
+											$lamina3_ancho=$fila_lamina3["ancho_articulo"];
+											$lamina3_tipo=$fila_lamina3["id_tipo_articulo"];
+											
+											$filtro3_polietileno=BuscarPalabra("POLIETILENO", $lamina3_nombre);
+											$filtro3_pebd=BuscarPalabra("PEBD", $lamina3_nombre);
+											$filtro3_pead=BuscarPalabra("PEAD", $lamina3_nombre);
+											$filtro3_ppp=BuscarPalabra("PPP", $lamina3_nombre);
+											
+									if($lamina3==$lamina3_id){?>
+										<option selected value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
+									<?php }elseif($filtro3_polietileno==1 or $filtro3_pead==1 or $filtro3_pebd==1 or $filtro3_ppp==1){
+												if($lamina3_ancho>=$formula_filtro_polietileno){ ?>
+										<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
+                                    <?php }}elseif($lamina3_tipo<>13){
+												if($lamina3_ancho>=$formula_filtro_lamina){ ?>
+										<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
+                                    <?php }}elseif($lamina3_tipo==13){
+												if($lamina3_ancho>=$formula_filtro_manga){?>
+										<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
+                                    <?php }}} ?>
+                                    
+                                  </select>
+                                  
+                                    <a id="lamina3_select" class="boton_lamina"  href="javascript:;"></a>
+                                  
+                                </fieldset>
+                                                            
+                                <div id="lamina3_procesos" class="w245 float_left">
+                                	
+                                    <?php if($lamina3>0){ ?>
+                                    
+                                    <fieldset class="w120">
+                                        <label for="lamina3_ancho">Ancho</label>
+                                        <input class="w100 texto_der" name="lamina3_ancho" type="text" id="lamina3_ancho" value="<?php echo $lamina3_dato["ancho_articulo"]; ?>" readonly>
+                                    </fieldset>
+                                    
+                                    <fieldset class="w120">
+                                        <label for="lamina3_grm2">GR / M2</label>
+                                        <input class="w100 texto_der" name="lamina3_grm2" type="text" id="lamina3_grm2" value="<?php echo $lamina3_dato["grm2_articulo"]; ?>" readonly>
+                                    </fieldset>
+                                    
+                                    <fieldset class="w235">
+                                        <?php if($lamina3_extrusion==1){ ?>
+                                        <label><input checked id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion3" type="checkbox" value="1">&nbsp;Extrusión</label>
+                                        <?php }else{ ?>
+                                        <label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion3" type="checkbox" value="1">&nbsp;Extrusión</label>
+                                        <?php } ?>                                    
+                                    </fieldset>
+                                                                        
+                                    <input id="procesos_maquinas_6" name="trilaminado3" type="hidden" value="1">
+                                    
+                                    <fieldset class="w235">
+                                        <label for="grm2_trilaminado">GR / m2 (Adhesivo)</label>
+                                      <input class="w140 texto_der" name="grm2_trilaminado" type="text" id="grm2_trilaminado" value="<?php echo $lamina3_trilaminado_grm2; ?>">
+                                    </fieldset>
+                                    
+                                    <input name="rebobinado2" type="hidden" value="0">
+                                	
+                                    <?php } ?>
+                                    
+                                </div>
+                                
+                            </div><!-- FIN LAMINA 3 -->
+                        	
+                            <div class="w245 float_left border_der margin_r10">
+                            	
+                                <h2>Acabado</h2><br>
+                                <fieldset class="w245">
+                                	<?php if($lamina1_cortefinal==1){ ?>
+                                    <label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal" type="checkbox" value="1">&nbsp;Corte</label>
+                                    <?php }else{ ?>
+                                    <label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal" type="checkbox" value="1">&nbsp;Corte</label>
+                                    <?php } ?>
+                                </fieldset>
+                                
+                                <fieldset class="w245">
+                                	<?php if($lamina1_sellado==1){ ?>
+                                    <label><input checked id="procesos_maquinas_8" class="procesos_maquinas" name="sellado" type="checkbox" value="1">&nbsp;Sellado</label>
+                                    <?php }else{ ?>
+                                    <label><input id="procesos_maquinas_8" class="procesos_maquinas" name="sellado" type="checkbox" value="1">&nbsp;Sellado</label>
+                                    <?php } ?>
+                                </fieldset>
                             
                             </div>
-                        
-                        </div> <!-- FIN LAMINA 1 -->
-                        
-                        <div class="w250 float_left border_der margin_r10">
-                      	<h2>Bilaminado</h2>
-                        <?php $rst_articulo2=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=3 OR id_tipo_articulo=6 ORDER BY nombre_articulo ASC;", $conexion); ?>
-                      
-                        <fieldset class="alto50 w245">
-                          <label for="dt_articulo2">Laminas:</label>
-                          <select name="dt_articulo2" id="dt_articulo2" class="w245">
-                                <option value>[ Seleccionar opcion ]</option>
-                                <?php while ($fila_articulo2=mysql_fetch_array($rst_articulo2)){
-                                  //VARIABLES
-                                  $articulo_id=$fila_articulo2["id_articulo"];
-                                  $articulo_nombre=$fila_articulo2["nombre_articulo"];
-								  $articulo_ancho=$fila_articulo2["ancho_articulo"];
-                                ?>
-                                <?php if($articulo_ancho>=$formula_filtro){ ?>
-									<?php if ($lamina2==$articulo_id){ ?>
-                                        <option value=<?php echo $articulo_id ?> selected><?php echo $articulo_nombre ?></option>
-                                    <?php }else{ ?>
-                                        <option value=<?php echo $articulo_id ?>><?php echo $articulo_nombre ?></option>
-                                    <?php }} ?>
-                                <?php } ?>
-                          </select>
-                        </fieldset>
-                        
-                            <div id="procesos_laminas2" class="float_left w250">
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina2_extrusion==1){ ?><label><input checked id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion2" type="checkbox" value="1">&nbsp;Extrusión</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion2" type="checkbox" value="1">&nbsp;Extrusión</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina2_bilaminado==1){ ?><label><input checked id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado2" type="checkbox" value="1">&nbsp;Bilaminado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_5" class="procesos_maquinas" name="bilaminado2" type="checkbox" value="1">&nbsp;Bilaminado</label><?php } ?>
-                            </fieldset>
-                            <fieldset class="w245">
-                                <label for="grm2_bilaminado">GR / m2</label>
-                                <input class="w140 texto_der" type="text" id="grm2_bilaminado" name="grm2_bilaminado" value="<?php echo $lamina2_bilaminado_grm2; ?>">
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina2_trilaminado==1){ ?><label><input checked id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado2" type="checkbox" value="1">&nbsp;Trilaminado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado2" type="checkbox" value="1">&nbsp;Trilaminado</label><?php } ?>
-                            </fieldset>
-                            
-                            <input name="rebobinado2" type="hidden" value="0">
-
-							<input name="habilitado2" type="hidden" value="0">
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina2_cortefinal==1){ ?><label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal2" type="checkbox" value="1">&nbsp;Corte Final</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal2" type="checkbox" value="1">&nbsp;Corte Final</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina2_sellado==1){ ?><label><input checked id="procesos_maquinas_8" class="procesos_maquinas" name="sellado2" type="checkbox" value="1">&nbsp;Sellado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_8" class="procesos_maquinas" name="sellado2" type="checkbox" value="1">&nbsp;Sellado</label><?php } ?>
-                            </fieldset>
-                            
-                            </div>
-                        
-                        </div> <!-- FIN LAMINA 2 -->
-                       
-                       <div class="w250 float_left border_der margin_r10">
-                      	<h2>Trilaminado</h2>
-                        <?php $rst_articulo3=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=3 OR id_tipo_articulo=6 ORDER BY nombre_articulo ASC;", $conexion); ?>
-                      
-                        <fieldset class="alto50 w245">
-                          <label for="dt_articulo3">Laminas:</label>
-                          <select name="dt_articulo3" id="dt_articulo3" class="w245">
-                                <option value>[ Seleccionar opcion ]</option>
-                                <?php while ($fila_articulo3=mysql_fetch_array($rst_articulo3)){
-                                  //VARIABLES
-                                  $articulo_id=$fila_articulo3["id_articulo"];
-                                  $articulo_nombre=$fila_articulo3["nombre_articulo"];
-								  $articulo_ancho=$fila_articulo3["ancho_articulo"];
-                                ?>
-                                <?php if($articulo_ancho>=$formula_filtro){ ?>
-									<?php if ($lamina3==$articulo_id){ ?>
-                                        <option value=<?php echo $articulo_id ?> selected><?php echo $articulo_nombre ?></option>
-                                    <?php }else{ ?>
-                                        <option value=<?php echo $articulo_id ?>><?php echo $articulo_nombre ?></option>
-                                    <?php }} ?>
-                                <?php } ?>
-                          </select>
-                        </fieldset>
-                        
-                            <div id="procesos_laminas3" class="float_left w250">
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina3_extrusion==1){ ?><label><input checked id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion3" type="checkbox" value="1">&nbsp;Extrusión</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion3" type="checkbox" value="1">&nbsp;Extrusión</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina3_trilaminado==1){ ?><label><input checked id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado3" type="checkbox" value="1">&nbsp;Trilaminado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_6" class="procesos_maquinas" name="trilaminado3" type="checkbox" value="1">&nbsp;Trilaminado</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                                <label for="grm2_trilaminado">GR / m2</label>
-                                <input class="w140 texto_der" id="grm2_trilaminado" type="text" name="grm2_trilaminado" value="<?php echo $lamina3_trilaminado_grm2; ?>">
-                            </fieldset>
-                            
-                            <input name="rebobinado2" type="hidden" value="0">
-
-							<input name="habilitado2" type="hidden" value="0">
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina3_cortefinal==1){ ?><label><input checked id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal3" type="checkbox" value="1">&nbsp;Corte Final</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_7" class="procesos_maquinas" name="cortefinal3" type="checkbox" value="1">&nbsp;Corte Final</label><?php } ?>
-                            </fieldset>
-                            
-                            <fieldset class="w245">
-                            <?php if($lamina3_sellado==1){ ?><label><input checked id="procesos_maquinas_8" class="procesos_maquinas" name="sellado3" type="checkbox" value="1">&nbsp;Sellado</label>
-                            <?php }else{ ?><label><input id="procesos_maquinas_8" class="procesos_maquinas" name="sellado3" type="checkbox" value="1">&nbsp;Sellado</label><?php } ?>
-                            </fieldset>
-                            
-                            </div>
-                        
-                        </div> <!-- FIN LAMINA 3 -->
                        
                         <fieldset>
                                 <input name="dtp_btnenviar" type="submit" id="dtp_btnenviar" value="Guardar datos">
-                                <input name="dtp_btnenviar" type="button" id="dtp_btnenviar" value="Cancelar" onClick="parent.location='lista.php?did=<?php echo $did; ?>&dart=<?php echo $dart; ?>&clt=<?php echo $clt; ?>$idlmpr=<?php echo $id_registro; ?>'">
+                                <input name="dtp_btnenviar" type="button" id="dtp_btnenviar" value="Cancelar" onClick="parent.location='lista.php?did=<?php echo $did; ?>&dart=<?php echo $dart; ?>&clt=<?php echo $clt; ?>&idlmpr=<?php echo $id_registro; ?>'">
                                 <input name="id_registro" type="hidden" id="id_registro" value="<?php echo $id_registro; ?>">
                                 <input name="did" type="hidden" id="did" value="<?php echo $did; ?>">
                                 <input name="dart" type="hidden" id="dart" value="<?php echo $dart; ?>">

@@ -102,22 +102,6 @@ jmenu(document).ready(function(){
 });
 </script>
 
-<!-- ORDENAR -->
-<script type="text/javascript" src="/libs_js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="/libs_js/jquery-ui-1.8.5.custom.min.js"></script>
-<script type="text/javascript">
-var jq = jQuery.noConflict();
-jq(document).ready(function() {
-	jq("#lista_colores").sortable({
-	  handle : '.handle',
-	  update : function () {
-		var order = jq('#lista_colores').sortable('serialize');
-		jq("#info").load("ordenar.php?"+order);
-	  }
-	});
-});
-</script>
-
 <!-- ELIMINAR -->
 <script type="text/javascript">
 function eliminarRegistro(registro, did, dart, clt) {
@@ -159,28 +143,43 @@ if(confirm("¿Está seguro de borrar este registro?")) {
                 <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
                     <thead>
                         <tr>
-                            <th width="85%">Articulo</th>
+                          <th width="12%">&nbsp;</th>
+                            <th width="64%">Articulo</th>
+                            <th width="12%">Ancho</th>
+                            <th width="12%">Gr / M2</th>
                         </tr>
                     </thead>
                     <tbody>
                     	<?php if($fila_laminas["lamina1"]>0){ ?>
                         <tr>
+                          	<td align="left">Monocapa</td>
                         	<td align="left"><?php echo $proclamina_lamin1["nombre_articulo"]; ?></td>
+                        	<td align="left"><?php echo $proclamina_lamin1["ancho_articulo"]; ?></td>
+                        	<td align="left"><?php echo $proclamina_lamin1["grm2_articulo"]; ?></td>
                        	</tr>
                         <?php } ?>
                         <?php if($fila_laminas["lamina2"]>0){ ?>
                         <tr>
+                          <td align="left">Bilaminado</td>
                             <td align="left"><?php echo $proclamina_lamin2["nombre_articulo"]; ?></td>
+                            <td align="left"><?php echo $proclamina_lamin2["ancho_articulo"]; ?></td>
+                            <td align="left"><?php echo $proclamina_lamin2["grm2_articulo"]; ?></td>
                        	</tr>
                         <?php } ?>
                         <?php if($fila_laminas["lamina3"]>0){ ?>
                         <tr>
+                          <td align="left">Trilaminado</td>
                             <td align="left"><?php echo $proclamina_lamin3["nombre_articulo"]; ?></td>
+                            <td align="left"><?php echo $proclamina_lamin3["ancho_articulo"]; ?></td>
+                            <td align="left"><?php echo $proclamina_lamin3["grm2_articulo"]; ?></td>
                        	</tr>
                         <?php } ?>
                     </tbody>
                     <tfoot>
                         <tr>
+                          <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
                             <th>&nbsp;</th>
                         </tr>
                     </tfoot>

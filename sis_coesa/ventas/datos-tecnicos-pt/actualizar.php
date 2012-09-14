@@ -10,7 +10,6 @@ $dtecnicos_cliente_id=$_POST["dtecnicos_cliente_id"];
 $dtecnicos_articulo_id=$_POST["dtecnicos_articulo_id"];
 $dtecnicos_cliente=$_POST["dtecnicos_cliente"];
 $dtecnicos_articulo=$_POST["dtecnicos_articulo"];
-$dtecnicos_sentbob=$_POST["valor-ddslick-select"];
 
 //USUARIO
 $datoFecha=$fechaActual;
@@ -19,10 +18,10 @@ $datoUsuario=$usuario_user;
 //DT BASICO
 $dtecnicos_numbandas=$_POST["dtecnicos_numbandas"];
 $dtecnicos_numcolores=$_POST["dtecnicos_numcolores"];
-$dtecnicos_laminas=$_POST["dtecnicos_laminas"];
 $dtecnicos_repeticion=$_POST["dtecnicos_repeticion"];
 $dtecnicos_frecuencia=$_POST["dtecnicos_frecuencia"];
 $dtecnicos_cilindro=$_POST["dtecnicos_cilindro"];
+$dtecnicos_sentbob=$_POST["valor-ddslick-select"];
 $dtecnicos_estado="I"; //SE ACTIVA CUANDO SE RELLENAN LOS DATOS EN DATOS BASICOS DE PRODUCCION
 
 //IMAGEN
@@ -31,8 +30,6 @@ elseif($_FILES["dtecnicos_imagen"]<>""){ $dtecnicos_imagen=guardarArchivo("../..
 
 //ARTICULOS
 $dtecnicos_ancho_final=$_POST["dtecnicos_ancho_final"];
-$dtecnicos_grm2=$_POST["dtecnicos_grm2"];
-$dtecnicos_precio=$_POST["dtecnicos_precio"];
 $dtecnicos_unidad_medida=$_POST["dtecnicos_unidad_medida"];
 $dtecnicos_observaciones=$_POST["dtecnicos_observaciones"];
 $producto_terminado="A"; //ES "A" CUANDO SE CREA EL PRODUCTO DIRECTAMENTE PARA EL CLIENTE
@@ -50,9 +47,7 @@ $rst_actDTecnico=mysql_query("UPDATE syCoesa_datos_tecnicos SET mostrar_dtb=$mos
 //GUARDAR DATOS EN ARTICULO
 $rst_guardar_articulo=mysql_query("INSERT INTO syCoesa_articulo (id_cliente,
 nombre_articulo, 
-grm2_articulo, 
 ancho_articulo, 
-precio_articulo, 
 unidad_medida_articulo,
 observaciones_articulo,
 producto_terminado,
@@ -62,12 +57,10 @@ cod_unico_historia,
 dato_fecha,
 dato_usuario)
 VALUES ($dtecnicos_cliente_id,
-'".htmlspecialchars($dtecnicos_articulo)."', 
-$dtecnicos_grm2, 
+'".htmlspecialchars($dtecnicos_articulo)."',  
 $dtecnicos_ancho_final, 
-'$dtecnicos_precio', 
 $dtecnicos_unidad_medida,
-'$dtecnicos_observaciones',
+'".htmlspecialchars($dtecnicos_observaciones)."',
 '$producto_terminado',
 $mostrar,
 '$codigo_unico',

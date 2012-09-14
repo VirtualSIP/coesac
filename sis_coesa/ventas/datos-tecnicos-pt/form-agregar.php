@@ -213,16 +213,6 @@ jFrec(document).ready(function(){
                         </fieldset>
                         
                         <fieldset class="alto50 w180">
-                            <label for="dtecnicos_ancho_final">Ancho final:</label>
-                          <span id="spry_dtecnicos_ancho_final">
-                          <input name="dtecnicos_ancho_final" type="text" class="w130 texto_der" id="dtecnicos_ancho_final" value="0" size="50" >
-                          <span class="textfieldRequiredMsg">(*)</span>
-                          <span class="textfieldInvalidFormatMsg">(*)</span></span>
-                        </fieldset>
-                        
-                        <input id="dtecnicos_grm2" name="dtecnicos_grm2" type="hidden" value="0">
-                                                
-                        <fieldset class="alto50 w180">
                           <label for="dtecnicos_cilindro">Cilindro (mm):</label>
                           <select name="dtecnicos_cilindro" id="dtecnicos_cilindro" class="w140">
                             <option value>Seleccione</option>
@@ -240,13 +230,21 @@ jFrec(document).ready(function(){
                             <label for="dtecnicos_repeticion">Distancia de repetición (mm):</label>
                           <input type="text" name="dtecnicos_repeticion" id="dtecnicos_repeticion" size="50" class="w130 texto_der" value="0">
                         </fieldset>
-
+                        
                         <div id="frecuencia" class="w180 float_left">
                         <fieldset class="alto50 w180">
-                            <label for="dtecnicos_frecuencia">Frecuencia (mm):</label>
+                            <label for="dtecnicos_frecuencia">Nro de Repeticiones (Und):</label>
                           <input name="dtecnicos_frecuencia" type="text" class="w130 texto_der" id="dtecnicos_frecuencia" value="0" size="50" readonly>
                         </fieldset>
                         </div>
+                        
+                        <fieldset class="alto50 w180">
+                            <label for="dtecnicos_ancho_final">Ancho final (mm):</label>
+                          <span id="spry_dtecnicos_ancho_final">
+                          <input name="dtecnicos_ancho_final" type="text" class="w130 texto_der" id="dtecnicos_ancho_final" value="0" size="50" >
+                          <span class="textfieldRequiredMsg">(*)</span>
+                          <span class="textfieldInvalidFormatMsg">(*)</span></span>
+                        </fieldset>
                         
                         <fieldset class="alto50 w180" id="item-nrobandas">
                             <label for="dtecnicos_numbandas">Número de bandas:</label>
@@ -270,14 +268,6 @@ jFrec(document).ready(function(){
                             <span class="selectInvalidMsg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*)</span>
                           <span class="selectRequiredMsg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*)</span></span>
 						</fieldset>
-                        
-                        <fieldset class="alto50 w180 display_none">
-                            <label for="dtecnicos_precio">Precio:</label>
-                          <span id="spry_dtecnicos_precio">
-                          <input type="text" name="dtecnicos_precio" id="dtecnicos_precio" size="50" class="w130 texto_der" value="0.00">
-                          <span class="textfieldRequiredMsg">(*)</span>
-                          <span class="textfieldInvalidFormatMsg">(*)</span></span>
-                        </fieldset>
                         
                         <fieldset>
                             <label for="dtecnicos_observaciones">Observaciones:</label>

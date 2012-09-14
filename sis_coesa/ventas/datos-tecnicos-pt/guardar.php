@@ -8,10 +8,8 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 $dtecnicos_cliente=$_POST["dtecnicos_cliente"];
 $dtecnicos_articulo=$_POST["dtecnicos_articulo"];
 $dtecnicos_ancho_final=$_POST["dtecnicos_ancho_final"];
-$dtecnicos_grm2=$_POST["dtecnicos_grm2"];
 $dtecnicos_numbandas=$_POST["dtecnicos_numbandas"];
 $dtecnicos_numcolores=$_POST["dtecnicos_numcolores"];
-$dtecnicos_laminas=$_POST["dtecnicos_laminas"];
 $dtecnicos_repeticion=$_POST["dtecnicos_repeticion"];
 $dtecnicos_frecuencia=$_POST["dtecnicos_frecuencia"];
 $dtecnicos_cilindro=$_POST["dtecnicos_cilindro"];
@@ -31,7 +29,6 @@ $datoUsuario=$usuario_user;
 //GUARDAR DATOS DE PRODUCTO TERMINADO
 $rst_guardar_articulo=mysql_query("INSERT INTO syCoesa_articulo (id_cliente,
 nombre_articulo, 
-grm2_articulo, 
 ancho_articulo, 
 unidad_medida_articulo,
 observaciones_articulo,
@@ -43,10 +40,9 @@ dato_fecha,
 dato_usuario)
 VALUES ($dtecnicos_cliente,
 '".htmlspecialchars($dtecnicos_articulo)."', 
-$dtecnicos_grm2, 
 $dtecnicos_ancho_final, 
 $dtecnicos_unidad_medida,
-'$dtecnicos_observaciones',
+'".htmlspecialchars($dtecnicos_observaciones)."',
 '$producto_terminado',
 $mostrar_dtb,
 '$codigo_unico',
