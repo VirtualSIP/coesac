@@ -48,14 +48,6 @@ jEnter(document).ready(function() {
 <link rel="stylesheet" href="/libs_js/combo/css-select.css">
 <script src="/libs_js/combo/js-select.js"></script>
 
-<!-- SPRY -->
-<link rel="stylesheet" type="text/css" href="/libs_js/SpryAssets/SpryValidationTextField.css">
-<link rel="stylesheet" type="text/css" href="/libs_js/SpryAssets/SpryValidationSelect.css">
-<link rel="stylesheet" type="text/css" href="/libs_js/SpryAssets/SpryValidationTextarea.css">
-<script type="text/javascript" src="/libs_js/SpryAssets/SpryValidationSelect.js"></script>
-<script type="text/javascript" src="/libs_js/SpryAssets/SpryValidationTextField.js"></script>
-<script type="text/javascript" src="/libs_js/SpryAssets/SpryValidationTextarea.js"></script>
-
 <!-- TEXT AREA -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="/libs_js/jquery.textareaCounter.plugin.js"></script>
@@ -100,6 +92,18 @@ jmenu(document).ready(function(){
 });
 </script>
 
+<!-- CLONAR REGISTROS -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jClon=jQuery.noConflict();
+jClon(document).ready(function(){
+	
+	jClon("#dtp_btnuevo").click(function(){
+		jClon(".registro_nuevo").clone().prependTo("form");
+	});	
+});
+</script>
+
 </head>
 
 <body>	
@@ -123,17 +127,16 @@ jmenu(document).ready(function(){
                     
                   <form action="guardar.php" method="post">
                         
-                        <fieldset class="an100">
+                        <div class="registro_nuevo">
+                        
+                        <fieldset class="w295">
                             <label for="almart_articulo">Nombre:</label>
-                          <span id="spry_almart_articulo">
-                            <input type="text" name="almart_articulo" id="almart_articulo" class="w450">
-                            <span class="textfieldRequiredMsg">(*)</span></span>
+                            <input name="almart_articulo" type="text" class="w270" id="almart_articulo" maxlength="250">
                         </fieldset>
                         
-                        <fieldset class="alto50">
+                        <fieldset class="alto50 w150 art-unimed">
                           <label for="almart_tipo_articulo">Tipo de Articulo:</label>
-                          <span id="spry_almart_tipo_articulo">
-                          <select name="almart_tipo_articulo" id="almart_tipo_articulo" class="cmbSlc">
+                          <select name="almart_tipo_articulo" id="almart_tipo_articulo" class="cmbSlc w100">
                             <option value>[ Seleccionar opcion ]</option>
                             <?php while($fila_articulos_tipo=mysql_fetch_array($rst_articulos_tipo)){
 								//VARIABLES
@@ -141,51 +144,34 @@ jmenu(document).ready(function(){
 								$tipo_articulo_nombre=$fila_articulos_tipo["nombre_tipo_articulo"];
 								$tipo_articulo_abreviacion=$fila_articulos_tipo["abreviado_tipo_articulo"];
 							?>
-                            	<option value="<?php echo $tipo_articulo_id; ?>"><?php echo $tipo_articulo_nombre."(".$tipo_articulo_abreviacion.")"; ?></option>
+                            	<option value="<?php echo $tipo_articulo_id; ?>"><?php echo $tipo_articulo_nombre; ?></option>
                             <?php } ?>
                           </select>
-                          <span class="selectInvalidMsg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*)</span>
-                          <span class="selectRequiredMsg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*)</span></span>
                         </fieldset>
                         
-                        <fieldset class="alto50">
-                            <label for="almart_abreviacion">Abreviación:</label>
-                          <input type="text" name="almart_abreviacion" id="almart_abreviacion" size="50">
-                        </fieldset>
-                        
-                        <fieldset class="alto50">
+                        <fieldset class="alto50 w110">
                             <label for="almart_grm2">Gr x M2:</label>
-                          <span id="spry_almart_grm2">
-                          <input name="almart_grm2" type="text" class="texto_cen" id="almart_grm2" value="0" size="50">
-                          <span class="textfieldRequiredMsg">(*)</span>
-                          <span class="textfieldInvalidFormatMsg">(*)</span></span>
+                          	<input name="almart_grm2" type="text" class="texto_cen w90" id="almart_grm2" value="0" size="50">
                         </fieldset>
                         
-                        <fieldset class="alto50">
+                        <fieldset class="alto50 w110">
                             <label for="almart_ancho">Ancho:</label>
-                          <span id="spry_almart_ancho">
-                          <input name="almart_ancho" type="text" class="texto_cen" id="almart_ancho" value="0" size="50">
-                          <span class="textfieldRequiredMsg">(*)</span>
-                          <span class="textfieldInvalidFormatMsg">(*)</span></span>
+                          	<input name="almart_ancho" type="text" class="texto_cen w90" id="almart_ancho" value="0" size="50">
                         </fieldset>
                                                 
-                        <fieldset class="alto50">
+                        <fieldset class="alto50 w110">
                             <label for="almart_precio">Precio:</label>
-                          <span id="spry_almart_precio">
-                          <input name="almart_precio" type="text" class="texto_der" id="almart_precio" value="0.00" size="50">
-                          <span class="textfieldRequiredMsg">(*)</span>
-                          <span class="textfieldInvalidFormatMsg">(*)</span></span>
+                          	<input name="almart_precio" type="text" class="texto_der w90" id="almart_precio" value="0.00" size="50">
                         </fieldset>
                         
-                        <fieldset class="alto50">
+                        <fieldset class="alto50 w110">
                             <label for="almart_solido">% Solido de tinta:</label>
-                          <input name="almart_solido" type="text" class="texto_der" id="almart_solido" value="0" size="50">
+                          	<input name="almart_solido" type="text" class="texto_der w90" id="almart_solido" value="0" size="50">
                         </fieldset>
                         
-                        <fieldset class="alto50">
+                        <fieldset class="alto50 w150 art-unimed">
                           <label for="almart_unidad_medida">Unidad de Medida:</label>
-                          <span id="spry_almart_unidad_medida">
-                          <select name="almart_unidad_medida" id="almart_unidad_medida" class="cmbSlc">
+                          <select name="almart_unidad_medida" id="almart_unidad_medida" class="cmbSlc w100">
                             <option value>[ Seleccionar opcion ]</option>
                             <?php while($fila_unidad_medida=mysql_fetch_array($rst_unidad_medida)){
 								//VARIABLES
@@ -195,16 +181,12 @@ jmenu(document).ready(function(){
                             	<option value="<?php echo $unidad_medida_id; ?>"><?php echo $unidad_medida_nombre; ?></option>
                             <?php } ?>
                           </select>
-                          <span class="selectInvalidMsg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*)</span>
-                          <span class="selectRequiredMsg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*)</span></span>
                         </fieldset>
                         
-                        <fieldset>
-                            <label for="almart_observaciones">Observaciones:</label>
-                            <textarea name="almart_observaciones" cols="100" rows="8" id="almart_observaciones"></textarea>
-                        </fieldset>
+                        </div>
                         
                         <fieldset>
+                            <a id="dtp_btnuevo" href="javascript:;">Añadir registro</a>
                             <input name="dtp_btnenviar" type="submit" id="dtp_btnenviar" value="Guardar datos">
                             <input name="dtp_btnenviar" type="button" id="dtp_btnenviar" value="Cancelar" onClick="parent.location='lista.php'">
                         </fieldset>
@@ -220,13 +202,5 @@ jmenu(document).ready(function(){
     </section><!-- FIN SECTION CONTENIDO -->
     
 </section><!-- FIN SECTION -->
-<script type="text/javascript">
-var sprytextfield1 = new Spry.Widget.ValidationTextField("spry_almart_articulo");
-var sprytextfield3 = new Spry.Widget.ValidationTextField("spry_almart_grm2");
-var sprytextfield4 = new Spry.Widget.ValidationTextField("spry_almart_ancho");
-var sprytextfield5 = new Spry.Widget.ValidationTextField("spry_almart_precio", "real");
-var spryselect1 = new Spry.Widget.ValidationSelect("spry_almart_tipo_articulo", {invalidValue:"-1"});
-var spryselect2 = new Spry.Widget.ValidationSelect("spry_almart_unidad_medida", {invalidValue:"-1"});
-</script>
 </body>
 </html>

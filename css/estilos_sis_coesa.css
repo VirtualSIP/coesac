@@ -14,20 +14,24 @@ input[type=file]{ width:300px !important; }
 .an50{ width:50% !important; }
 .an100{ width:100% !important; }
 .alto50{ height:50px !important; }
-.w245{ width:245px !important; }
-.w230{ width:230px !important; }
-.w250{ width:250px !important; }
-.w215{ width:215px !important; }
-.w235{ width:235px !important; }
-.w450{ width:450px !important; }
-.w180{ width:180px !important; }
-.w130{ width:130px !important; }
-.w120{ width:120px !important; }
+.w85{ width:85px !important; }
+.w90{ width:90px !important; }
 .w100{ width:100px !important; }
 .w110{ width:110px !important; }
-.w85{ width:85px !important; }
+.w120{ width:120px !important; }
+.w130{ width:130px !important; }
 .w140{ width:140px !important; }
 .w150{ width:150px !important; }
+.w180{ width:180px !important; }
+.w215{ width:215px !important; }
+.w230{ width:230px !important; }
+.w235{ width:235px !important; }
+.w245{ width:245px !important; }
+.w250{ width:250px !important; }
+.w270{ width:270px !important; }
+.w295{ width:295px !important; }
+.w450{ width:450px !important; }
+.w475{ width:475px !important; }
 .margin_0{ margin:0 !important; }
 .margin_r10{ margin-right:10px !important; }
 .padding_tb10{ margin:10px 0 !important; }
@@ -124,6 +128,9 @@ a.boton_lamina{
 a.boton_lamina:hover{
 	background:url(../imagenes/icons/icon-ok-activo.png) no-repeat;
 }
+
+/* FORMULARIO */
+.art-unimed input{ width:100px !important; }
 
 /* FORMULARIO SUB */
 #formulario_sub{ width:100%; float:left; position:relative; }
