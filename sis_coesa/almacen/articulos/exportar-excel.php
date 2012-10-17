@@ -13,12 +13,8 @@ header("Pragma: no-cache");
 header("Expires: 0");
 
 ?>
-
-<h1>Insumos</h1>
-
 <table cellspacing="0" cellpadding="0" border="1">
-    
-    <tr>    
+    <tr>
         <th width="600">Insumos</th>
         <th>Tipo de Articulo</th>
         <th>Grm2</th>
