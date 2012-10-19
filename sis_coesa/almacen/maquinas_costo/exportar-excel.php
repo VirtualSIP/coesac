@@ -15,17 +15,19 @@ header("Expires: 0");
 ?>
 <table cellspacing="0" cellpadding="0" border="1">
     
-    <tr>    
+    <tr>
+    	<th width="25%">ID</th>
         <th width="25%">M&aacute;quinas</th>
-        <th width="25%">Tipo de M&aacute;quina</th>
-        <th width="25%">Merma</th>
-        <th width="15%">Velocidad</th>
-        <th width="15%">Tiempo de preparaci&oacute;n</th>
-      	<th width="15%">Regulaci&oacute;n</th>
-    	<th width="15%">Costo <br>Kw / Hora </th>
+        <th width="15%">Costo <br>Kw / Hora </th>
         <th width="15%">Costo <br>Hora / Hombre</th>
         <th width="15%">Depreciaci&oacute;n</th>
         <th width="15%">Gastos de F&aacute;brica</th>
+        <th width="15%">Tiempo de Preparaci&oacute;n</th>
+        <th width="15%">TIempo de Regulaci&oacute;n</th>
+        <th width="25%">Merma</th>
+        <th width="15%">Velocidad</th>
+        <th width="25%">Tipo de M&aacute;quina</th>
+      	
     </tr>
     
     <?php while($fila_maquinas=mysql_fetch_array($rst_maquinas)){
@@ -39,19 +41,20 @@ header("Expires: 0");
 		$maquinas_datos_depreciacion=$fila_maquinas["costodepreciacion_hora_maquina"];
 		$maquinas_datos_gastosFabrica=$fila_maquinas["gastosfabrica_hora_maquina"];
 		$maquinas_datos_maquina=seleccionTabla($fila_maquinas["id_maquina"], "id_maquina", "syCoesa_mantenimiento_maquinas", $conexion);
-		$maquinas_tipo=seleccionTabla($fila_maquinas["id_maquina_tipo"], "id_maquina_tipo", "syCoesa_mantenimiento_maquinas_tipo", $conexion);
+		$maquinas_tipo=seleccionTabla($fila_maquinas["id_maquina_tipo"], "id_tipo_maquina", "syCoesa_mantenimiento_maquinas_tipo", $conexion);
 	?>
 	<tr>
+    	<td class="texto_izq"><?php echo $maquinas_datos_id; ?></td>
 		<td class="texto_izq"><?php echo $maquinas_datos_maquina["nombre_maquina"]; ?></td>
-        <td class="texto_izq"><?php echo $maquinas_tipo["nombre_tipo_maquina"]; ?></td>
-        <td class="center"><?php echo $maquinas_datos_merma; ?></td>
-        <td class="center"><?php echo $maquinas_datos_velocidad; ?></td>
-        <td class="center"><?php echo $maquinas_datos_preparacion; ?></td>
-        <td class="center"><?php echo $maquinas_datos_regulacion; ?></td>
-		<td class="center"><?php echo $maquinas_datos_costoKwHora; ?></td>
+        <td class="center"><?php echo $maquinas_datos_costoKwHora; ?></td>
 		<td class="center"><?php echo $maquinas_datos_costoHoraHombre; ?></td>
 		<td class="center"><?php echo $maquinas_datos_depreciacion; ?></td>
-		<td class="center"><?php echo $maquinas_datos_gastosFabrica; ?></td>
+		<td class="center"><?php echo $maquinas_datos_gastosFabrica; ?></td
+        <td class="center"><?php echo $maquinas_datos_preparacion; ?></td>
+        <td class="center"><?php echo $maquinas_datos_regulacion; ?></td>
+        <td class="center"><?php echo $maquinas_datos_merma; ?></td>
+        <td class="center"><?php echo $maquinas_datos_velocidad; ?></td>        
+        <td class="texto_izq"><?php echo $maquinas_tipo["nombre_tipo_maquina"]; ?></td>
 	</tr>
 	<?php } ?>
  

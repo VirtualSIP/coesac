@@ -298,7 +298,7 @@ jTimeP(document).ready(function(){
                         
                         <fieldset class="alto50">
                           <label for="merma_proceso_permitida">Merma permitida:</label>
-                          <input type="text" name="merma_proceso_permitida" id="merma_proceso_permitida" size="50" class="an50 texto_cen" value="<?php echo $maquina_tolerancia_mm; ?>">
+                          <input type="text" name="merma_proceso_permitida" id="merma_proceso_permitida" size="50" class="an50 texto_cen" value="<?php echo $merma_proceso_permitida; ?>">
                         </fieldset>
                         
                         <fieldset class="alto50">
