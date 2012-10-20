@@ -5,7 +5,7 @@ require_once("../../../connect/function.php");
 require_once("../../../connect/sesion/verificar_sesion.php");
 
 //ARTICULOS
-$rst_articulos=mysql_query("SELECT * FROM syCoesa_articulo WHERE producto_terminado='I' ORDER BY nombre_articulo ASC;", $conexion);
+$rst_articulos=mysql_query("SELECT * FROM syCoesa_articulo WHERE producto_terminado='I' AND mostrar_articulo=1 ORDER BY nombre_articulo ASC;", $conexion);
 
 header('Content-type: application/vnd.ms-excel');
 header("Content-Disposition: attachment; filename=insumos.xls");
