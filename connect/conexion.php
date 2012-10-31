@@ -1,7 +1,7 @@
 <?php
 //CONEXION CON EL SERVIDOR
-$conexion=mysql_connect("localhost","vsipsumr_CsPrAdw","U+G4+dmz(GfBAs5y93");
-mysql_select_db("vsipsumr_sysCoesacPry12-01",$conexion);
+$conexion=mysql_connect("localhost","root","");
+mysql_select_db("marost2_scoesacpry12-1",$conexion);
 
 //ZONA HORARIA
 date_default_timezone_set('America/Lima');
