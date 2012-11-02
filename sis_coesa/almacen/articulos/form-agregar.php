@@ -92,7 +92,24 @@ jmenu(document).ready(function(){
 });
 </script>
 
-<!-- CLONAR REGISTROS -->
+<!-- NOMBRE DE INSUMO -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jNomIns=jQuery.noConflict();
+jNomIns(document).ready(function(){
+	jNomIns("#almart_articulo").change(function(){
+		jNomIns("#progressbar").removeClass("ocultar");
+		var insumo=jNomIns(this).val();
+		jNomIns.post("factor-conversion.php", {insumo: insumo},
+			function(data){
+				jNomIns("#progressbar").addClass("ocultar");
+				jNomIns("#factor-conversion").html(data);
+			});
+	});
+});
+</script>
+
+<!-- CLONAR REGISTROS 
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 var jClon=jQuery.noConflict();
@@ -102,7 +119,7 @@ jClon(document).ready(function(){
 		jClon(".registro_nuevo").clone().prependTo("form");
 	});	
 });
-</script>
+</script>-->
 
 </head>
 
@@ -149,10 +166,8 @@ jClon(document).ready(function(){
                           </select>
                         </fieldset>
                         
-                        <fieldset class="alto50 w110">
-                            <label for="almart_grm2">Gr x M2:</label>
-                          	<input name="almart_grm2" type="text" class="texto_cen w90" id="almart_grm2" value="0" size="50">
-                        </fieldset>
+                        <div id="factor-conversion" class="alto50 w110 float_left"></div>
+                        
                         
                         <fieldset class="alto50 w110">
                             <label for="almart_ancho">Ancho:</label>

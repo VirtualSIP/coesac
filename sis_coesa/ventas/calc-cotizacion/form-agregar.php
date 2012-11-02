@@ -248,9 +248,8 @@ jCilRep(document).ready(function(){
                         <fieldset class="alto50">
                           <label for="dtecnicos_articulo">Producto:</label>
                           <input name="dtecnicos_articulo" type="text" id="dtecnicos_articulo">
+                          <input name="dtecnicos_grm2" type="hidden" value="0">
 						</fieldset>
-                        
-                        <input name="dtecnicos_grm2" type="hidden" value="0">
                         
                         <fieldset class="alto50 w180">
                             <label for="dtecnicos_cilindro">Cilindro (mm):</label>

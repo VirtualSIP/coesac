@@ -8,12 +8,29 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 $articulo_nombre=$_POST["almart_articulo"];
 $articulo_tipo_articulo=$_POST["almart_tipo_articulo"];
 $articulo_abreviacion=$_POST["almart_abreviacion"];
-$articulo_grm2=$_POST["almart_grm2"];
 $articulo_ancho=$_POST["almart_ancho"];
 $articulo_precio=$_POST["almart_precio"];
 $articulo_solido=$_POST["almart_solido"];
 $articulo_unidad_medida=$_POST["almart_unidad_medida"];
 $articulo_observaciones=$_POST["almart_observaciones"];
+
+//FACTOR DE CONVERSION
+$factor_material=seleccionTabla($_POST["almart_material"], "id_factor", "sycoesa_mantenimiento_factor_conversion", $conexion);
+$factor_milpul=$_POST["almart_milpul"];
+$factor_micra=$_POST["almart_micra"];
+
+if($factor_milpul<>0){
+	$articulo_grm2=$factor_milpul * $factor_material["factor"];
+	$factor_micra=0;
+}elseif($factor_micra<>0){
+	$articulo_grm2=$factor_micra * $factor_material["factor"];
+	$factor_milpul=0;
+}else{
+	$articulo_grm2=$_POST["almart_grm2"];
+	$factor_milpul=0;
+	$factor_micra=0;
+}
+
 $mostrar=1;
 $producto_terminado="I";
 $codigo_unico=codigoAleatorio(20, true, true, false);
@@ -26,12 +43,13 @@ $dato_usuario=$usuario_user;
 $rst_guardar=mysql_query("INSERT INTO syCoesa_articulo (id_tipo_articulo, 
 nombre_articulo, 
 abreviado_articulo, 
+factor_milpul,
+factor_micra,
 grm2_articulo, 
 ancho_articulo, 
 precio_articulo,
 solido_tinta, 
 unidad_medida_articulo,
-observaciones_articulo,
 producto_terminado,
 mostrar_articulo,
 cod_unico,
@@ -41,18 +59,20 @@ dato_usuario)
 VALUES ($articulo_tipo_articulo, 
 '".htmlspecialchars($articulo_nombre)."', 
 '".htmlspecialchars($articulo_abreviacion)."', 
+$factor_milpul,
+$factor_micra,
 $articulo_grm2, 
 $articulo_ancho, 
 $articulo_precio, 
 $articulo_solido,
 $articulo_unidad_medida,
-'".htmlspecialchars($articulo_observaciones)."',
 '$producto_terminado',
 $mostrar,
 '$codigo_unico',
 '$codigo_unico',
 '$dato_fecha',
 '$dato_usuario')", $conexion);
+
 
 if (mysql_errno()!=0){
 	header("Location:lista.php?m=2");

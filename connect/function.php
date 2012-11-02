@@ -209,4 +209,9 @@ function BuscarPalabra($palabra, $texto){
 	}else{ return 0; }
 }
 
+function BuscarPalabraFactor($palabra, $texto){
+	if(preg_match("/".$palabra."/",$texto)){ return 1;
+	}else{ return 0; }
+}
+
 ?>
