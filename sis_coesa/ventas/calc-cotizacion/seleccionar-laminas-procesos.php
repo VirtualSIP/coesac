@@ -145,7 +145,7 @@ if(BuscarPalabraFactor($lista, $lamina2_dato["nombre_articulo"])==1){
 	while($fila_factor_lam2=mysql_fetch_array($rst_factor_lam2)){
 		
 		$factor_id_lam2=$fila_factor_lam2["id_factor"];
-		$factor_materia2_lam1=$fila_factor_lam2["material"];
+		$factor_material_lam1=$fila_factor_lam2["material"];
 		$factor_tipo_lam2=$fila_factor_lam2["tipo"];
 		
 		if(BuscarPalabra($factor_material_lam2, $lamina2_dato["nombre_articulo"])==1 and $factor_tipo_lam2==1){
@@ -219,10 +219,32 @@ if(BuscarPalabraFactor($lista, $lamina2_dato["nombre_articulo"])==1){
     <input class="w100 texto_der" name="lamina3_ancho" type="text" id="lamina3_ancho" value="0">
 </fieldset>
 
-<fieldset class="w120">
-    <label for="lamina3_grm2">GR / M2</label>
-    <input class="w100 texto_der" name="lamina3_grm2" type="text" id="lamina3_grm2" value="0">
+<?php
+if(BuscarPalabraFactor($lista, $lamina3_dato["nombre_articulo"])==1){ 
+
+	while($fila_factor_lam3=mysql_fetch_array($rst_factor_lam3)){
+		
+		$factor_id_lam3=$fila_factor_lam3["id_factor"];
+		$factor_material_lam3=$fila_factor_lam3["material"];
+		$factor_tipo_lam3=$fila_factor_lam3["tipo"];
+		
+		if(BuscarPalabra($factor_material_lam3, $lamina3_dato["nombre_articulo"])==1 and $factor_tipo_lam3==1){
+?>
+<fieldset class="alto50 w110">
+    <label for="lamina2_milpul">Mil. Pulgada:</label>
+    <input name="lamina2_milpul" type="text" class="texto_cen w90" id="lamina2_milpul" value="0" size="50">
+    <input name="lamina2_material" id="lamina2_material" type="hidden" value="<?php echo $factor_id_lam3; ?>">
+    <input name="lamina2_micra" id="lamina2_micra" type="hidden" value="">
+    <input name="lamina2_grm2" id="lamina2_grm2" type="hidden" value="">
 </fieldset>
+<?php } } }elseif(BuscarPalabraFactor($lista, $lamina3_dato["nombre_articulo"])==0){ ?>
+<fieldset class="w120">
+    <label for="lamina2_grm2">GR / M2</label>
+    <input class="w100 texto_der" name="lamina2_grm2" type="text" id="lamina2_grm2" value="0">
+    <input name="lamina2_milpul" id="lamina2_milpul" type="hidden" value="">
+     <input name="lamina2_micra" id="lamina2_micra" type="hidden" value="">
+</fieldset>
+<?php } ?>
 
 <fieldset class="w245">
     <label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion3" type="checkbox" value="1">&nbsp;Extrusión</label>
@@ -234,11 +256,32 @@ if(BuscarPalabraFactor($lista, $lamina2_dato["nombre_articulo"])==1){
     <input class="w100 texto_der" name="lamina3_ancho" type="text" id="lamina3_ancho" value="<?php echo $lamina3_dato["ancho_articulo"]; ?>">
 </fieldset>
 
-<fieldset class="w120">
-    <label for="lamina3_grm2">GR / M2</label>
-    <input class="w100 texto_der" name="lamina3_grm2" type="text" id="lamina3_grm2" value="<?php echo $lamina3_dato["grm2_articulo"] ?>">
+<?php
+if(BuscarPalabraFactor($lista, $lamina3_dato["nombre_articulo"])==1){ 
+
+	while($fila_factor_lam3=mysql_fetch_array($rst_factor_lam3)){
+		
+		$factor_id_lam3=$fila_factor_lam3["id_factor"];
+		$factor_material_lam3=$fila_factor_lam3["material"];
+		$factor_tipo_lam3=$fila_factor_lam3["tipo"];
+		
+		if(BuscarPalabra($factor_material_lam3, $lamina3_dato["nombre_articulo"])==1 and $factor_tipo_lam3==2){
+?>
+<fieldset class="alto50 w110">
+    <label for="lamina2_micra">Micras:</label>
+    <input name="lamina2_micra" type="text" class="texto_cen w90" id="lamina2_micra" value="0" size="50">
+    <input name="lamina2_material" id="lamina2_material" type="hidden" value="<?php echo $factor_id_lam3; ?>">
+    <input name="lamina2_milpul" id="lamina2_milpul" type="hidden" value="">
+    <input name="lamina2_grm2" id="lamina2_grm2" type="hidden" value="">
 </fieldset>
-<?php } ?>
+<?php } } }elseif(BuscarPalabraFactor($lista, $lamina3_dato["nombre_articulo"])==0){ ?>
+<fieldset class="w120">
+    <label for="lamina2_grm2">GR / M2</label>
+    <input class="w100 texto_der" name="lamina2_grm2" type="text" id="lamina2_grm2" value="0">
+    <input name="lamina2_milpul" id="lamina2_milpul" type="hidden" value="">
+     <input name="lamina2_micra" id="lamina2_micra" type="hidden" value="">
+</fieldset>
+<?php } } ?>
 
 <fieldset class="w245">
 	<input id="procesos_maquinas_6" name="trilaminado3" type="hidden" value="1">
