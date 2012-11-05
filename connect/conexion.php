@@ -1,6 +1,6 @@
 <?php
 //CONEXION CON EL SERVIDOR
-$conexion=mysql_connect("localhost","root","");
+$conexion=mysql_connect("localhost","marost2_admin","master@18073");
 mysql_select_db("marost2_scoesacpry12-1",$conexion);
 
 //ZONA HORARIA

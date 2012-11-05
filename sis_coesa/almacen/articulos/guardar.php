@@ -15,7 +15,7 @@ $articulo_unidad_medida=$_POST["almart_unidad_medida"];
 $articulo_observaciones=$_POST["almart_observaciones"];
 
 //FACTOR DE CONVERSION
-$factor_material=seleccionTabla($_POST["almart_material"], "id_factor", "sycoesa_mantenimiento_factor_conversion", $conexion);
+$factor_material=seleccionTabla($_POST["almart_material"], "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
 $factor_milpul=$_POST["almart_milpul"];
 $factor_micra=$_POST["almart_micra"];
 

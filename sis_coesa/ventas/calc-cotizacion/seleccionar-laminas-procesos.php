@@ -31,7 +31,7 @@ $filtro3_pead=BuscarPalabra("PEAD", $lamina3_dato["nombre_articulo"]);
 $filtro3_ppp=BuscarPalabra("PPP", $lamina3_dato["nombre_articulo"]);
 
 //FACTOR DE CONVERSION
-$rst_factor=mysql_query("SELECT * FROM sycoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
+$rst_factor=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
 
 //LISTA DE MATERIALES PARA FACTORES DE CONVERSION
 while($fila_factor=mysql_fetch_array($rst_factor)){
@@ -41,9 +41,9 @@ while($fila_factor=mysql_fetch_array($rst_factor)){
 $lista=substr($factor_lista, 0, -1);
 
 //MATERIALES PARA LAMINAS
-$rst_factor_lam1=mysql_query("SELECT * FROM sycoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
-$rst_factor_lam2=mysql_query("SELECT * FROM sycoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
-$rst_factor_lam3=mysql_query("SELECT * FROM sycoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
+$rst_factor_lam1=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
+$rst_factor_lam2=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
+$rst_factor_lam3=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
 
 ?>
 

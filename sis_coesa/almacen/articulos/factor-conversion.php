@@ -8,9 +8,9 @@ require_once("../../../connect/sesion/verificar_sesion.php");
 $insumo=$_POST["insumo"];
 
 //FACTOR DE CONVERSION
-$rst_factor=mysql_query("SELECT * FROM sycoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
+$rst_factor=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
 
-$rst_factor_bus=mysql_query("SELECT * FROM sycoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
+$rst_factor_bus=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
 
 while($fila_factor=mysql_fetch_array($rst_factor)){
 	$factor_material=$fila_factor["material"];
