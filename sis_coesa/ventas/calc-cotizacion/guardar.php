@@ -31,6 +31,8 @@ $cod_unico=codigoAleatorio(20, true, true, false);
 //LAMINA 1
 if($_POST["dt_articulo1"]==""){ $lamina1=0; }else{ $lamina1=$_POST["dt_articulo1"]; };
 if($_POST["lamina1_ancho"]<>""){ $lamina1_ancho=$_POST["lamina1_ancho"]; }else{ $lamina1_ancho=0; }
+if($_POST["lamina1_micra"]<>""){ $lamina1_micra=$_POST["lamina1_micra"]; }else{ $lamina1_micra=0; }
+if($_POST["lamina1_milpul"]<>""){ $lamina1_milpul=$_POST["lamina1_milpul"]; }else{ $lamina1_milpul=0; }
 if($_POST["lamina1_grm2"]<>""){ $lamina1_grm2=$_POST["lamina1_grm2"]; }else{ $lamina1_grm2=0; }
 if($_POST["extrusion1"]==""){ $lamina1_extrusion=0; }else{ $lamina1_extrusion=$_POST["extrusion1"]; };
 if($_POST["impresion1"]==""){ $lamina1_impresion=0; }else{ $lamina1_impresion=$_POST["impresion1"]; };
@@ -40,6 +42,8 @@ if($_POST["grm2_tintaseca_1"]==""){ $lamina1_impresion_grm2=0; }else{ $lamina1_i
 //LAMINA 2
 if($_POST["dt_articulo2"]==""){ $lamina2=0; }else{ $lamina2=$_POST["dt_articulo2"]; };
 if($_POST["lamina2_ancho"]<>""){ $lamina2_ancho=$_POST["lamina2_ancho"]; }else{ $lamina2_ancho=0; }
+if($_POST["lamina2_micra"]<>""){ $lamina2_micra=$_POST["lamina2_micra"]; }else{ $lamina2_micra=0; }
+if($_POST["lamina2_milpul"]<>""){ $lamina2_milpul=$_POST["lamina2_milpul"]; }else{ $lamina2_milpul=0; }
 if($_POST["lamina2_grm2"]<>""){ $lamina2_grm2=$_POST["lamina2_grm2"]; }else{ $lamina2_grm2=0; }
 if($_POST["extrusion2"]==""){ $lamina2_extrusion=0; }else{ $lamina2_extrusion=$_POST["extrusion2"]; };
 if($_POST["bilaminado2"]==""){ $lamina2_bilaminado=0; }else{ $lamina2_bilaminado=$_POST["bilaminado2"]; };
@@ -49,6 +53,8 @@ if($_POST["bilaminado_proceso_2"]==""){ $lamina2_bilaminado_grm2=0; }else{ $lami
 //LAMINA 3
 if($_POST["dt_articulo3"]==""){ $lamina3=0; }else{ $lamina3=$_POST["dt_articulo3"]; };
 if($_POST["lamina3_ancho"]<>""){ $lamina3_ancho=$_POST["lamina3_ancho"]; }else{ $lamina3_ancho=0; }
+if($_POST["lamina3_micra"]<>""){ $lamina3_micra=$_POST["lamina3_micra"]; }else{ $lamina3_micra=0; }
+if($_POST["lamina3_milpul"]<>""){ $lamina3_milpul=$_POST["lamina3_milpul"]; }else{ $lamina3_milpul=0; }
 if($_POST["lamina3_grm2"]<>""){ $lamina3_grm2=$_POST["lamina3_grm2"]; }else{ $lamina3_grm2=0; }
 if($_POST["extrusion3"]==""){ $lamina3_extrusion=0; }else{ $lamina3_extrusion=$_POST["extrusion3"]; };
 if($_POST["trilaminado3"]==""){ $lamina3_trilaminado=0; }else{ $lamina3_trilaminado=$_POST["trilaminado3"]; };

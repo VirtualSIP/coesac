@@ -18,11 +18,37 @@ $tolerancia=$_POST["dtecnicos_tolerancia"];
 
 //ANCHO Y GRM2 DE LAMINAS
 if($_POST["lamina1_ancho"]<>""){ $lamina1_ancho=$_POST["lamina1_ancho"]; }else{ $lamina1_ancho=0; }
-if($_POST["lamina1_grm2"]<>""){ $lamina1_grm2=$_POST["lamina1_grm2"]; }else{ $lamina1_grm2=0; }
+if($_POST["lamina1_milpul"]<>""){ 
+	$lamina1_grm2=$_POST["lamina1_milpul"] * $_POST["lamina1_grm2"];
+}elseif($_POST["lamina1_micra"]<>""){
+	$lamina1_grm2=$_POST["lamina1_micra"] * $_POST["lamina1_grm2"];
+}elseif($_POST["lamina1_grm2"]<>""){
+	$lamina1_grm2=$_POST["lamina1_grm2"];
+}else{
+	$lamina1_grm2=0;
+}
+
 if($_POST["lamina2_ancho"]<>""){ $lamina2_ancho=$_POST["lamina2_ancho"]; }else{ $lamina2_ancho=0; }
-if($_POST["lamina2_grm2"]<>""){ $lamina2_grm2=$_POST["lamina2_grm2"]; }else{ $lamina2_grm2=0; }
+if($_POST["lamina2_milpul"]<>""){ 
+	$lamina2_grm2=$_POST["lamina2_milpul"] * $_POST["lamina2_grm2"];
+}elseif($_POST["lamina2_micra"]<>""){
+	$lamina2_grm2=$_POST["lamina2_micra"] * $_POST["lamina2_grm2"];
+}elseif($_POST["lamina2_grm2"]<>""){
+	$lamina2_grm2=$_POST["lamina2_grm2"];
+}else{
+	$lamina2_grm2=0;
+}
+
 if($_POST["lamina3_ancho"]<>""){ $lamina3_ancho=$_POST["lamina3_ancho"]; }else{ $lamina3_ancho=0; }
-if($_POST["lamina3_grm2"]<>""){ $lamina3_grm2=$_POST["lamina3_grm2"]; }else{ $lamina3_grm2=0; }
+if($_POST["lamina3_milpul"]<>""){ 
+	$lamina3_grm2=$_POST["lamina3_milpul"] * $_POST["lamina3_grm2"];
+}elseif($_POST["lamina3_micra"]<>""){
+	$lamina3_grm2=$_POST["lamina3_micra"] * $_POST["lamina3_grm2"];
+}elseif($_POST["lamina3_grm2"]<>""){
+	$lamina3_grm2=$_POST["lamina3_grm2"];
+}else{
+	$lamina3_grm2=0;
+}
 
 //TIPOS DE INSUMOS
 $rst_insTinta=mysql_query("SELECT * FROM syCoesa_articulo WHERE id_tipo_articulo=2 AND mostrar_articulo=1 ORDER BY precio_articulo DESC;", $conexion);
