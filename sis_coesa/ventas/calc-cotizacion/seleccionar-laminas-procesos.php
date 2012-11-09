@@ -145,7 +145,7 @@ if(BuscarPalabraFactor($lista, $lamina2_dato["nombre_articulo"])==1){
 	while($fila_factor_lam2=mysql_fetch_array($rst_factor_lam2)){
 		
 		$factor_id_lam2=$fila_factor_lam2["id_factor"];
-		$factor_material_lam1=$fila_factor_lam2["material"];
+		$factor_material_lam2=$fila_factor_lam2["material"];
 		$factor_tipo_lam2=$fila_factor_lam2["tipo"];
 		
 		if(BuscarPalabra($factor_material_lam2, $lamina2_dato["nombre_articulo"])==1 and $factor_tipo_lam2==1){
