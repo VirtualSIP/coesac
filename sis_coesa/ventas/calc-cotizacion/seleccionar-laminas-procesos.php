@@ -31,7 +31,7 @@ $filtro3_pead=BuscarPalabra("PEAD", $lamina3_dato["nombre_articulo"]);
 $filtro3_ppp=BuscarPalabra("PPP", $lamina3_dato["nombre_articulo"]);
 
 //FACTOR DE CONVERSION
-$rst_factor=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
+$rst_factor=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;", $conexion);
 
 //LISTA DE MATERIALES PARA FACTORES DE CONVERSION
 while($fila_factor=mysql_fetch_array($rst_factor)){
