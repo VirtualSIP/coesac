@@ -41,14 +41,14 @@ while($fila_factor=mysql_fetch_array($rst_factor)){
 $lista=substr($factor_lista, 0, -1);
 
 //MATERIALES PARA LAMINAS
-$rst_factor_lam1=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
-$rst_factor_lam2=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
-$rst_factor_lam3=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;");
+$rst_factor_lam1=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;", $conexion);
+$rst_factor_lam2=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;", $conexion);
+$rst_factor_lam3=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;", $conexion);
 
 ?>
 
+<!-- LAMINA 1 -->
 <?php if($lamina1>0){ ?>
-
 <?php if($filtro1_polietileno==1 or $filtro1_pebd==1 or $filtro1_pead==1 or $filtro1_ppp==1){ ?>
 <fieldset class="w120">
     <label for="lamina1_ancho">Ancho</label>
@@ -132,6 +132,7 @@ if(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==1){
 </fieldset>
 <?php } ?>
 
+<!-- LAMINA 2 -->
 <?php if($lamina2>0){ ?>
 <?php if($filtro2_polietileno==1 or $filtro2_pebd==1 or $filtro2_pead==1 or $filtro2_ppp==1){ ?>
 <fieldset class="w120">
@@ -212,6 +213,7 @@ if(BuscarPalabraFactor($lista, $lamina2_dato["nombre_articulo"])==1){
 
 <?php } ?>
 
+<!-- LAMINA 3 -->
 <?php if($lamina3>0){ ?>
 <?php if($filtro3_polietileno==1 or $filtro3_pebd==1 or $filtro3_pead==1 or $filtro3_ppp==1){ ?>
 <fieldset class="w120">
