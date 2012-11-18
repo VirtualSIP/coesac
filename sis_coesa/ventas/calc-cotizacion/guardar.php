@@ -131,7 +131,8 @@ if($_POST["insumo4"]==""){ $insumo_cushion=0; }else{ $insumo_cushion=$_POST["ins
 if($_POST["insumo5"]==""){ $insumo_clises=0; }else{ $insumo_clises=$_POST["insumo5"]; }
 
 //GUARDAR
-$rst_guardar=mysql_query("INSERT INTO syCoesa_cotizacion (cliente_cotizacion, 
+/*$rst_guardar=mysql_query("INSERT INTO syCoesa_cotizacion (*/
+	echo "cliente_cotizacion, 
 producto_cotizacion, 
 grm2_cotizacion, 
 repeticion_cotizacion, 
@@ -197,8 +198,8 @@ insumo_cushion,
 insumo_clises,
 dato_fecha,
 dato_usuario,
-cod_unico) 
-VALUES ('".htmlspecialchars($cliente)."', 
+cod_unico)";
+/*VALUES ('".htmlspecialchars($cliente)."', 
 '".htmlspecialchars($producto)."', 
 $grm2, 
 $repeticion, 
@@ -264,7 +265,7 @@ $insumo_cushion,
 $insumo_clises,
 '$dato_fecha',
 '$dato_usuario',
-'$cod_unico')", $conexion);
+'$cod_unico')", $conexion);*/
 
 //SELECCIONAR COTIZACION INGRESADA
 $rst_ver=mysql_query("SELECT * FROM syCoesa_cotizacion WHERE cod_unico='$cod_unico'", $conexion);
