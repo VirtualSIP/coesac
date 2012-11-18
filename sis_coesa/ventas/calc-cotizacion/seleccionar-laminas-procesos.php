@@ -96,7 +96,8 @@ if(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==1){
 <?php } ?>
 
 <fieldset class="w245">
-    <label><input id="procesos_maquinas_4" class="procesos_maquinas" name="impresion1" type="checkbox" value="1">&nbsp;Impresión</label>
+    <label><input id="procesos_maquinas_4" class="procesos_maquinas" name="impresion1" type="checkbox" value="1">
+        &nbsp;Impresión</label>
 </fieldset>
 
 <fieldset class="w245">
@@ -214,5 +215,12 @@ if(BuscarPalabraFactor($lista, $lamina3_dato["nombre_articulo"])==1){
     <label><input id="procesos_maquinas_3" class="procesos_maquinas" name="extrusion3" type="checkbox" value="1">&nbsp;Extrusión</label>
 </fieldset>
 <?php } ?>
+
+<fieldset class="w245">
+    <input id="procesos_maquinas_6" name="trilaminado3" type="hidden" value="1">
+    <label for="trilaminado_proceso_3">GR / m2 (Adhesivo)</label>
+    <input class="w140 texto_der" name="trilaminado_proceso_3" type="text" id="trilaminado_proceso_3" value="0">
+    <input name="rebobinado3" type="hidden" value="0">
+</fieldset>
 
 <?php } ?>
