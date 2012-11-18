@@ -18,6 +18,8 @@ $articulo_id=$fila_articulo["id_articulo"];
 $articulo_tipo_articulo=$fila_articulo["id_tipo_articulo"];
 $articulo_nombre=$fila_articulo["nombre_articulo"];
 $articulo_abreviado=$fila_articulo["abreviado_articulo"];
+$articulo_factor_milpul=$fila_articulo["factor_milpul"];
+$articulo_factor_micra=$fila_articulo["factor_micra"];
 $articulo_grm2=floatval($fila_articulo["grm2_articulo"]);
 $articulo_ancho=floatval($fila_articulo["ancho_articulo"]);
 $articulo_precio=floatval($fila_articulo["precio_articulo"]);
@@ -122,6 +124,23 @@ jmenu(document).ready(function(){
 });
 </script>
 
+<!-- NOMBRE DE INSUMO -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jNomIns=jQuery.noConflict();
+jNomIns(document).ready(function(){
+	jNomIns("#almart_articulo").change(function(){
+		jNomIns("#progressbar").removeClass("ocultar");
+		var insumo=jNomIns(this).val();
+		jNomIns.post("factor-conversion.php", {insumo: insumo},
+			function(data){
+				jNomIns("#progressbar").addClass("ocultar");
+				jNomIns("#factor-conversion").html(data);
+			});
+	});
+});
+</script>
+
 </head>
 
 <body>
@@ -178,13 +197,28 @@ jmenu(document).ready(function(){
                           <input name="almart_abreviacion" type="text" class="an50" id="almart_abreviacion" value="<?php echo $articulo_abreviado; ?>" size="50">
                         </fieldset>
                         
-                        <fieldset class="alto50">
-                            <label for="almart_grm2">Gr x M2:</label>
-                          <span id="spry_almart_grm2">
-                          <input name="almart_grm2" type="text" class="an50 texto_cen" id="almart_grm2" value="<?php echo $articulo_grm2; ?>" size="50">
-                          <span class="textfieldRequiredMsg">(*)</span>
-                          <span class="textfieldInvalidFormatMsg">(*)</span></span>
-                        </fieldset>
+                        <?php if($articulo_factor_milpul>0 and $articulo_grm2>0){ ?>
+                        	<fieldset class="alto50">
+                                <label for="almart_milpul">Micra:</label>
+	                            <input name="almart_milpul" type="text" class="an50 texto_cen" id="almart_milpul" value="<?php echo $articulo_factor_milpul; ?>" size="50">
+                                <input name="almart_grm2" type="hidden" id="almart_grm2" value="<?php echo $articulo_grm2; ?>">
+                                <input name="almart_micra" type="hidden" id="almart_micra" value="<?php echo $articulo_factor_micra; ?>">
+                            </fieldset>
+                        <?php }elseif($articulo_factor_micra>0 and $articulo_grm2>0){ ?>
+                        	<fieldset class="alto50">
+                                <label for="almart_micra">Micra:</label>
+	                            <input name="almart_micra" type="text" class="an50 texto_cen" id="almart_micra" value="<?php echo $articulo_factor_micra; ?>" size="50">
+                                <input name="almart_grm2" type="hidden" id="almart_grm2" value="<?php echo $articulo_grm2; ?>">
+                                <input name="almart_milpul" type="hidden" id="almart_milpul" value="<?php echo $articulo_factor_milpul; ?>">
+                            </fieldset>
+                        <?php }elseif($articulo_factor_micra==0 and $articulo_factor_milpul==0 and $articulo_grm2>0){ ?>
+                        	<fieldset class="alto50">
+                                <label for="almart_grm2">Gr x M2:</label>
+                              	<input name="almart_grm2" type="text" class="an50 texto_cen" id="almart_grm2" value="<?php echo $articulo_grm2; ?>" size="50">
+                                <input name="almart_milpul" type="hidden" id="almart_milpul" value="<?php echo $articulo_factor_milpul; ?>">
+                                <input name="almart_micra" type="hidden" id="almart_micra" value="<?php echo $articulo_factor_micra; ?>">
+                            </fieldset>
+                        <?php } ?>
                         
                         <fieldset class="alto50">
                             <label for="almart_ancho">Ancho:</label>
@@ -231,11 +265,6 @@ jmenu(document).ready(function(){
                         </fieldset>
                         
                         <fieldset>
-                            <label for="almart_observaciones">Observaciones:</label>
-                            <textarea name="almart_observaciones" cols="100" rows="8" id="almart_observaciones"><?php echo $articulo_observaciones; ?></textarea>
-                        </fieldset>
-                        
-                        <fieldset>
                         	<input name="almart_id" type="hidden" id="almart_id" value="<?php echo $articulo_id; ?>">
                             <input name="cod_unico" type="hidden" id="cod_unico" value="<?php echo $articulo_cod_unico_historia; ?>">
                             <input name="dtp_btnenviar" type="submit" id="dtp_btnenviar" value="Guardar datos">
@@ -255,7 +284,6 @@ jmenu(document).ready(function(){
 </section><!-- FIN SECTION -->
 <script type="text/javascript">
 var sprytextfield1 = new Spry.Widget.ValidationTextField("spry_almart_articulo");
-var sprytextfield3 = new Spry.Widget.ValidationTextField("spry_almart_grm2");
 var sprytextfield4 = new Spry.Widget.ValidationTextField("spry_almart_ancho");
 var sprytextfield5 = new Spry.Widget.ValidationTextField("spry_almart_precio");
 var spryselect1 = new Spry.Widget.ValidationSelect("spry_almart_tipo_articulo", {invalidValue:"-1"});

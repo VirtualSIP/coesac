@@ -21,6 +21,23 @@ $codigo_unico=codigoAleatorio(20, true, true, false);
 $mostrar=1;
 $mostrar_anterior=2;
 
+//FACTOR DE CONVERSION
+$factor_material=seleccionTabla($_POST["almart_material"], "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
+$factor_milpul=$_POST["almart_milpul"];
+$factor_micra=$_POST["almart_micra"];
+
+if($factor_milpul<>0){
+	$articulo_grm2=$factor_milpul * $factor_material["factor"];
+	$factor_micra=0;
+}elseif($factor_micra<>0){
+	$articulo_grm2=$factor_micra * $factor_material["factor"];
+	$factor_milpul=0;
+}else{
+	$articulo_grm2=$_POST["almart_grm2"];
+	$factor_milpul=0;
+	$factor_micra=0;
+}
+
 //DATOS USUARIO
 $dato_fecha=$fechaActual;
 $dato_usuario=$usuario_user;
@@ -31,13 +48,13 @@ $rst_upd=mysql_query("UPDATE syCoesa_articulo SET mostrar_articulo=$mostrar_ante
 //GUARDAR
 $rst_guardar=mysql_query("INSERT INTO syCoesa_articulo (id_tipo_articulo, 
 nombre_articulo, 
-abreviado_articulo, 
+factor_milpul,
+factor_micra,
 grm2_articulo, 
 ancho_articulo, 
 precio_articulo,
 solido_tinta, 
 unidad_medida_articulo,
-observaciones_articulo,
 producto_terminado,
 mostrar_articulo,
 cod_unico,
@@ -46,13 +63,13 @@ dato_fecha,
 dato_usuario)
 VALUES ($articulo_tipo_articulo, 
 '".htmlspecialchars($articulo_nombre)."', 
-'".htmlspecialchars($articulo_abreviacion)."', 
+$factor_milpul,
+$factor_micra,
 $articulo_grm2, 
 $articulo_ancho, 
 $articulo_precio, 
 $articulo_solido,
 $articulo_unidad_medida,
-'".htmlspecialchars($articulo_observaciones)."',
 '$producto_terminado',
 $mostrar,
 '$codigo_unico',

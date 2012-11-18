@@ -201,7 +201,7 @@ jClon(document).ready(function(){
                         </div>
                         
                         <fieldset>
-                            <a id="dtp_btnuevo" href="javascript:;">Añadir registro</a>
+                            <!--<a id="dtp_btnuevo" href="javascript:;">Añadir registro</a> -->
                             <input name="dtp_btnenviar" type="submit" id="dtp_btnenviar" value="Guardar datos">
                             <input name="dtp_btnenviar" type="button" id="dtp_btnenviar" value="Cancelar" onClick="parent.location='lista.php'">
                         </fieldset>
