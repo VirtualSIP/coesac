@@ -15,15 +15,16 @@ $articulo_unidad_medida=$_POST["almart_unidad_medida"];
 $articulo_observaciones=$_POST["almart_observaciones"];
 
 //FACTOR DE CONVERSION
-$factor_material=seleccionTabla($_POST["almart_material"], "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
 $factor_milpul=$_POST["almart_milpul"];
 $factor_micra=$_POST["almart_micra"];
+$factor_material=$_POST["almart_material"];
+$factor_conversion=seleccionTabla($factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
 
 if($factor_milpul<>0){
-	$articulo_grm2=$factor_milpul * $factor_material["factor"];
+	$articulo_grm2=$factor_milpul * $factor_conversion["factor"];
 	$factor_micra=0;
 }elseif($factor_micra<>0){
-	$articulo_grm2=$factor_micra * $factor_material["factor"];
+	$articulo_grm2=$factor_micra * $factor_conversion["factor"];
 	$factor_milpul=0;
 }else{
 	$articulo_grm2=$_POST["almart_grm2"];
@@ -60,7 +61,7 @@ VALUES ($articulo_tipo_articulo,
 '".htmlspecialchars($articulo_nombre)."', 
 $factor_milpul,
 $factor_micra,
-".$factor_material["almart_material"].",
+$factor_material,
 $articulo_grm2, 
 $articulo_ancho, 
 $articulo_precio, 
