@@ -268,17 +268,17 @@ $insumo_clises,
 '$cod_unico')", $conexion);*/
 
 //SELECCIONAR COTIZACION INGRESADA
-$rst_ver=mysql_query("SELECT * FROM syCoesa_cotizacion WHERE cod_unico='$cod_unico'", $conexion);
+/*$rst_ver=mysql_query("SELECT * FROM syCoesa_cotizacion WHERE cod_unico='$cod_unico'", $conexion);
 $fila_ver=mysql_fetch_array($rst_ver);
-$id_impresion=$fila_ver["id_cotizacion"];
+$id_impresion=$fila_ver["id_cotizacion"];*/
 
-if (mysql_errno()!=0){
+/*if (mysql_errno()!=0){
 	//echo "ERROR: ". mysql_errno() . " - ". mysql_error();
 	mysql_close($conexion);
 	header("Location:lista.php?msj=2");
 } else {
 	mysql_close($conexion);
 	header("Location:lista.php?msj=1&imp=$id_impresion");
-}
+}*/
 ?>
 	
