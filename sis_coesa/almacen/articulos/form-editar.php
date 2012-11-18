@@ -20,10 +20,11 @@ $articulo_nombre=$fila_articulo["nombre_articulo"];
 $articulo_abreviado=$fila_articulo["abreviado_articulo"];
 $articulo_factor_milpul=$fila_articulo["factor_milpul"];
 $articulo_factor_micra=$fila_articulo["factor_micra"];
-$articulo_grm2=floatval($fila_articulo["grm2_articulo"]);
-$articulo_ancho=floatval($fila_articulo["ancho_articulo"]);
-$articulo_precio=floatval($fila_articulo["precio_articulo"]);
-$articulo_solido=floatval($fila_articulo["solido_tinta"]);
+$articulo_factor_material=$fila_articulo["factor_material"];
+$articulo_grm2=$fila_articulo["grm2_articulo"];
+$articulo_ancho=$fila_articulo["ancho_articulo"];
+$articulo_precio=$fila_articulo["precio_articulo"];
+$articulo_solido=$fila_articulo["solido_tinta"];
 $articulo_unidad_medida=$fila_articulo["unidad_medida_articulo"];
 $articulo_observaciones=$fila_articulo["observaciones_articulo"];
 $articulo_cod_unico_historia=$fila_articulo["cod_unico_historia"];
@@ -177,46 +178,44 @@ jNomIns(document).ready(function(){
                           <select name="almart_tipo_articulo" id="almart_tipo_articulo" class="cmbSlc">
                               <option value>[ Seleccionar opcion ]</option>
                               	<?php while ($fila_articulo_tipo=mysql_fetch_array($rst_articulo_tipo)){
-								  //VARIABLES
-								  $tipo_articulo_id=$fila_articulo_tipo["id_tipo_articulo"];
-								  $tipo_articulo_nombre=$fila_articulo_tipo["nombre_tipo_articulo"];
-								?>
-								<?php if ($tipo_articulo_id==$articulo_tipo_articulo){ ?>
-                                 	<option selected='' value=<?php echo $tipo_articulo_id ?>><?php echo $tipo_articulo_nombre ?></option>
-                                <?php }else{ ?>
-                                 	<option value=<?php echo $tipo_articulo_id ?>><?php echo $tipo_articulo_nombre ?></option>
-								<?php }} ?>
+                								  //VARIABLES
+                								  $tipo_articulo_id=$fila_articulo_tipo["id_tipo_articulo"];
+                								  $tipo_articulo_nombre=$fila_articulo_tipo["nombre_tipo_articulo"];
+                								?>
+                								<?php if ($tipo_articulo_id==$articulo_tipo_articulo){ ?>
+                                                 	<option selected='' value=<?php echo $tipo_articulo_id ?>><?php echo $tipo_articulo_nombre ?></option>
+                                                <?php }else{ ?>
+                                                 	<option value=<?php echo $tipo_articulo_id ?>><?php echo $tipo_articulo_nombre ?></option>
+                								<?php }} ?>
                           </select>
                           
                           <span class="selectInvalidMsg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*)</span>
                           <span class="selectRequiredMsg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*)</span></span>
                         </fieldset>
-                                               
-                        <fieldset class="alto50">
-                            <label for="almart_abreviacion">Abreviación:</label>
-                          <input name="almart_abreviacion" type="text" class="an50" id="almart_abreviacion" value="<?php echo $articulo_abreviado; ?>" size="50">
-                        </fieldset>
                         
                         <?php if($articulo_factor_milpul>0 and $articulo_grm2>0){ ?>
                         	<fieldset class="alto50">
-                                <label for="almart_milpul">Micra:</label>
-	                            <input name="almart_milpul" type="text" class="an50 texto_cen" id="almart_milpul" value="<?php echo $articulo_factor_milpul; ?>" size="50">
-                                <input name="almart_grm2" type="hidden" id="almart_grm2" value="<?php echo $articulo_grm2; ?>">
-                                <input name="almart_micra" type="hidden" id="almart_micra" value="<?php echo $articulo_factor_micra; ?>">
-                            </fieldset>
+                              <label for="almart_milpul">Milesimas de Pulgada:</label>
+                              <input name="almart_milpul" type="text" class="an50 texto_cen" id="almart_milpul" value="<?php echo $articulo_factor_milpul; ?>" size="50">
+                              <input name="almart_grm2" type="hidden" id="almart_grm2" value="<?php echo $articulo_grm2; ?>">
+                              <input name="almart_micra" type="hidden" id="almart_micra" value="<?php echo $articulo_factor_micra; ?>">
+                              <input name="almart_material" id="almart_material" type="hidden" value="<?php echo $factor_material; ?>">
+                          </fieldset>
                         <?php }elseif($articulo_factor_micra>0 and $articulo_grm2>0){ ?>
-                        	<fieldset class="alto50">
-                                <label for="almart_micra">Micra:</label>
-	                            <input name="almart_micra" type="text" class="an50 texto_cen" id="almart_micra" value="<?php echo $articulo_factor_micra; ?>" size="50">
-                                <input name="almart_grm2" type="hidden" id="almart_grm2" value="<?php echo $articulo_grm2; ?>">
-                                <input name="almart_milpul" type="hidden" id="almart_milpul" value="<?php echo $articulo_factor_milpul; ?>">
+                        	 <fieldset class="alto50">
+                              <label for="almart_micra">Micra:</label>
+                              <input name="almart_micra" type="text" class="an50 texto_cen" id="almart_micra" value="<?php echo $articulo_factor_micra; ?>" size="50">
+                              <input name="almart_grm2" type="hidden" id="almart_grm2" value="<?php echo $articulo_grm2; ?>">
+                              <input name="almart_milpul" type="hidden" id="almart_milpul" value="<?php echo $articulo_factor_milpul; ?>">
+                              <input name="almart_material" id="almart_material" type="hidden" value="<?php echo $factor_material; ?>">
                             </fieldset>
                         <?php }elseif($articulo_factor_micra==0 and $articulo_factor_milpul==0 and $articulo_grm2>0){ ?>
-                        	<fieldset class="alto50">
+                        	  <fieldset class="alto50">
                                 <label for="almart_grm2">Gr x M2:</label>
                               	<input name="almart_grm2" type="text" class="an50 texto_cen" id="almart_grm2" value="<?php echo $articulo_grm2; ?>" size="50">
                                 <input name="almart_milpul" type="hidden" id="almart_milpul" value="<?php echo $articulo_factor_milpul; ?>">
                                 <input name="almart_micra" type="hidden" id="almart_micra" value="<?php echo $articulo_factor_micra; ?>">
+                                <input name="almart_material" id="almart_material" type="hidden" value="<?php echo $factor_material; ?>">
                             </fieldset>
                         <?php } ?>
                         

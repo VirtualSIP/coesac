@@ -9,7 +9,6 @@ $articulo_id=$_POST["almart_id"];
 $articulo_nombre=$_POST["almart_articulo"];
 $articulo_tipo_articulo=$_POST["almart_tipo_articulo"];
 $articulo_abreviacion=$_POST["almart_abreviacion"];
-$articulo_grm2=$_POST["almart_grm2"];
 $articulo_ancho=$_POST["almart_ancho"];
 $articulo_precio=$_POST["almart_precio"];
 if($_POST["almart_solido"]<>""){ $articulo_solido=$_POST["almart_solido"]; }else{ $articulo_solido=0; }
