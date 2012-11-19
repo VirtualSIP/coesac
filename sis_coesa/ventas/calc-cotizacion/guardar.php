@@ -263,7 +263,7 @@ $insumo_cushion,
 $insumo_clises,
 '$dato_fecha',
 '$dato_usuario',
-'$cod_unico')";, $conexion);
+'$cod_unico')", $conexion);
 
 //SELECCIONAR COTIZACION INGRESADA
 /*$rst_ver=mysql_query("SELECT * FROM syCoesa_cotizacion WHERE cod_unico='$cod_unico'", $conexion);
