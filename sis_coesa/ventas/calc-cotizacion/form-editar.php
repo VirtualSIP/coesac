@@ -28,6 +28,9 @@ $cotizacion_formato=$cotizacion["formato_cotizacion"];
 $cotizacion_lamina1=$cotizacion["lamina1_cotizacion"];
 $lamina1_dato=seleccionTabla($cotizacion_lamina1, "id_articulo", "syCoesa_articulo", $conexion);
 $cotizacion_lamina1_ancho=$cotizacion["lamina1_ancho_cotizacion"];
+$cotizacion_lamina1_factor_milpul=$cotizacion["lamina1_factor_milpul"];
+$cotizacion_lamina1_factor_micra=$cotizacion["lamina1_factor_micra"];
+$cotizacion_lamina1_factor_material=$cotizacion["lamina1_factor_material"];
 $cotizacion_lamina1_grm2=$cotizacion["lamina1_grm2_cotizacion"];
 $cotizacion_lamina1_extrusion=$cotizacion["extrusion1_cotizacion"];
 $cotizacion_lamina1_impresion=$cotizacion["impresion1_cotizacion"];
@@ -37,6 +40,9 @@ $cotizacion_lamina1_rebobinado=$cotizacion["rebobinado1_cotizacion"];
 $cotizacion_lamina2=$cotizacion["lamina2_cotizacion"];
 $lamina2_dato=seleccionTabla($cotizacion_lamina2, "id_articulo", "syCoesa_articulo", $conexion);
 $cotizacion_lamina2_ancho=$cotizacion["lamina2_ancho_cotizacion"];
+$cotizacion_lamina2_factor_milpul=$cotizacion["lamina2_factor_milpul"];
+$cotizacion_lamina2_factor_micra=$cotizacion["lamina2_factor_micra"];
+$cotizacion_lamina2_factor_material=$cotizacion["lamina2_factor_material"];
 $cotizacion_lamina2_grm2=$cotizacion["lamina2_grm2_cotizacion"];
 $cotizacion_lamina2_extrusion=$cotizacion["extrusion2_cotizacion"];
 $cotizacion_lamina2_bilaminado=$cotizacion["bilaminado2_cotizacion"];
@@ -46,6 +52,9 @@ $cotizacion_lamina2_rebobinado=$cotizacion["rebobinado2_cotizacion"];
 $cotizacion_lamina3=$cotizacion["lamina3_cotizacion"];
 $lamina3_dato=seleccionTabla($cotizacion_lamina3, "id_articulo", "syCoesa_articulo", $conexion);
 $cotizacion_lamina3_ancho=$cotizacion["lamina3_ancho_cotizacion"];
+$cotizacion_lamina3_factor_milpul=$cotizacion["lamina3_factor_milpul"];
+$cotizacion_lamina3_factor_micra=$cotizacion["lamina3_factor_micra"];
+$cotizacion_lamina3_factor_material=$cotizacion["lamina3_factor_material"];
 $cotizacion_lamina3_grm2=$cotizacion["lamina3_grm2_cotizacion"];
 $cotizacion_lamina3_extrusion=$cotizacion["extrusion3_cotizacion"];
 $cotizacion_lamina3_trilaminado=$cotizacion["trilaminado3_cotizacion"];
@@ -642,10 +651,31 @@ jslcmaq(document).ready(function(){
                                         <input class="w100 texto_der" name="lamina1_ancho" type="text" id="lamina1_ancho" value="<?php echo $cotizacion_lamina1_ancho; ?>">
                                     </fieldset>
                                     
-                                    <fieldset class="w120">
-                                        <label for="lamina1_grm2">GR / M2</label>
-                                        <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="<?php echo $cotizacion_lamina1_grm2; ?>">
-                                    </fieldset>
+                                    <?php if($cotizacion_lamina1_milpul>0 and $cotizacion_lamina1_grm2>0){ ?>
+			                        	<fieldset class="alto50">
+			                              <label for="lamina1_milpul">Milesima de Pulgada:</label>
+			                              <input name="lamina1_milpul" type="text" class="an50 texto_cen" id="lamina1_milpul" value="<?php echo $cotizacion_lamina1_milpul; ?>" size="50">
+			                              <input name="lamina1_grm2" type="hidden" id="lamina1_grm2" value="<?php echo $cotizacion_lamina1_grm2; ?>">
+			                              <input name="lamina1_micra" type="hidden" id="lamina1_micra" value="<?php echo $cotizacion_lamina1_micra; ?>">
+			                              <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $cotizacion_lamina1_material; ?>">
+			                          </fieldset>
+			                        <?php }elseif($cotizacion_lamina1_micra>0 and $cotizacion_lamina1_grm2>0){ ?>
+			                        	 <fieldset class="alto50">
+			                              <label for="lamina1_micra">Micra:</label>
+			                              <input name="lamina1_micra" type="text" class="an50 texto_cen" id="lamina1_micra" value="<?php echo $cotizacion_lamina1_micra; ?>" size="50">
+			                              <input name="lamina1_grm2" type="hidden" id="lamina1_grm2" value="<?php echo $cotizacion_lamina1_grm2; ?>">
+			                              <input name="lamina1_milpul" type="hidden" id="lamina1_milpul" value="<?php echo $cotizacion_lamina1_milpul; ?>">
+			                              <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $cotizacion_lamina1_material; ?>">
+			                            </fieldset>
+			                        <?php }elseif($cotizacion_lamina1_micra==0 and $cotizacion_lamina1_milpul==0 and $cotizacion_lamina1_grm2>0){ ?>
+			                            <fieldset class="w120">
+	                                        <label for="lamina1_grm2">GR / M2</label>
+	                                        <input name="lamina1_grm2" type="text" id="lamina1_grm2" class="w100 texto_der" value="<?php echo $cotizacion_lamina1_grm2; ?>">
+	                                        <input name="lamina1_milpul" type="hidden" id="lamina1_milpul" value="<?php echo $cotizacion_lamina1_factor_milpul; ?>">
+			                                <input name="lamina1_micra" type="hidden" id="lamina1_micra" value="<?php echo $cotizacion_lamina1_micra; ?>">
+			                                <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $cotizacion_lamina1_material; ?>">
+	                                    </fieldset>
+			                        <?php } ?>
                                     
                                     <?php if($filtro1_polietileno==1 or $filtro1_pebd==1 or $filtro1_pead==1 or $filtro1_ppp==1){ ?>
                                     <fieldset class="w235">
@@ -733,11 +763,32 @@ jslcmaq(document).ready(function(){
                                         <input class="w100 texto_der" name="lamina2_ancho" type="text" id="lamina2_ancho" value="<?php echo $cotizacion_lamina2_ancho; ?>">
                                     </fieldset>
                                     
-                                    <fieldset class="w120">
-                                        <label for="lamina2_grm2">GR / M2</label>
-                                        <input class="w100 texto_der" name="lamina2_grm2" type="text" id="lamina2_grm2" value="<?php echo $cotizacion_lamina2_grm2; ?>">
-                                    </fieldset>
-                                    
+                                    <?php if($cotizacion_lamina2_milpul>0 and $cotizacion_lamina2_grm2>0){ ?>
+			                        	<fieldset class="alto50">
+			                              <label for="lamina2_milpul">Milesima de Pulgada:</label>
+			                              <input name="lamina2_milpul" type="text" class="an50 texto_cen" id="lamina2_milpul" value="<?php echo $cotizacion_lamina2_milpul; ?>" size="50">
+			                              <input name="lamina2_grm2" type="hidden" id="lamina2_grm2" value="<?php echo $cotizacion_lamina2_grm2; ?>">
+			                              <input name="lamina2_micra" type="hidden" id="lamina2_micra" value="<?php echo $cotizacion_lamina2_micra; ?>">
+			                              <input name="lamina2_material" id="lamina2_material" type="hidden" value="<?php echo $cotizacion_lamina2_material; ?>">
+			                          	</fieldset>
+			                        <?php }elseif($cotizacion_lamina2_micra>0 and $cotizacion_lamina2_grm2>0){ ?>
+			                        	 <fieldset class="alto50">
+			                              <label for="lamina2_micra">Micra:</label>
+			                              <input name="lamina2_micra" type="text" class="an50 texto_cen" id="lamina2_micra" value="<?php echo $cotizacion_lamina2_micra; ?>" size="50">
+			                              <input name="lamina2_grm2" type="hidden" id="lamina2_grm2" value="<?php echo $cotizacion_lamina2_grm2; ?>">
+			                              <input name="lamina2_milpul" type="hidden" id="lamina2_milpul" value="<?php echo $cotizacion_lamina2_milpul; ?>">
+			                              <input name="lamina2_material" type="hidden" id="lamina2_material" value="<?php echo $cotizacion_lamina2_material; ?>">
+			                            </fieldset>
+			                        <?php }elseif($cotizacion_lamina2_micra==0 and $cotizacion_lamina2_milpul==0 and $cotizacion_lamina2_grm2>0){ ?>
+			                            <fieldset class="w120">
+	                                        <label for="lamina2_grm2">GR / M2</label>
+	                                        <input name="lamina2_grm2" type="text" id="lamina2_grm2" class="w100 texto_der" value="<?php echo $cotizacion_lamina2_grm2; ?>">
+	                                        <input name="lamina2_milpul" type="hidden" id="lamina2_milpul" value="<?php echo $cotizacion_lamina2_factor_milpul; ?>">
+			                                <input name="lamina2_micra" type="hidden" id="lamina2_micra" value="<?php echo $cotizacion_lamina2_micra; ?>">
+			                                <input name="lamina2_material" type="hidden" id="lamina2_material" value="<?php echo $cotizacion_lamina2_material; ?>">
+	                                    </fieldset>
+			                        <?php } ?>
+
                                     <?php if($filtro2_polietileno==1 or $filtro2_pebd==1 or $filtro2_pead==1 or $filtro2_ppp==1){ ?>
                                     <fieldset class="w235">
                                         <?php if($cotizacion_lamina2_extrusion==1){ ?>
@@ -811,10 +862,33 @@ jslcmaq(document).ready(function(){
                                         <input class="w100 texto_der" name="lamina3_ancho" type="text" id="lamina3_ancho" value="<?php echo $cotizacion_lamina3_ancho; ?>">
                                     </fieldset>
                                     
-                                    <fieldset class="w120">
-                                        <label for="lamina3_grm2">GR / M2</label>
-                                        <input class="w100 texto_der" name="lamina3_grm2" type="text" id="lamina3_grm2" value="<?php echo $cotizacion_lamina3_grm2; ?>">
-                                    </fieldset>
+
+                                    <?php if($cotizacion_lamina3_milpul>0 and $cotizacion_lamina3_grm2>0){ ?>
+			                        	<fieldset class="alto50">
+			                              <label for="lamina3_milpul">Milesima de Pulgada:</label>
+			                              <input name="lamina3_milpul" type="text" class="an50 texto_cen" id="lamina3_milpul" value="<?php echo $cotizacion_lamina3_milpul; ?>" size="50">
+			                              <input name="lamina3_grm2" type="hidden" id="lamina3_grm2" value="<?php echo $cotizacion_lamina3_grm2; ?>">
+			                              <input name="lamina3_micra" type="hidden" id="lamina3_micra" value="<?php echo $cotizacion_lamina3_micra; ?>">
+			                              <input name="lamina3_material" id="lamina3_material" type="hidden" value="<?php echo $cotizacion_lamina3_material; ?>">
+			                          	</fieldset>
+			                        <?php }elseif($cotizacion_lamina3_micra>0 and $cotizacion_lamina3_grm2>0){ ?>
+			                        	 <fieldset class="alto50">
+			                              <label for="lamina3_micra">Micra:</label>
+			                              <input name="lamina3_micra" type="text" class="an50 texto_cen" id="lamina3_micra" value="<?php echo $cotizacion_lamina3_micra; ?>" size="50">
+			                              <input name="lamina3_grm2" type="hidden" id="lamina3_grm2" value="<?php echo $cotizacion_lamina3_grm2; ?>">
+			                              <input name="lamina3_milpul" type="hidden" id="lamina3_milpul" value="<?php echo $cotizacion_lamina3_milpul; ?>">
+			                              <input name="lamina3_material" type="hidden" id="lamina3_material" value="<?php echo $cotizacion_lamina3_material; ?>">
+			                            </fieldset>
+			                        <?php }elseif($cotizacion_lamina3_micra==0 and $cotizacion_lamina3_milpul==0 and $cotizacion_lamina3_grm2>0){ ?>
+			                            <fieldset class="w120">
+	                                        <label for="lamina3_grm2">GR / M2</label>
+	                                        <input name="lamina3_grm2" type="text" id="lamina3_grm2" class="w100 texto_der" value="<?php echo $cotizacion_lamina3_grm2; ?>">
+	                                        <input name="lamina3_milpul" type="hidden" id="lamina3_milpul" value="<?php echo $cotizacion_lamina3_factor_milpul; ?>">
+			                                <input name="lamina3_micra" type="hidden" id="lamina3_micra" value="<?php echo $cotizacion_lamina3_micra; ?>">
+			                                <input name="lamina3_material" type="hidden" id="lamina3_material" value="<?php echo $cotizacion_lamina3_material; ?>">
+	                                    </fieldset>
+			                        <?php } ?>
+
                                     
                                     <?php if($filtro3_polietileno==1 or $filtro3_pebd==1 or $filtro3_pead==1 or $filtro3_ppp==1){ ?>
                                     <fieldset class="w235">

@@ -23,6 +23,61 @@ $grm2total=$_POST["dtecnicos_grm2_total"];
 $cantproduccion=$_POST["dtecnicos_cantrequerida"];
 $metrosproducir=$_POST["dtecnicos_metrosproducir"];
 
+/*VARIABLES DE MILESIMA DE PULGADA Y MICRA*/
+//LAMINA 1
+$lamina1_factor_milpul=$_POST["lamina1_milpul"];
+$lamina1_factor_micra=$_POST["lamina1_micra"];
+$lamina1_factor_material=$_POST["lamina1_material"];
+
+//LAMINA 2
+$lamina2_factor_milpul=$_POST["lamina2_milpul"];
+$lamina2_factor_micra=$_POST["lamina2_micra"];
+$lamina2_factor_material=$_POST["lamina2_material"];
+
+//LAMINA 3
+$lamina3_factor_milpul=$_POST["lamina3_milpul"];
+$lamina3_factor_micra=$_POST["lamina3_micra"];
+$lamina3_factor_material=$_POST["lamina3_material"];
+
+/* LAMINA 1 - MILESIMA DE PULGADA Y MICRA */
+if($lamina1_factor_milpul>0){ 
+	$lamina1_material=seleccionTabla($lamina1_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
+	$lamina1_grm2=$lamina1_factor_milpul * $lamina1_material["factor"];
+}elseif($lamina1_factor_micra>0){
+	$lamina1_material=seleccionTabla($lamina1_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
+	$lamina1_grm2=$lamina1_factor_micra * $lamina1_material["factor"];
+}elseif($_POST["lamina1_grm2"]>0){
+	$lamina1_grm2=$_POST["lamina1_grm2"];
+}else{
+	$lamina1_grm2=0;
+}
+
+/* LAMINA 2 - MILESIMA DE PULGADA Y MICRA */
+if($lamina2_factor_milpul>0){ 
+	$lamina2_material=seleccionTabla($lamina2_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
+	$lamina2_grm2=$lamina2_factor_milpul * $lamina2_material["factor"];
+}elseif($lamina2_factor_micra>0){
+	$lamina2_material=seleccionTabla($lamina2_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
+	$lamina2_grm2=$lamina2_factor_micra * $lamina2_material["factor"];
+}elseif($_POST["lamina2_grm2"]>0){
+	$lamina2_grm2=$_POST["lamina2_grm2"];
+}else{
+	$lamina2_grm2=0;
+}
+
+/* LAMINA 3 - MILESIMA DE PULGADA Y MICRA */
+if($lamina3_factor_milpul>0){ 
+	$lamina3_material=seleccionTabla($lamina3_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
+	$lamina3_grm2=$lamina3_factor_milpul * $lamina3_material["factor"];
+}elseif($lamina3_factor_micra>0){
+	$lamina3_material=seleccionTabla($lamina3_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
+	$lamina3_grm2=$lamina3_factor_micra * $lamina3_material["factor"];
+}elseif($_POST["lamina3_grm2"]>0){
+	$lamina3_grm2=$_POST["lamina3_grm2"];
+}else{
+	$lamina3_grm2=0;
+}
+
 //LAMINA 1
 if($_POST["dt_articulo1"]==""){ $lamina1=0; }else{ $lamina1=$_POST["dt_articulo1"]; };
 if($_POST["lamina1_ancho"]<>""){ $lamina1_ancho=$_POST["lamina1_ancho"]; }else{ $lamina1_ancho=0; }
@@ -89,6 +144,9 @@ precio_cotizacion=$precio,
 formato_cotizacion=$formato,
 lamina1_cotizacion=$lamina1,
 lamina1_ancho_cotizacion=$lamina1_ancho,
+lamina1_factor_micra=$lamina1_factor_micra,
+lamina1_factor_milpul=$lamina1_factor_milpul,
+lamina1_factor_material=$lamina1_factor_material,
 lamina1_grm2_cotizacion=$lamina1_grm2,
 extrusion1_cotizacion=$lamina1_extrusion,
 impresion1_cotizacion=$lamina1_impresion,
@@ -96,6 +154,9 @@ impresion1_grm2_cotizacion=$lamina1_impresion_grm2,
 rebobinado1_cotizacion=$lamina1_rebobinado,
 lamina2_cotizacion=$lamina2,
 lamina2_ancho_cotizacion=$lamina2_ancho,
+lamina2_factor_micra=$lamina2_factor_micra,
+lamina2_factor_milpul=$lamina2_factor_milpul,
+lamina2_factor_material=$lamina3_factor_material,
 lamina2_grm2_cotizacion=$lamina2_grm2,
 extrusion2_cotizacion=$lamina2_extrusion,
 bilaminado2_cotizacion=$lamina2_bilaminado,
@@ -103,6 +164,9 @@ bilaminado2_grm2_cotizacion=$lamina2_bilaminado_grm2,
 rebobinado2_cotizacion=$lamina2_rebobinado,
 lamina3_cotizacion=$lamina3,
 lamina3_ancho_cotizacion=$lamina3_ancho,
+lamina3_factor_micra=$lamina3_factor_micra,
+lamina3_factor_milpul=$lamina3_factor_milpul,
+lamina3_factor_material=$lamina3_factor_material,
 lamina3_grm2_cotizacion=$lamina3_grm2,
 extrusion3_cotizacion=$lamina3_extrusion,
 trilaminado3_cotizacion=$lamina3_trilaminado,
@@ -128,12 +192,11 @@ insumo_bilaminado=$insumo_bilaminado,
 insumo_trilaminado=$insumo_trilaminado,
 insumo_cushion=$insumo_cushion,
 insumo_clises=$insumo_clises WHERE id_cotizacion=$id_cotizacion", $conexion);
-?>
-<?php
+
 if (mysql_errno()!=0){
-	echo "ERROR: ". mysql_errno() . " - ". mysql_error();
+	//echo "ERROR: ". mysql_errno() . " - ". mysql_error();
 	mysql_close($conexion);
-	//header("Location:lista.php?msj=4");
+	header("Location:lista.php?msj=4");
 } else {
 	mysql_close($conexion);
 	header("Location:lista.php?msj=3&imp=$id_cotizacion"); 
