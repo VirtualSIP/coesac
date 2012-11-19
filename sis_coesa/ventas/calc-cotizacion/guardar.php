@@ -270,13 +270,14 @@ $insumo_clises,
 $fila_ver=mysql_fetch_array($rst_ver);
 $id_impresion=$fila_ver["id_cotizacion"];*/
 
-/*if (mysql_errno()!=0){
-	//echo "ERROR: ". mysql_errno() . " - ". mysql_error();
+if(mysql_errno()!=0){
+	echo "ERROR: ". mysql_errno() . " - ". mysql_error();
 	mysql_close($conexion);
-	header("Location:lista.php?msj=2");
-} else {
+	//header("Location:lista.php?msj=2");
+}else{
+	echo "ERROR: ". mysql_errno() . " - ". mysql_error();
 	mysql_close($conexion);
-	header("Location:lista.php?msj=1&imp=$id_impresion");
-}*/
+	//header("Location:lista.php?msj=1&imp=$id_impresion");
+}
 ?>
 	
