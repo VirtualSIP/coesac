@@ -1,6 +1,7 @@
 <?php
 require_once("../../../connect/conexion.php");
 require_once("../../../connect/function.php");
+require_once("../../../connect/sesion/verificar_sesion.php");
 
 //VARIABLES
 $lamina1=$_POST["lamina1"];
@@ -49,17 +50,60 @@ $rst_factor_lam2=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_convers
 $rst_factor_lam3=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;", $conexion);
 
 //SELECCION DE FORMATO (LAMINA O MANGA)
-if($formato==1){
-	//ANCHO PARA LAMINAS - SOLO PARA LAMINAS
-	$anchofinal=($ancho * $nrobandas) + 20;
-}elseif($formato==2){
-	//ANCHO PARA LAMINAS - SOLO PARA MANGAS
-	$anchofinal=$ancho;
-}
-
-
+if($formato==1){ $anchofinal=($ancho * $nrobandas) + 20; }//ANCHO PARA LAMINAS - SOLO PARA LAMINAS
+elseif($formato==2){ $anchofinal=$ancho; } //ANCHO PARA LAMINAS - SOLO PARA MANGAS
 
 ?>
+<!-- SELECCION DE PROCESOS -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jLamFactorConv=jQuery.noConflict();
+jLamFactorConv(document).ready(function(){
+	
+	//LAMINA 1
+	jLamFactorConv(".factor_conversion_lam1").change(function(){	
+		jLamFactorConv("#progressbar").removeClass("ocultar");
+		var lam1_milpul=jLamFactorConv("#lamina1_milpul").val();
+		var lam1_material=jLamFactorConv("#lamina1_material").val();
+		var lam1_micra=jLamFactorConv("#lamina1_micra").val();
+		
+		jLamFactorConv.post("formula-facto-conversion.php", {lam1_milpul: lam1_milpul, lam1_material: lam1_material, lam1_micra: lam1_micra},
+			function(data){
+				jLamFactorConv("#grm2_lam1").html(data);
+				jLamFactorConv("#progressbar").addClass("ocultar");
+			});
+	});
+
+	//LAMINA 2	
+	jLamFactorConv(".factor_conversion_lam2").change(function(){	
+		jLamFactorConv("#progressbar").removeClass("ocultar");
+		var lam2_milpul=jLamFactorConv("#lamina2_milpul").val();
+		var lam2_material=jLamFactorConv("#lamina2_material").val();
+		var lam2_micra=jLamFactorConv("#lamina2_micra").val();
+		
+		jLamFactorConv.post("formula-facto-conversion.php", {lam2_milpul: lam2_milpul, lam2_material: lam2_material, lam2_micra: lam2_micra},
+			function(data){
+				jLamFactorConv("#grm2_lam2").html(data);
+				jLamFactorConv("#progressbar").addClass("ocultar");
+			});
+	});	
+	
+	//LAMINA 3
+	jLamFactorConv(".factor_conversion_lam3").change(function(){	
+		jLamFactorConv("#progressbar").removeClass("ocultar");
+		var lam3_milpul=jLamFactorConv("#lamina3_milpul").val();
+		var lam3_material=jLamFactorConv("#lamina3_material").val();
+		var lam3_micra=jLamFactorConv("#lamina3_micra").val();
+		
+		jLamFactorConv.post("formula-facto-conversion.php", {lam3_milpul: lam3_milpul, lam3_material: lam3_material, lam3_micra: lam3_micra},
+			function(data){
+				jLamFactorConv("#grm2_lam3").html(data);
+				jLamFactorConv("#progressbar").addClass("ocultar");
+			});
+	});
+	
+});
+</script>
 
 <!-- LAMINA 1 -->
 <?php if($lamina1>0){ ?>
@@ -81,18 +125,24 @@ if(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==1){
 ?>
 <fieldset class="alto50 w110">
     <label for="lamina1_milpul">Mil. Pulgada:</label>
-    <input name="lamina1_milpul" type="text" class="texto_cen w90" id="lamina1_milpul" value="0" size="50">
+    <input name="lamina1_milpul" type="text" class="texto_cen w90 factor_conversion_lam1" id="lamina1_milpul" value="0" >
     <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $factor_id_lam1; ?>">
     <input name="lamina1_micra" id="lamina1_micra" type="hidden" value="0">
-    <input name="lamina1_grm2" id="lamina1_grm2" type="hidden" value="0">
+</fieldset>
+<fieldset class="w120" id="grm2_lam1">
+    <label for="lamina1_grm2">GR / M2</label>
+    <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0">
 </fieldset>
 <?php }elseif(BuscarPalabra($factor_material_lam1, $lamina1_dato["nombre_articulo"])==1 and $factor_tipo_lam1==2){ ?>
 <fieldset class="alto50 w110">
     <label for="lamina1_micra">Micras:</label>
-    <input name="lamina1_micra" type="text" class="texto_cen w90" id="lamina1_micra" value="0" size="50">
+    <input name="lamina1_micra" type="text" class="texto_cen w90 factor_conversion_lam1" id="lamina1_micra" value="0">
     <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $factor_id_lam1; ?>">
     <input name="lamina1_milpul" id="lamina1_milpul" type="hidden" value="0">
-    <input name="lamina1_grm2" id="lamina1_grm2" type="hidden" value="0">
+</fieldset>
+<fieldset class="w120" id="grm2_lam1">
+    <label for="lamina1_grm2">GR / M2</label>
+    <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0">
 </fieldset>
 <?php } } }elseif(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==0){ ?>
 <fieldset class="w120">
@@ -144,18 +194,24 @@ if(BuscarPalabraFactor($lista, $lamina2_dato["nombre_articulo"])==1){
 ?>
 <fieldset class="alto50 w110">
     <label for="lamina2_milpul">Mil. Pulgada:</label>
-    <input name="lamina2_milpul" type="text" class="texto_cen w90" id="lamina2_milpul" value="0" size="50">
+    <input name="lamina2_milpul" type="text" class="texto_cen w90 factor_conversion_lam2" id="lamina2_milpul" value="0">
     <input name="lamina2_material" id="lamina2_material" type="hidden" value="<?php echo $factor_id_lam2; ?>">
     <input name="lamina2_micra" id="lamina2_micra" type="hidden" value="0">
-    <input name="lamina2_grm2" id="lamina2_grm2" type="hidden" value="0">
+</fieldset>
+<fieldset class="w120" id="grm2_lam2">
+    <label for="lamina2_grm2">GR / M2</label>
+    <input class="w100 texto_der" name="lamina2_grm2" type="text" id="lamina2_grm2" value="0">
 </fieldset>
 <?php }elseif(BuscarPalabra($factor_material_lam2, $lamina2_dato["nombre_articulo"])==1 and $factor_tipo_lam2==2){ ?>
 <fieldset class="alto50 w110">
     <label for="lamina2_micra">Micras:</label>
-    <input name="lamina2_micra" type="text" class="texto_cen w90" id="lamina2_micra" value="0" size="50">
+    <input name="lamina2_micra" type="text" class="texto_cen w90 factor_conversion_lam2" id="lamina2_micra" value="0">
     <input name="lamina2_material" id="lamina2_material" type="hidden" value="<?php echo $factor_id_lam2; ?>">
     <input name="lamina2_milpul" id="lamina2_milpul" type="hidden" value="0">
-    <input name="lamina2_grm2" id="lamina2_grm2" type="hidden" value="0">
+</fieldset>
+<fieldset class="w120" id="grm2_lam2">
+    <label for="lamina2_grm2">GR / M2</label>
+    <input class="w100 texto_der" name="lamina2_grm2" type="text" id="lamina2_grm2" value="0">
 </fieldset>
 <?php } } }elseif(BuscarPalabraFactor($lista, $lamina2_dato["nombre_articulo"])==0){ ?>
 <fieldset class="w120">
@@ -202,18 +258,24 @@ if(BuscarPalabraFactor($lista, $lamina3_dato["nombre_articulo"])==1){
 ?>
 <fieldset class="alto50 w110">
     <label for="lamina3_milpul">Mil. Pulgada:</label>
-    <input name="lamina3_milpul" type="text" class="texto_cen w90" id="lamina3_milpul" value="0" size="50">
+    <input name="lamina3_milpul" type="text" class="texto_cen w90 factor_conversion_lam3" id="lamina3_milpul" value="0">
     <input name="lamina3_material" id="lamina3_material" type="hidden" value="<?php echo $factor_id_lam3; ?>">
     <input name="lamina3_micra" id="lamina3_micra" type="hidden" value="0">
-    <input name="lamina3_grm2" id="lamina3_grm2" type="hidden" value="0">
+</fieldset>
+<fieldset class="w120" id="grm2_lam3">
+    <label for="lamina3_grm2">GR / M2</label>
+    <input class="w100 texto_der" name="lamina3_grm2" type="text" id="lamina3_grm2" value="0">
 </fieldset>
 <?php }elseif(BuscarPalabra($factor_material_lam3, $lamina3_dato["nombre_articulo"])==1 and $factor_tipo_lam3==2){ ?>
 <fieldset class="alto50 w110">
     <label for="lamina3_micra">Micras:</label>
-    <input name="lamina3_micra" type="text" class="texto_cen w90" id="lamina3_micra" value="0" size="50">
+    <input name="lamina3_micra" type="text" class="texto_cen w90 factor_conversion_lam3" id="lamina3_micra" value="0">
     <input name="lamina3_material" id="lamina3_material" type="hidden" value="<?php echo $factor_id_lam3; ?>">
     <input name="lamina3_milpul" id="lamina3_milpul" type="hidden" value="0">
-    <input name="lamina3_grm2" id="lamina3_grm2" type="hidden" value="0">
+</fieldset>
+<fieldset class="w120" id="grm2_lam3">
+    <label for="lamina3_grm2">GR / M2</label>
+    <input class="w100 texto_der" name="lamina3_grm2" type="text" id="lamina3_grm2" value="0">
 </fieldset>
 <?php } } }elseif(BuscarPalabraFactor($lista, $lamina3_dato["nombre_articulo"])==0){ ?>
 <fieldset class="w120">

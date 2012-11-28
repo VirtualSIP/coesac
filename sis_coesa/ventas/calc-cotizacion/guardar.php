@@ -28,55 +28,19 @@ $metrosproducir=$_POST["dtecnicos_metrosproducir"];
 $lamina1_factor_milpul=$_POST["lamina1_milpul"];
 $lamina1_factor_micra=$_POST["lamina1_micra"];
 $lamina1_factor_material=$_POST["lamina1_material"];
+$lamina1_grm2=$_POST["lamina1_grm2"];
 
 //LAMINA 2
 $lamina2_factor_milpul=$_POST["lamina2_milpul"];
 $lamina2_factor_micra=$_POST["lamina2_micra"];
 $lamina2_factor_material=$_POST["lamina2_material"];
+$lamina2_grm2=$_POST["lamina2_grm2"];
 
 //LAMINA 3
 $lamina3_factor_milpul=$_POST["lamina3_milpul"];
 $lamina3_factor_micra=$_POST["lamina3_micra"];
 $lamina3_factor_material=$_POST["lamina3_material"];
-
-/* LAMINA 1 - MILESIMA DE PULGADA Y MICRA */
-if($lamina1_factor_milpul>0){ 
-	$lamina1_material=seleccionTabla($lamina1_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
-	$lamina1_grm2=$lamina1_factor_milpul * $lamina1_material["factor"];
-}elseif($lamina1_factor_micra>0){
-	$lamina1_material=seleccionTabla($lamina1_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
-	$lamina1_grm2=$lamina1_factor_micra * $lamina1_material["factor"];
-}elseif($_POST["lamina1_grm2"]>0){
-	$lamina1_grm2=$_POST["lamina1_grm2"];
-}else{
-	$lamina1_grm2=0;
-}
-
-/* LAMINA 2 - MILESIMA DE PULGADA Y MICRA */
-if($lamina2_factor_milpul>0){ 
-	$lamina2_material=seleccionTabla($lamina2_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
-	$lamina2_grm2=$lamina2_factor_milpul * $lamina2_material["factor"];
-}elseif($lamina2_factor_micra>0){
-	$lamina2_material=seleccionTabla($lamina2_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
-	$lamina2_grm2=$lamina2_factor_micra * $lamina2_material["factor"];
-}elseif($_POST["lamina2_grm2"]>0){
-	$lamina2_grm2=$_POST["lamina2_grm2"];
-}else{
-	$lamina2_grm2=0;
-}
-
-/* LAMINA 3 - MILESIMA DE PULGADA Y MICRA */
-if($lamina3_factor_milpul>0){ 
-	$lamina3_material=seleccionTabla($lamina3_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
-	$lamina3_grm2=$lamina3_factor_milpul * $lamina3_material["factor"];
-}elseif($lamina3_factor_micra>0){
-	$lamina3_material=seleccionTabla($lamina3_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
-	$lamina3_grm2=$lamina3_factor_micra * $lamina3_material["factor"];
-}elseif($_POST["lamina3_grm2"]>0){
-	$lamina3_grm2=$_POST["lamina3_grm2"];
-}else{
-	$lamina3_grm2=0;
-}
+$lamina3_grm2=$_POST["lamina3_grm2"];
 
 //DATOS
 $dato_fecha=$fechaActual;
