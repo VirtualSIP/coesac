@@ -43,8 +43,11 @@ jLamProcSelc(document).ready(function(){
 	jLamProcSelc("#lamina1_select").click(function(){	
 		jLamProcSelc("#progressbar").removeClass("ocultar");
 		var lamina1=jLamProcSelc("#dt_articulo1").val();
+		var anchofinal=jLamProcSelc("#dtecnicos_anchofinal").val();
+		var nrobandas=jLamProcSelc("#dtecnicos_numbandas").val();
+		var formato=jLamProcSelc("#dtecnicos_formato").val();
 		
-		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina1: lamina1},
+		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina1: lamina1, anchofinal: anchofinal, nrobandas: nrobandas, formato: formato},
 			function(data){
 				jLamProcSelc("#lamina1_procesos").html(data);
 				jLamProcSelc("#progressbar").addClass("ocultar");
@@ -54,8 +57,11 @@ jLamProcSelc(document).ready(function(){
 	jLamProcSelc("#lamina2_select").click(function(){
 		jLamProcSelc("#progressbar").removeClass("ocultar");
 		var lamina2=jLamProcSelc("#dt_articulo2").val();
+		var anchofinal=jLamProcSelc("#dtecnicos_anchofinal").val();
+		var nrobandas=jLamProcSelc("#dtecnicos_numbandas").val();
+		var formato=jLamProcSelc("#dtecnicos_formato").val();
 		
-		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina2: lamina2},
+		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina2: lamina2, anchofinal: anchofinal, nrobandas: nrobandas, formato: formato},
 			function(data){
 				jLamProcSelc("#lamina2_procesos").html(data);
 				jLamProcSelc("#progressbar").addClass("ocultar");
@@ -65,8 +71,11 @@ jLamProcSelc(document).ready(function(){
 	jLamProcSelc("#lamina3_select").click(function(){
 		jLamProcSelc("#progressbar").removeClass("ocultar");
 		var lamina3=jLamProcSelc("#dt_articulo3").val();
+		var anchofinal=jLamProcSelc("#dtecnicos_anchofinal").val();
+		var nrobandas=jLamProcSelc("#dtecnicos_numbandas").val();
+		var formato=jLamProcSelc("#dtecnicos_formato").val();
 		
-		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina3: lamina3},
+		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina3: lamina3, anchofinal: anchofinal, nrobandas: nrobandas, formato: formato},
 			function(data){
 				jLamProcSelc("#lamina3_procesos").html(data);
 				jLamProcSelc("#progressbar").addClass("ocultar");
@@ -97,16 +106,13 @@ jLamProcSelc(document).ready(function(){
 				$filtro1_pead=BuscarPalabra("PEAD", $lamina1_nombre);
 				$filtro1_ppp=BuscarPalabra("PPP", $lamina1_nombre);
 				
-		if($filtro1_polietileno==1 or $filtro1_pead==1 or $filtro1_pebd==1 or $filtro1_ppp==1){
-			if($lamina1_ancho>=$formula_filtro_polietileno){ ?>
+		if($filtro1_polietileno==1 or $filtro1_pead==1 or $filtro1_pebd==1 or $filtro1_ppp==1){?>
 			<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
-		<?php }}elseif($lamina1_tipo<>13){
-					if($lamina1_ancho>=$formula_filtro_lamina){ ?>
+		<?php }elseif($lamina1_tipo<>13){?>
             <option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
-        <?php }}elseif($lamina1_tipo==13){
-				if($lamina1_ancho>=$formula_filtro_manga){?>
+        <?php }elseif($lamina1_tipo==13){?>
         	<option value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>	
-        <?php }}} ?>
+        <?php }} ?>
       </select>
       <a id="lamina1_select" class="boton_lamina"  href="javascript:;"></a>
     </fieldset>
@@ -136,16 +142,13 @@ jLamProcSelc(document).ready(function(){
 				$filtro2_pead=BuscarPalabra("PEAD", $lamina2_nombre);
 				$filtro2_ppp=BuscarPalabra("PPP", $lamina2_nombre);
 		
-		if($filtro2_polietileno==1 or $filtro2_pead==1 or $filtro2_pebd==1 or $filtro2_ppp==1){
-				if($lamina2_ancho>=$formula_filtro_polietileno){ ?>
+		if($filtro2_polietileno==1 or $filtro2_pead==1 or $filtro2_pebd==1 or $filtro2_ppp==1){ ?>
             <option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>	    
-		<?php }}elseif($lamina2_tipo<>13){
-					if($lamina2_ancho>=$formula_filtro_lamina){ ?>
+		<?php }elseif($lamina2_tipo<>13){ ?>
             <option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>
-        <?php }}elseif($lamina2_tipo==13){
-				if($lamina2_ancho>=$formula_filtro_manga){ ?>
+        <?php }elseif($lamina2_tipo==13){ ?>
         	<option value="<?php echo $lamina2_id; ?>"><?php echo $lamina2_nombre; ?></option>	
-        <?php }}} ?>
+        <?php }} ?>
       </select>
       <a id="lamina2_select" class="boton_lamina"  href="javascript:;"></a>
     </fieldset>
@@ -175,16 +178,13 @@ jLamProcSelc(document).ready(function(){
 				$filtro3_pead=BuscarPalabra("PEAD", $lamina3_nombre);
 				$filtro3_ppp=BuscarPalabra("PPP", $lamina3_nombre);
 				
-		if($filtro3_polietileno==1 or $filtro3_pead==1 or $filtro3_pebd==1 or $filtro3_ppp==1){
-				if($lamina3_ancho>=$formula_filtro_polietileno){ ?>
+		if($filtro3_polietileno==1 or $filtro3_pead==1 or $filtro3_pebd==1 or $filtro3_ppp==1){ ?>
 			<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
-		<?php }}elseif($lamina3_tipo<>13){
-					if($lamina3_ancho>=$formula_filtro_lamina){?>
+		<?php }elseif($lamina3_tipo<>13){ ?>
             <option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>
-        <?php }}elseif($lamina3_tipo==13){
-				if($lamina3_ancho>=$formula_filtro_manga){?>
+        <?php }elseif($lamina3_tipo==13){ ?>
         	<option value="<?php echo $lamina3_id; ?>"><?php echo $lamina3_nombre; ?></option>	
-        <?php }}} ?>
+        <?php }} ?>
         </select>
         <a id="lamina3_select" class="boton_lamina"  href="javascript:;"></a>
     </fieldset>

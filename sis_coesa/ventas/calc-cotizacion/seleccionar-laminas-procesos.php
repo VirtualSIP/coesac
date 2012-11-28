@@ -6,6 +6,9 @@ require_once("../../../connect/function.php");
 $lamina1=$_POST["lamina1"];
 $lamina2=$_POST["lamina2"];
 $lamina3=$_POST["lamina3"];
+$ancho=$_POST["anchofinal"];
+$nrobandas=$_POST["nrobandas"];
+$formato=$_POST["formato"];
 
 //LAMINAS
 $lamina1_dato=seleccionTabla($lamina1, "id_articulo", "syCoesa_articulo", $conexion);
@@ -45,13 +48,24 @@ $rst_factor_lam1=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_convers
 $rst_factor_lam2=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;", $conexion);
 $rst_factor_lam3=mysql_query("SELECT * FROM syCoesa_mantenimiento_factor_conversion ORDER BY id_factor ASC;", $conexion);
 
+//SELECCION DE FORMATO (LAMINA O MANGA)
+if($formato==1){
+	//ANCHO PARA LAMINAS - SOLO PARA LAMINAS
+	$anchofinal=($ancho * $nrobandas) + 20;
+}elseif($formato==2){
+	//ANCHO PARA LAMINAS - SOLO PARA MANGAS
+	$anchofinal=$ancho;
+}
+
+
+
 ?>
 
 <!-- LAMINA 1 -->
 <?php if($lamina1>0){ ?>
 <fieldset class="w120">
     <label for="lamina1_ancho">Ancho</label>
-    <input class="w100 texto_der" name="lamina1_ancho" type="text" id="lamina1_ancho" value="<?php echo $lamina1_dato["ancho_articulo"]; ?>">
+    <input class="w100 texto_der" name="lamina1_ancho" type="text" id="lamina1_ancho" value="<?php echo $anchofinal; ?>">
 </fieldset>
 
 <?php
@@ -114,7 +128,7 @@ if(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==1){
 <?php if($lamina2>0){ ?>
 <fieldset class="w120">
     <label for="lamina2_ancho">Ancho</label>
-    <input class="w100 texto_der" name="lamina2_ancho" type="text" id="lamina2_ancho" value="<?php echo $lamina2_dato["ancho_articulo"]; ?>">
+    <input class="w100 texto_der" name="lamina2_ancho" type="text" id="lamina2_ancho" value="<?php echo $anchofinal; ?>">
 </fieldset>
 
 <?php
@@ -172,7 +186,7 @@ if(BuscarPalabraFactor($lista, $lamina2_dato["nombre_articulo"])==1){
 
 <fieldset class="w120">
     <label for="lamina3_ancho">Ancho</label>
-    <input class="w100 texto_der" name="lamina3_ancho" type="text" id="lamina3_ancho" value="<?php echo $lamina3_dato["ancho_articulo"]; ?>">
+    <input class="w100 texto_der" name="lamina3_ancho" type="text" id="lamina3_ancho" value="<?php echo $anchofinal; ?>">
 </fieldset>
 
 <?php

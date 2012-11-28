@@ -216,6 +216,22 @@ jCilRep(document).ready(function(){
 });
 </script>
 
+<!-- SELECCIONAR LAMINAS -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jlamproc = jQuery.noConflict();
+jlamproc(document).ready(function(){
+	jlamproc("#dtecnicos_formato").change(function(){
+		jlamproc("#progressbar").removeClass("ocultar");
+		var formato = jlamproc(this).val();
+		jlamproc.post("seleccionar-laminas.php", {formato: formato},
+			function(data){
+				jlamproc("#progressbar").addClass("ocultar");
+				jlamproc("#datos_lamproc").html(data);
+			});
+	});
+});
+</script>
 
 </head>
 
