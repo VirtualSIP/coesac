@@ -68,7 +68,7 @@ jLamFactorConv(document).ready(function(){
 		var lam1_material=jLamFactorConv("#lamina1_material").val();
 		var lam1_micra=jLamFactorConv("#lamina1_micra").val();
 		
-		jLamFactorConv.post("formula-facto-conversion.php", {lam1_milpul: lam1_milpul, lam1_material: lam1_material, lam1_micra: lam1_micra},
+		jLamFactorConv.post("formula-factor-conversion.php", {lam1_milpul: lam1_milpul, lam1_material: lam1_material, lam1_micra: lam1_micra},
 			function(data){
 				jLamFactorConv("#grm2_lam1").html(data);
 				jLamFactorConv("#progressbar").addClass("ocultar");
@@ -82,7 +82,7 @@ jLamFactorConv(document).ready(function(){
 		var lam2_material=jLamFactorConv("#lamina2_material").val();
 		var lam2_micra=jLamFactorConv("#lamina2_micra").val();
 		
-		jLamFactorConv.post("formula-facto-conversion.php", {lam2_milpul: lam2_milpul, lam2_material: lam2_material, lam2_micra: lam2_micra},
+		jLamFactorConv.post("formula-factor-conversion.php", {lam2_milpul: lam2_milpul, lam2_material: lam2_material, lam2_micra: lam2_micra},
 			function(data){
 				jLamFactorConv("#grm2_lam2").html(data);
 				jLamFactorConv("#progressbar").addClass("ocultar");
@@ -96,7 +96,7 @@ jLamFactorConv(document).ready(function(){
 		var lam3_material=jLamFactorConv("#lamina3_material").val();
 		var lam3_micra=jLamFactorConv("#lamina3_micra").val();
 		
-		jLamFactorConv.post("formula-facto-conversion.php", {lam3_milpul: lam3_milpul, lam3_material: lam3_material, lam3_micra: lam3_micra},
+		jLamFactorConv.post("formula-factor-conversion.php", {lam3_milpul: lam3_milpul, lam3_material: lam3_material, lam3_micra: lam3_micra},
 			function(data){
 				jLamFactorConv("#grm2_lam3").html(data);
 				jLamFactorConv("#progressbar").addClass("ocultar");
