@@ -62,7 +62,7 @@ var jLamFactorConv=jQuery.noConflict();
 jLamFactorConv(document).ready(function(){
 	
 	//LAMINA 1
-	jLamFactorConv("#factor1_convertir").change(function(){	
+	jLamFactorConv("#factor1_convertir").click(function(){	
 		jLamFactorConv("#progressbar").removeClass("ocultar");
 		var lam1_milpul=jLamFactorConv("#lamina1_milpul").val();
 		var lam1_material=jLamFactorConv("#lamina1_material").val();
