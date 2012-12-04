@@ -58,51 +58,28 @@ elseif($formato==2){ $anchofinal=$ancho; } //ANCHO PARA LAMINAS - SOLO PARA MANG
 <!-- SELECCION DE PROCESOS -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-/*var jLamFactorConv=jQuery.noConflict();
+var jLamFactorConv=jQuery.noConflict();
 jLamFactorConv(document).ready(function(){
 	
 	//LAMINA 1
-	jLamFactorConv(".factor_conversion_lam1").change(function(){	
+	jLamFactorConv("#factor1_convertir").change(function(){	
 		jLamFactorConv("#progressbar").removeClass("ocultar");
 		var lam1_milpul=jLamFactorConv("#lamina1_milpul").val();
 		var lam1_material=jLamFactorConv("#lamina1_material").val();
 		var lam1_micra=jLamFactorConv("#lamina1_micra").val();
+		var lam1_grm2=jLamFactorConv("#lamina1_grm2").val();
+		var conversion1_factor=jLamFactorConv("#conversion1_factor").val();
+		var conversion1_grm2=jLamFactorConv("#conversion1_grm2").val();
+		var convertir1="OK";
 		
-		jLamFactorConv.post("formula-factor-conversion.php", {lam1_milpul: lam1_milpul, lam1_material: lam1_material, lam1_micra: lam1_micra},
+		jLamFactorConv.post("formula-factor-conversion.php", {lam1_milpul: lam1_milpul, lam1_material: lam1_material, convertir1: convertir1,
+		lam1_micra: lam1_micra, lam1_grm2: lam1_grm2, conversion1_factor: conversion1_factor, conversion1_grm2: conversion1_grm2},
 			function(data){
-				jLamFactorConv("#grm2_lam1").html(data);
+				jLamFactorConv("#lamina1_factconv").html(data);
 				jLamFactorConv("#progressbar").addClass("ocultar");
 			});
 	});
-
-	//LAMINA 2	
-	jLamFactorConv(".factor_conversion_lam2").change(function(){	
-		jLamFactorConv("#progressbar").removeClass("ocultar");
-		var lam2_milpul=jLamFactorConv("#lamina2_milpul").val();
-		var lam2_material=jLamFactorConv("#lamina2_material").val();
-		var lam2_micra=jLamFactorConv("#lamina2_micra").val();
-		
-		jLamFactorConv.post("formula-factor-conversion.php", {lam2_milpul: lam2_milpul, lam2_material: lam2_material, lam2_micra: lam2_micra},
-			function(data){
-				jLamFactorConv("#grm2_lam2").html(data);
-				jLamFactorConv("#progressbar").addClass("ocultar");
-			});
-	});	
-	
-	//LAMINA 3
-	jLamFactorConv(".factor_conversion_lam3").change(function(){	
-		jLamFactorConv("#progressbar").removeClass("ocultar");
-		var lam3_milpul=jLamFactorConv("#lamina3_milpul").val();
-		var lam3_material=jLamFactorConv("#lamina3_material").val();
-		var lam3_micra=jLamFactorConv("#lamina3_micra").val();
-		
-		jLamFactorConv.post("formula-factor-conversion.php", {lam3_milpul: lam3_milpul, lam3_material: lam3_material, lam3_micra: lam3_micra},
-			function(data){
-				jLamFactorConv("#grm2_lam3").html(data);
-				jLamFactorConv("#progressbar").addClass("ocultar");
-			});
-	});	
-});*/
+});
 </script>
 
 <!-- CAMBIAR POSICION DE FACTORES DE CONVERSION -->
@@ -148,7 +125,7 @@ if(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==1){
 </fieldset>
 <fieldset class="alto50 w120" id="grm2_lam1">
     <label for="lamina1_grm2">GR / M2</label>
-    <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0" readonly>
+    <input class="texto_cen w90" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0" readonly>
     <input name="conversion1_grm2" id="conversion1_grm2" type="hidden" value="0">
 </fieldset>
 </div>
@@ -169,7 +146,7 @@ if(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==1){
 </fieldset>
 <fieldset class="alto50 w120" id="grm2_lam1">
     <label for="lamina1_grm2">GR / M2</label>
-    <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0" readonly>
+    <input class="texto_cen w90" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0" readonly>
     <input name="conversion1_grm2" id="conversion1_grm2" type="hidden" value="0">
 </fieldset>
 </div>
