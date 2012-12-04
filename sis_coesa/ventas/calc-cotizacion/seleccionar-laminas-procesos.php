@@ -111,13 +111,13 @@ jLamFactorConv(document).ready(function(){
 var jLamCambPos=jQuery.noConflict();
 jLamCambPos(document).ready(function(){
 	jLamCambPos("#factor_cambiar").click(function(){
-		var lam1_material=jLamFactorConv("#lamina1_material").val();
-		var conversion1_factor=jLamFactorConv("#conversion1_factor").val();
-		var conversion1_grm2=jLamFactorConv("#conversion1_grm2").val();
-		jLamFactorConv.post("formula-factor-conversion.php", {lam1_material: lam1_material, conversion1_factor: conversion1_factor, conversion1_grm2: conversion1_grm2},
+		var lam1_material=jLamCambPos("#lamina1_material").val();
+		var conversion1_factor=jLamCambPos("#conversion1_factor").val();
+		var conversion1_grm2=jLamCambPos("#conversion1_grm2").val();
+		jLamCambPos.post("formula-factor-conversion.php", {lam1_material: lam1_material, conversion1_factor: conversion1_factor, conversion1_grm2: conversion1_grm2},
 			function(data){
-				jLamFactorConv("#lamina1_factconv").html(data);
-				jLamFactorConv("#progressbar").addClass("ocultar");
+				jLamCambPos("#lamina1_factconv").html(data);
+				jLamCambPos("#progressbar").addClass("ocultar");
 			});
 	});
 });
