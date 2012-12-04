@@ -144,12 +144,12 @@ if(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==1){
     <input name="lamina1_milpul" type="text" class="texto_cen w90 factor_conversion_lam1" id="lamina1_milpul" value="0" >
     <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $factor_id_lam1; ?>">
     <input name="lamina1_micra" id="lamina1_micra" type="hidden" value="0">
-    <input name="conversion1_factor" id="conversion_factor" type="hidden" value="1">
+    <input name="conversion1_factor" id="conversion1_factor" type="hidden" value="1">
 </fieldset>
 <fieldset class="alto50 w120" id="grm2_lam1">
     <label for="lamina1_grm2">GR / M2</label>
     <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0" readonly>
-    <input name="conversion1_grm2" id="conversion_grm2" type="hidden" value="0">
+    <input name="conversion1_grm2" id="conversion1_grm2" type="hidden" value="0">
 </fieldset>
 </div>
 <fieldset class="w120">
@@ -165,12 +165,12 @@ if(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==1){
     <input name="lamina1_micra" type="text" class="texto_cen w90 factor_conversion_lam1" id="lamina1_micra" value="0">
     <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $factor_id_lam1; ?>">
     <input name="lamina1_milpul" id="lamina1_milpul" type="hidden" value="0">
-    <input name="conversion1_factor" id="conversion_factor" type="hidden" value="1">
+    <input name="conversion1_factor" id="conversion1_factor" type="hidden" value="1">
 </fieldset>
 <fieldset class="alto50 w120" id="grm2_lam1">
     <label for="lamina1_grm2">GR / M2</label>
     <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0" readonly>
-    <input name="conversion1_grm2" id="conversion_grm2" type="hidden" value="0">
+    <input name="conversion1_grm2" id="conversion1_grm2" type="hidden" value="0">
 </fieldset>
 </div>
 <fieldset class="w120">
