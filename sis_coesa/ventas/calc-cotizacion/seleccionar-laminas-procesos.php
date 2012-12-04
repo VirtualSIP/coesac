@@ -58,7 +58,7 @@ elseif($formato==2){ $anchofinal=$ancho; } //ANCHO PARA LAMINAS - SOLO PARA MANG
 <!-- SELECCION DE PROCESOS -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-var jLamFactorConv=jQuery.noConflict();
+/*var jLamFactorConv=jQuery.noConflict();
 jLamFactorConv(document).ready(function(){
 	
 	//LAMINA 1
@@ -101,33 +101,31 @@ jLamFactorConv(document).ready(function(){
 				jLamFactorConv("#grm2_lam3").html(data);
 				jLamFactorConv("#progressbar").addClass("ocultar");
 			});
-	});
-	
-	/*-------------------------*/
-	//CONVERSION AL INGRESAR DATOS EN GRM2
-	/*-------------------------*/
-	//LAMINA 1
-	jLamFactorConv("#lamina1_grm2").change(function(){	
-		jLamFactorConv("#progressbar").removeClass("ocultar");
+	});	
+});*/
+</script>
+
+<!-- CAMBIAR POSICION DE FACTORES DE CONVERSION -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jLamCambPos=jQuery.noConflict();
+jLamCambPos(document).ready(function(){
+	jLamCambPos("#factor_cambiar").click(function(){
 		var lam1_material=jLamFactorConv("#lamina1_material").val();
-		var lam1_grm2=jLamFactorConv(this).val();
-				
-		jLamFactorConv.post("formula-factor-conversion.php", {lam1_material: lam1_material, lam1_grm2: lam1_grm2},
+		var conversion1_factor=jLamFactorConv("#conversion1_factor").val();
+		var conversion1_grm2=jLamFactorConv("#conversion1_grm2").val();
+		jLamFactorConv.post("formula-factor-conversion.php", {lam1_material: lam1_material, conversion1_factor: conversion1_factor, conversion1_grm2: conversion1_grm2},
 			function(data){
-				jLamFactorConv("#factor_lam1").html(data);
+				jLamFactorConv("#lamina1_factconv").html(data);
 				jLamFactorConv("#progressbar").addClass("ocultar");
 			});
 	});
-	
 });
 </script>
 
+
 <!-- LAMINA 1 -->
 <?php if($lamina1>0){ ?>
-<fieldset class="w120">
-    <label for="lamina1_ancho">Ancho</label>
-    <input class="w100 texto_der" name="lamina1_ancho" type="text" id="lamina1_ancho" value="<?php echo $anchofinal; ?>">
-</fieldset>
 
 <?php
 if(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==1){ 
@@ -140,35 +138,60 @@ if(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==1){
 		
 		if(BuscarPalabra($factor_material_lam1, $lamina1_dato["nombre_articulo"])==1 and $factor_tipo_lam1==1){
 ?>
-<fieldset class="alto50 w110" id="factor_lam1">
+<div id="lamina1_factconv">
+<fieldset class="alto50 w120" id="factor_lam1">
     <label for="lamina1_milpul">Mil. Pulgada:</label>
     <input name="lamina1_milpul" type="text" class="texto_cen w90 factor_conversion_lam1" id="lamina1_milpul" value="0" >
     <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $factor_id_lam1; ?>">
     <input name="lamina1_micra" id="lamina1_micra" type="hidden" value="0">
+    <input name="conversion1_factor" id="conversion_factor" type="hidden" value="1">
 </fieldset>
-<fieldset class="w120" id="grm2_lam1">
+<fieldset class="alto50 w120" id="grm2_lam1">
     <label for="lamina1_grm2">GR / M2</label>
-    <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0">
+    <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0" readonly>
+    <input name="conversion1_grm2" id="conversion_grm2" type="hidden" value="0">
+</fieldset>
+</div>
+<fieldset class="w120">
+    <a href="javascript:;" class="boton_conv" id="factor_cambiar">Cambiar <img src="/imagenes/icons/icon-resize.png"></a>
+</fieldset>
+<fieldset class="w120">
+	<a href="javascript:;" class="boton_conv" id="factor_convertir">Convertir</a>
 </fieldset>
 <?php }elseif(BuscarPalabra($factor_material_lam1, $lamina1_dato["nombre_articulo"])==1 and $factor_tipo_lam1==2){ ?>
-<fieldset class="alto50 w110" id="factor_lam1">
+<div id="lamina1_factconv">
+<fieldset class="alto50 w120" id="factor_lam1">
     <label for="lamina1_micra">Micras:</label>
     <input name="lamina1_micra" type="text" class="texto_cen w90 factor_conversion_lam1" id="lamina1_micra" value="0">
     <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $factor_id_lam1; ?>">
     <input name="lamina1_milpul" id="lamina1_milpul" type="hidden" value="0">
+    <input name="conversion1_factor" id="conversion_factor" type="hidden" value="1">
 </fieldset>
-<fieldset class="w120" id="grm2_lam1">
+<fieldset class="alto50 w120" id="grm2_lam1">
     <label for="lamina1_grm2">GR / M2</label>
-    <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0">
+    <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0" readonly>
+    <input name="conversion1_grm2" id="conversion_grm2" type="hidden" value="0">
+</fieldset>
+</div>
+<fieldset class="w120">
+    <a href="javascript:;" class="boton_conv" id="factor_cambiar">Cambiar <img src="/imagenes/icons/icon-resize.png"></a>
+</fieldset>
+<fieldset class="w120">
+	<a href="javascript:;" class="boton_conv" id="factor_convertir">Convertir</a>
 </fieldset>
 <?php } } }elseif(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==0){ ?>
-<fieldset class="w120">
+<fieldset class="alto50 w120">
     <label for="lamina1_grm2">GR / M2</label>
     <input class="w100 texto_der" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0">
     <input name="lamina1_milpul" id="lamina1_milpul" type="hidden" value="0">
      <input name="lamina1_micra" id="lamina1_micra" type="hidden" value="0">
 </fieldset>
 <?php } ?>
+
+<fieldset class="w120">
+    <label for="lamina1_ancho">Ancho</label>
+    <input class="w100 texto_der" name="lamina1_ancho" type="text" id="lamina1_ancho" value="<?php echo $anchofinal; ?>">
+</fieldset>
 
 <?php if($filtro1_polietileno==1 or $filtro1_pebd==1 or $filtro1_pead==1 or $filtro1_ppp==1){ ?>
 <fieldset class="w245">
