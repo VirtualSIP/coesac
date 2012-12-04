@@ -70,8 +70,7 @@ jLamFactorConv(document).ready(function(){
 		var lam1_grm2=jLamFactorConv("#lamina1_grm2").val();
 		var conversion1_factor=jLamFactorConv("#conversion1_factor").val();
 		var conversion1_grm2=jLamFactorConv("#conversion1_grm2").val();
-		var convertir1="OK";
-		
+		var convertir1="OK";		
 		jLamFactorConv.post("formula-factor-conversion.php", {lam1_milpul: lam1_milpul, lam1_material: lam1_material, convertir1: convertir1,
 		lam1_micra: lam1_micra, lam1_grm2: lam1_grm2, conversion1_factor: conversion1_factor, conversion1_grm2: conversion1_grm2},
 			function(data){
@@ -92,7 +91,9 @@ jLamCambPos(document).ready(function(){
 		var lam1_material=jLamCambPos("#lamina1_material").val();
 		var conversion1_factor=jLamCambPos("#conversion1_factor").val();
 		var conversion1_grm2=jLamCambPos("#conversion1_grm2").val();
-		jLamCambPos.post("formula-factor-conversion.php", {lam1_material: lam1_material, conversion1_factor: conversion1_factor, conversion1_grm2: conversion1_grm2},
+		var posicion1="OK";
+		jLamCambPos.post("formula-factor-conversion.php", {lam1_material: lam1_material, conversion1_factor: conversion1_factor, 
+		conversion1_grm2: conversion1_grm2, posicion1: posicion1},
 			function(data){
 				jLamCambPos("#lamina1_factconv").html(data);
 				jLamCambPos("#progressbar").addClass("ocultar");
