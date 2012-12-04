@@ -70,11 +70,11 @@ jLamFactorConv(document).ready(function(){
 		var lam1_grm2=jLamFactorConv("#lamina1_grm2").val();
 		var conversion1_factor=jLamFactorConv("#conversion1_factor").val();
 		var conversion1_grm2=jLamFactorConv("#conversion1_grm2").val();
-		var convertir1="OK";		
+		var convertir1="OK";
+		jLamFactorConv("#lamina1_factconv").empty();		
 		jLamFactorConv.post("formula-factor-conversion.php", {lam1_milpul: lam1_milpul, lam1_material: lam1_material, convertir1: convertir1,
 		lam1_micra: lam1_micra, lam1_grm2: lam1_grm2, conversion1_factor: conversion1_factor, conversion1_grm2: conversion1_grm2},
 			function(data){
-				jLamFactorConv("#lamina1_factconv").empty();
 				jLamFactorConv("#lamina1_factconv").html(data);
 				jLamFactorConv("#progressbar").addClass("ocultar");
 			});
