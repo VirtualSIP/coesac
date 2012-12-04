@@ -110,7 +110,7 @@ jLamFactorConv(document).ready(function(){
 <script>
 var jLamCambPos=jQuery.noConflict();
 jLamCambPos(document).ready(function(){
-	jLamCambPos("#factor_cambiar").click(function(){
+	jLamCambPos("#factor1_cambiar").click(function(){
 		var lam1_material=jLamCambPos("#lamina1_material").val();
 		var conversion1_factor=jLamCambPos("#conversion1_factor").val();
 		var conversion1_grm2=jLamCambPos("#conversion1_grm2").val();
@@ -153,10 +153,10 @@ if(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==1){
 </fieldset>
 </div>
 <fieldset class="w120">
-    <a href="javascript:;" class="boton_conv" id="factor_cambiar">Cambiar <img src="/imagenes/icons/icon-resize.png"></a>
+    <a href="javascript:;" class="boton_conv" id="factor1_cambiar">Cambiar</a>
 </fieldset>
 <fieldset class="w120">
-	<a href="javascript:;" class="boton_conv" id="factor_convertir">Convertir</a>
+	<a href="javascript:;" class="boton_conv" id="factor1_convertir">Convertir</a>
 </fieldset>
 <?php }elseif(BuscarPalabra($factor_material_lam1, $lamina1_dato["nombre_articulo"])==1 and $factor_tipo_lam1==2){ ?>
 <div id="lamina1_factconv">
@@ -174,10 +174,10 @@ if(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==1){
 </fieldset>
 </div>
 <fieldset class="w120">
-    <a href="javascript:;" class="boton_conv" id="factor_cambiar">Cambiar <img src="/imagenes/icons/icon-resize.png"></a>
+    <a href="javascript:;" class="boton_conv" id="factor1_cambiar">Cambiar</a>
 </fieldset>
 <fieldset class="w120">
-	<a href="javascript:;" class="boton_conv" id="factor_convertir">Convertir</a>
+	<a href="javascript:;" class="boton_conv" id="factor1_convertir">Convertir</a>
 </fieldset>
 <?php } } }elseif(BuscarPalabraFactor($lista, $lamina1_dato["nombre_articulo"])==0){ ?>
 <fieldset class="alto50 w120">
