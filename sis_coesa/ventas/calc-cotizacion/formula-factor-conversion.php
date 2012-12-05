@@ -120,6 +120,37 @@ $lamina3_grm2=$_POST["lam3_grm2"];
             <input class="texto_cen w90" name="lamina1_grm2" type="text" id="lamina1_grm2" value="<?php echo $lamina1_grm2; ?>" readonly>
             <input name="conversion1_grm2" id="conversion1_grm2" type="hidden" value="0">
         </fieldset>        
+    <?php }}elseif($conversion1_factor==0 and $conversion1_grm2==1){
+			$lamina1_material=seleccionTabla($lamina1_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
+			if($lamina1_material["tipo"]==1){
+				$lamina1_factor_milpul=$lamina1_grm2 / $lamina1_material["factor"];
+	?>
+    	<fieldset class="alto50 w120" id="grm2_lam1">
+            <label for="lamina1_grm2">GR / M2</label>
+            <input class="texto_cen w90" name="lamina1_grm2" type="text" id="lamina1_grm2" value="<?php echo $lamina1_grm2; ?>">
+            <input name="conversion1_grm2" id="conversion1_grm2" type="hidden" value="1">
+        </fieldset>
+        <fieldset class="alto50 w120" id="factor_lam1">
+            <label for="lamina1_milpul">Mil. Pulgada:</label>
+            <input name="lamina1_milpul" type="text" class="texto_cen w90 factor_conversion_lam1" id="lamina1_milpul" value="<?php echo $lamina1_factor_milpul; ?>" readonly>
+            <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $lamina1_factor_material; ?>">
+            <input name="lamina1_micra" id="lamina1_micra" type="hidden" value="0">
+            <input name="conversion1_factor" id="conversion1_factor" type="hidden" value="0">
+        </fieldset>
+    <?php }elseif($lamina1_material["tipo"]==2){
+			$lamina1_factor_micra=$lamina1_grm2 / $lamina1_material["factor"];
+	?>
+    	<fieldset class="alto50 w120" id="grm2_lam1">
+            <label for="lamina1_grm2">GR / M2</label>
+            <input class="texto_cen w90" name="lamina1_grm2" type="text" id="lamina1_grm2" value="<?php echo $lamina1_grm2; ?>">
+            <input name="conversion1_grm2" id="conversion1_grm2" type="hidden" value="1">
+        </fieldset>
+    	<fieldset class="alto50 w120" id="factor_lam1">
+            <label for="lamina1_micra">Micras:</label>
+            <input name="lamina1_micra" type="text" class="texto_cen w90 factor_conversion_lam1" id="lamina1_micra" value="<?php echo $lamina1_factor_micra; ?>" readonly>
+            <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $lamina1_factor_material; ?>">
+            <input name="lamina1_milpul" id="lamina1_milpul" type="hidden" value="0">
+            <input name="conversion1_factor" id="conversion1_factor" type="hidden" value="0">
+        </fieldset>            
     <?php } ?>
-    <?php } ?>
-<?php } ?>
+<?php }} ?>
