@@ -55,7 +55,7 @@ if($formato==1){ $anchofinal=($ancho * $nrobandas) + 20; }//ANCHO PARA LAMINAS -
 elseif($formato==2){ $anchofinal=$ancho; } //ANCHO PARA LAMINAS - SOLO PARA MANGAS
 
 ?>
-<!-- SELECCION DE PROCESOS -->
+<!-- CONVERSION DE FACTOR A GRM2 O VICEVERSA -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 var jLamFactorConv=jQuery.noConflict();

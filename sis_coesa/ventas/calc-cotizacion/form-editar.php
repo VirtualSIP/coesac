@@ -31,6 +31,8 @@ $cotizacion_lamina1_ancho=$cotizacion["lamina1_ancho_cotizacion"];
 $cotizacion_lamina1_factor_milpul=$cotizacion["lamina1_factor_milpul"];
 $cotizacion_lamina1_factor_micra=$cotizacion["lamina1_factor_micra"];
 $cotizacion_lamina1_factor_material=$cotizacion["lamina1_factor_material"];
+$cotizacion_conversion1_factor=$cotizacion["conversion1_factor"];
+$cotizacion_conversion1_grm2=$cotizacion["conversion1_grm2"];
 $cotizacion_lamina1_grm2=$cotizacion["lamina1_grm2_cotizacion"];
 $cotizacion_lamina1_extrusion=$cotizacion["extrusion1_cotizacion"];
 $cotizacion_lamina1_impresion=$cotizacion["impresion1_cotizacion"];
@@ -43,6 +45,8 @@ $cotizacion_lamina2_ancho=$cotizacion["lamina2_ancho_cotizacion"];
 $cotizacion_lamina2_factor_milpul=$cotizacion["lamina2_factor_milpul"];
 $cotizacion_lamina2_factor_micra=$cotizacion["lamina2_factor_micra"];
 $cotizacion_lamina2_factor_material=$cotizacion["lamina2_factor_material"];
+$cotizacion_conversion2_factor=$cotizacion["conversion2_factor"];
+$cotizacion_conversion2_grm2=$cotizacion["conversion2_grm2"];
 $cotizacion_lamina2_grm2=$cotizacion["lamina2_grm2_cotizacion"];
 $cotizacion_lamina2_extrusion=$cotizacion["extrusion2_cotizacion"];
 $cotizacion_lamina2_bilaminado=$cotizacion["bilaminado2_cotizacion"];
@@ -55,6 +59,8 @@ $cotizacion_lamina3_ancho=$cotizacion["lamina3_ancho_cotizacion"];
 $cotizacion_lamina3_factor_milpul=$cotizacion["lamina3_factor_milpul"];
 $cotizacion_lamina3_factor_micra=$cotizacion["lamina3_factor_micra"];
 $cotizacion_lamina3_factor_material=$cotizacion["lamina3_factor_material"];
+$cotizacion_conversion3_factor=$cotizacion["conversion3_factor"];
+$cotizacion_conversion3_grm2=$cotizacion["conversion3_grm2"];
 $cotizacion_lamina3_grm2=$cotizacion["lamina3_grm2_cotizacion"];
 $cotizacion_lamina3_extrusion=$cotizacion["extrusion3_cotizacion"];
 $cotizacion_lamina3_trilaminado=$cotizacion["trilaminado3_cotizacion"];
@@ -272,16 +278,15 @@ jnrobd(document).ready(function(){
 <!-- SELECCIONAR LAMINAS -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-var jlamprocEd = jQuery.noConflict();
-jlamprocEd(document).ready(function(){
-	jlamprocEd("#dtecnicos_numbandas").change(function(){
-		jlamprocEd("#progressbar").removeClass("ocultar");
-		var anchofinal = jlamprocEd("#dtecnicos_anchofinal").val();
-		var nrobandas = jlamprocEd("select#dtecnicos_numbandas option:selected").val();
-		jlamprocEd.post("seleccionar-laminas.php", {anchofinal: anchofinal, nrobandas: nrobandas},
+var jlamproc = jQuery.noConflict();
+jlamproc(document).ready(function(){
+	jlamproc("#dtecnicos_formato").change(function(){
+		jlamproc("#progressbar").removeClass("ocultar");
+		var formato = jlamproc(this).val();
+		jlamproc.post("seleccionar-laminas.php", {formato: formato},
 			function(data){
-				jlamprocEd("#progressbar").addClass("ocultar");
-				jlamprocEd("#datos_lamproc").html(data);
+				jlamproc("#progressbar").addClass("ocultar");
+				jlamproc("#datos_lamproc").html(data);
 			});
 	});
 });
@@ -351,6 +356,121 @@ jLamProcSelc(document).ready(function(){
 			});
 	});
 	
+});
+</script>
+
+<!-- CONVERSION DE FACTOR A GRM2 O VICEVERSA -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jLamFactorConv=jQuery.noConflict();
+jLamFactorConv(document).ready(function(){
+	
+	//LAMINA 1
+	jLamFactorConv("#factor1_convertir").click(function(){	
+		jLamFactorConv("#progressbar").removeClass("ocultar");
+		var lam1_milpul=jLamFactorConv("#lamina1_milpul").val();
+		var lam1_material=jLamFactorConv("#lamina1_material").val();
+		var lam1_micra=jLamFactorConv("#lamina1_micra").val();
+		var lam1_grm2=jLamFactorConv("#lamina1_grm2").val();
+		var conversion1_factor=jLamFactorConv("#conversion1_factor").val();
+		var conversion1_grm2=jLamFactorConv("#conversion1_grm2").val();
+		var convertir1="OK";
+		jLamFactorConv("#lamina1_factconv").empty();		
+		jLamFactorConv.post("formula-factor-conversion.php", {lam1_milpul: lam1_milpul, lam1_material: lam1_material, convertir1: convertir1,
+		lam1_micra: lam1_micra, lam1_grm2: lam1_grm2, conversion1_factor: conversion1_factor, conversion1_grm2: conversion1_grm2},
+			function(data){
+				jLamFactorConv("#lamina1_factconv").html(data);
+				jLamFactorConv("#progressbar").addClass("ocultar");
+			});
+	});
+	
+	//LAMINA 2
+	jLamFactorConv("#factor2_convertir").click(function(){	
+		jLamFactorConv("#progressbar").removeClass("ocultar");
+		var lam2_milpul=jLamFactorConv("#lamina2_milpul").val();
+		var lam2_material=jLamFactorConv("#lamina2_material").val();
+		var lam2_micra=jLamFactorConv("#lamina2_micra").val();
+		var lam2_grm2=jLamFactorConv("#lamina2_grm2").val();
+		var conversion2_factor=jLamFactorConv("#conversion2_factor").val();
+		var conversion2_grm2=jLamFactorConv("#conversion2_grm2").val();
+		var convertir2="OK";
+		jLamFactorConv("#lamina2_factconv").empty();		
+		jLamFactorConv.post("formula-factor-conversion.php", {lam2_milpul: lam2_milpul, lam2_material: lam2_material, convertir2: convertir2,
+		lam2_micra: lam2_micra, lam2_grm2: lam2_grm2, conversion2_factor: conversion2_factor, conversion2_grm2: conversion2_grm2},
+			function(data){
+				jLamFactorConv("#lamina2_factconv").html(data);
+				jLamFactorConv("#progressbar").addClass("ocultar");
+			});
+	});
+	
+	//LAMINA 3
+	jLamFactorConv("#factor3_convertir").click(function(){	
+		jLamFactorConv("#progressbar").removeClass("ocultar");
+		var lam3_milpul=jLamFactorConv("#lamina3_milpul").val();
+		var lam3_material=jLamFactorConv("#lamina3_material").val();
+		var lam3_micra=jLamFactorConv("#lamina3_micra").val();
+		var lam3_grm2=jLamFactorConv("#lamina3_grm2").val();
+		var conversion3_factor=jLamFactorConv("#conversion3_factor").val();
+		var conversion3_grm2=jLamFactorConv("#conversion3_grm2").val();
+		var convertir3="OK";
+		jLamFactorConv("#lamina3_factconv").empty();		
+		jLamFactorConv.post("formula-factor-conversion.php", {lam3_milpul: lam3_milpul, lam3_material: lam3_material, convertir3: convertir3,
+		lam3_micra: lam3_micra, lam3_grm2: lam3_grm2, conversion3_factor: conversion3_factor, conversion3_grm2: conversion3_grm2},
+			function(data){
+				jLamFactorConv("#lamina3_factconv").html(data);
+				jLamFactorConv("#progressbar").addClass("ocultar");
+			});
+	});
+	
+});
+</script>
+
+<!-- CAMBIAR POSICION DE FACTORES DE CONVERSION -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var jLamCambPos=jQuery.noConflict();
+jLamCambPos(document).ready(function(){
+	//LAMINA 1
+	jLamCambPos("#factor1_cambiar").click(function(){
+		var lam1_material=jLamCambPos("#lamina1_material").val();
+		var conversion1_factor=jLamCambPos("#conversion1_factor").val();
+		var conversion1_grm2=jLamCambPos("#conversion1_grm2").val();
+		var posicion1="OK";
+		jLamCambPos.post("formula-factor-conversion.php", {lam1_material: lam1_material, conversion1_factor: conversion1_factor, 
+		conversion1_grm2: conversion1_grm2, posicion1: posicion1},
+			function(data){
+				jLamCambPos("#lamina1_factconv").html(data);
+				jLamCambPos("#progressbar").addClass("ocultar");
+			});
+	});
+	
+	//LAMINA 2
+	jLamCambPos("#factor2_cambiar").click(function(){
+		var lam2_material=jLamCambPos("#lamina2_material").val();
+		var conversion2_factor=jLamCambPos("#conversion2_factor").val();
+		var conversion2_grm2=jLamCambPos("#conversion2_grm2").val();
+		var posicion2="OK";
+		jLamCambPos.post("formula-factor-conversion.php", {lam2_material: lam2_material, conversion2_factor: conversion2_factor, 
+		conversion2_grm2: conversion2_grm2, posicion2: posicion2},
+			function(data){
+				jLamCambPos("#lamina2_factconv").html(data);
+				jLamCambPos("#progressbar").addClass("ocultar");
+			});
+	});
+	
+	//LAMINA 3
+	jLamCambPos("#factor3_cambiar").click(function(){
+		var lam3_material=jLamCambPos("#lamina3_material").val();
+		var conversion3_factor=jLamCambPos("#conversion3_factor").val();
+		var conversion3_grm2=jLamCambPos("#conversion3_grm2").val();
+		var posicion3="OK";
+		jLamCambPos.post("formula-factor-conversion.php", {lam3_material: lam3_material, conversion3_factor: conversion3_factor, 
+		conversion3_grm2: conversion3_grm2, posicion3: posicion3},
+			function(data){
+				jLamCambPos("#lamina3_factconv").html(data);
+				jLamCambPos("#progressbar").addClass("ocultar");
+			});
+	});
 });
 </script>
 
@@ -644,21 +764,31 @@ jslcmaq(document).ready(function(){
 
                                 <div id="lamina1_procesos" class="w245 float_left">
                                 	
-                                    <?php if($cotizacion_lamina1>0){ ?>
+                                    <?php if($cotizacion_lamina1>0){
+											$lamina1_material=seleccionTabla($cotizacion_lamina1_factor_material, "id_factor", "syCoesa_mantenimiento_factor_conversion", $conexion);
+									?>
                                     
-                                    <fieldset class="w120">
-                                        <label for="lamina1_ancho">Ancho</label>
-                                        <input class="w100 texto_der" name="lamina1_ancho" type="text" id="lamina1_ancho" value="<?php echo $cotizacion_lamina1_ancho; ?>">
-                                    </fieldset>
-                                    
-                                    <?php if($cotizacion_lamina1_factor_milpul>0 and $cotizacion_lamina1_grm2>0){ ?>
-			                        	<fieldset class="alto50 w120">
-			                              <label for="lamina1_milpul">Milesima de Pulgada:</label>
-			                              <input name="lamina1_milpul" type="text" class="w100 texto_cen" id="lamina1_milpul" value="<?php echo $cotizacion_lamina1_factor_milpul; ?>" size="50">
-			                              <input name="lamina1_grm2" type="hidden" id="lamina1_grm2" value="<?php echo $cotizacion_lamina1_grm2; ?>">
-			                              <input name="lamina1_micra" type="hidden" id="lamina1_micra" value="<?php echo $cotizacion_lamina1_factor_micra; ?>">
-			                              <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $cotizacion_lamina1_factor_material; ?>">
-			                          </fieldset>
+                                    <?php if($lamina1_material["tipo"]==1 and $cotizacion_conversion1_factor==1){ ?>
+			                        	<div id="lamina1_factconv">
+                                        <fieldset class="alto50 w120" id="factor_lam1">
+                                            <label for="lamina1_milpul">Mil. Pulgada:</label>
+                                            <input name="lamina1_milpul" type="text" class="texto_cen w90 factor_conversion_lam1" id="lamina1_milpul" value="<?php echo $cotizacion_lamina1_factor_milpul; ?>" >
+                                            <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $cotizacion_lamina1_factor_material; ?>">
+                                            <input name="lamina1_micra" id="lamina1_micra" type="hidden" value="0">
+                                            <input name="conversion1_factor" id="conversion1_factor" type="hidden" value="1">
+                                        </fieldset>
+                                        <fieldset class="alto50 w120" id="grm2_lam1">
+                                            <label for="lamina1_grm2">GR / M2</label>
+                                            <input class="texto_cen w90" name="lamina1_grm2" type="text" id="lamina1_grm2" value="0" readonly>
+                                            <input name="conversion1_grm2" id="conversion1_grm2" type="hidden" value="0">
+                                        </fieldset>
+                                        </div>
+                                        <fieldset class="w120">
+                                            <a href="javascript:;" class="boton_conv" id="factor1_cambiar">Cambiar</a>
+                                        </fieldset>
+                                        <fieldset class="w120">
+                                            <a href="javascript:;" class="boton_conv" id="factor1_convertir">Convertir</a>
+                                        </fieldset>
 			                        <?php }elseif($cotizacion_lamina1_factor_micra>0 and $cotizacion_lamina1_grm2>0){ ?>
 			                        	 <fieldset class="alto50 w120">
 			                              <label for="lamina1_micra">Micra:</label>
@@ -676,6 +806,11 @@ jslcmaq(document).ready(function(){
 			                                <input name="lamina1_material" id="lamina1_material" type="hidden" value="<?php echo $cotizacion_lamina1_factor_material; ?>">
 	                                    </fieldset>
 			                        <?php } ?>
+                                    
+                                    <fieldset class="w120">
+                                        <label for="lamina1_ancho">Ancho</label>
+                                        <input class="w100 texto_der" name="lamina1_ancho" type="text" id="lamina1_ancho" value="<?php echo $cotizacion_lamina1_ancho; ?>">
+                                    </fieldset>
                                     
                                     <?php if($filtro1_polietileno==1 or $filtro1_pebd==1 or $filtro1_pead==1 or $filtro1_ppp==1){ ?>
                                     <fieldset class="w235">
