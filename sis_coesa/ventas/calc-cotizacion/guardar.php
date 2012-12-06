@@ -29,18 +29,24 @@ $lamina1_factor_milpul=$_POST["lamina1_milpul"];
 $lamina1_factor_micra=$_POST["lamina1_micra"];
 $lamina1_factor_material=$_POST["lamina1_material"];
 $lamina1_grm2=$_POST["lamina1_grm2"];
+$conversion1_factor=$_POST["conversion1_factor"];
+$conversion1_grm2=$_POST["conversion1_grm2"];
 
 //LAMINA 2
 $lamina2_factor_milpul=$_POST["lamina2_milpul"];
 $lamina2_factor_micra=$_POST["lamina2_micra"];
 $lamina2_factor_material=$_POST["lamina2_material"];
 $lamina2_grm2=$_POST["lamina2_grm2"];
+$conversion2_factor=$_POST["conversion2_factor"];
+$conversion2_grm2=$_POST["conversion2_grm2"];
 
 //LAMINA 3
 $lamina3_factor_milpul=$_POST["lamina3_milpul"];
 $lamina3_factor_micra=$_POST["lamina3_micra"];
 $lamina3_factor_material=$_POST["lamina3_material"];
 $lamina3_grm2=$_POST["lamina3_grm2"];
+$conversion3_factor=$_POST["conversion3_factor"];
+$conversion3_grm2=$_POST["conversion3_grm2"];
 
 //DATOS
 $dato_fecha=$fechaActual;
