@@ -25,28 +25,28 @@ $metrosproducir=$_POST["dtecnicos_metrosproducir"];
 
 /*VARIABLES DE MILESIMA DE PULGADA Y MICRA*/
 //LAMINA 1
-$lamina1_factor_milpul=$_POST["lamina1_milpul"];
-$lamina1_factor_micra=$_POST["lamina1_micra"];
-$lamina1_factor_material=$_POST["lamina1_material"];
-$lamina1_grm2=$_POST["lamina1_grm2"];
-$conversion1_factor=$_POST["conversion1_factor"];
-$conversion1_grm2=$_POST["conversion1_grm2"];
+if($_POST["lamina1_milpul"]==""){ $lamina1_factor_milpul=0; }else{ $lamina1_factor_milpul=$_POST["lamina1_milpul"]; }
+if($_POST["lamina1_micra"]==""){ $lamina1_factor_micra=0; }else{ $lamina1_factor_micra=$_POST["lamina1_micra"]; }
+if($_POST["lamina1_material"]==""){ $lamina1_factor_material=0; }else{ $lamina1_factor_material=$_POST["lamina1_material"]; }
+if($_POST["lamina1_grm2"]==""){ $lamina1_grm2=0; }else{ $lamina1_grm2=$_POST["lamina1_grm2"]; }
+if($_POST["conversion1_factor"]==""){ $conversion1_factor=0; }else{ $conversion1_factor=$_POST["conversion1_factor"]; }
+if($_POST["conversion1_grm2"]==""){ $conversion1_grm2=0; }else{ $conversion1_grm2=$_POST["conversion1_grm2"]; }
 
 //LAMINA 2
-$lamina2_factor_milpul=$_POST["lamina2_milpul"];
-$lamina2_factor_micra=$_POST["lamina2_micra"];
-$lamina2_factor_material=$_POST["lamina2_material"];
-$lamina2_grm2=$_POST["lamina2_grm2"];
-$conversion2_factor=$_POST["conversion2_factor"];
-$conversion2_grm2=$_POST["conversion2_grm2"];
+if($_POST["lamina2_milpul"]==""){ $lamina2_factor_milpul=0; }else{ $lamina2_factor_milpul=$_POST["lamina2_milpul"]; }
+if($_POST["lamina2_micra"]==""){ $lamina2_factor_micra=0; }else{ $lamina2_factor_micra=$_POST["lamina2_micra"]; }
+if($_POST["lamina2_material"]==""){ $lamina2_factor_material=0; }else{ $lamina2_factor_material=$_POST["lamina2_material"]; }
+if($_POST["lamina2_grm2"]==""){ $lamina2_grm2=0; }else{ $lamina2_grm2=$_POST["lamina2_grm2"]; }
+if($_POST["conversion2_factor"]==""){ $conversion2_factor=0; }else{ $conversion2_factor=$_POST["conversion2_factor"]; }
+if($_POST["conversion2_grm2"]==""){ $conversion2_grm2=0; }else{ $conversion2_grm2=$_POST["conversion2_grm2"]; }
 
 //LAMINA 3
-$lamina3_factor_milpul=$_POST["lamina3_milpul"];
-$lamina3_factor_micra=$_POST["lamina3_micra"];
-$lamina3_factor_material=$_POST["lamina3_material"];
-$lamina3_grm2=$_POST["lamina3_grm2"];
-$conversion3_factor=$_POST["conversion3_factor"];
-$conversion3_grm2=$_POST["conversion3_grm2"];
+if($_POST["lamina3_milpul"]==""){ $lamina3_factor_milpul=0; }else{ $lamina3_factor_milpul=$_POST["lamina3_milpul"]; }
+if($_POST["lamina3_micra"]==""){ $lamina3_factor_micra=0; }else{ $lamina3_factor_micra=$_POST["lamina3_micra"]; }
+if($_POST["lamina3_material"]==""){ $lamina3_factor_material=0; }else{ $lamina3_factor_material=$_POST["lamina3_material"]; }
+if($_POST["lamina3_grm2"]==""){ $lamina3_grm2=0; }else{ $lamina3_grm2=$_POST["lamina3_grm2"]; }
+if($_POST["conversion3_factor"]==""){ $conversion3_factor=0; }else{ $conversion3_factor=$_POST["conversion3_factor"]; }
+if($_POST["conversion3_grm2"]==""){ $conversion3_grm2=0; }else{ $conversion3_grm2=$_POST["conversion3_grm2"]; }
 
 //DATOS
 $dato_fecha=$fechaActual;
@@ -120,6 +120,8 @@ lamina1_ancho_cotizacion,
 lamina1_factor_micra,
 lamina1_factor_milpul,
 lamina1_factor_material,
+conversion1_factor,
+conversion1_grm2,
 lamina1_grm2_cotizacion,
 extrusion1_cotizacion, 
 impresion1_cotizacion, 
@@ -130,6 +132,8 @@ lamina2_ancho_cotizacion,
 lamina2_factor_micra,
 lamina2_factor_milpul,
 lamina2_factor_material,
+conversion2_factor,
+conversion2_grm2,
 lamina2_grm2_cotizacion,
 extrusion2_cotizacion, 
 bilaminado2_cotizacion, 
@@ -140,6 +144,8 @@ lamina3_ancho_cotizacion,
 lamina3_factor_micra,
 lamina3_factor_milpul,
 lamina3_factor_material,
+conversion3_factor,
+conversion3_grm2,
 lamina3_grm2_cotizacion,
 extrusion3_cotizacion, 
 trilaminado3_cotizacion, 
@@ -186,6 +192,8 @@ $lamina1_ancho,
 $lamina1_factor_micra,
 $lamina1_factor_milpul,
 $lamina1_factor_material,
+$conversion1_factor,
+$conversion1_grm2,
 $lamina1_grm2,
 $lamina1_extrusion, 
 $lamina1_impresion, 
@@ -196,6 +204,8 @@ $lamina2_ancho,
 $lamina2_factor_micra,
 $lamina2_factor_milpul,
 $lamina2_factor_material,
+$conversion2_factor,
+$conversion2_grm2,
 $lamina2_grm2,
 $lamina2_extrusion, 
 $lamina2_bilaminado, 
@@ -206,6 +216,8 @@ $lamina3_ancho,
 $lamina3_factor_micra,
 $lamina3_factor_milpul,
 $lamina3_factor_material,
+$conversion3_factor,
+$conversion3_grm2,
 $lamina3_grm2,
 $lamina3_extrusion, 
 $lamina3_trilaminado, 
