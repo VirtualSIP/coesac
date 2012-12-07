@@ -326,8 +326,11 @@ jLamProcSelc(document).ready(function(){
 	jLamProcSelc("#lamina1_select").click(function(){	
 		jLamProcSelc("#progressbar").removeClass("ocultar");
 		var lamina1=jLamProcSelc("#dt_articulo1").val();
+		var anchofinal=jLamProcSelc("#dtecnicos_anchofinal").val();
+		var nrobandas=jLamProcSelc("#dtecnicos_numbandas").val();
+		var formato=jLamProcSelc("#dtecnicos_formato").val();
 		
-		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina1: lamina1},
+		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina1: lamina1, anchofinal: anchofinal, nrobandas: nrobandas, formato: formato},
 			function(data){
 				jLamProcSelc("#lamina1_procesos").html(data);
 				jLamProcSelc("#progressbar").addClass("ocultar");
@@ -337,19 +340,25 @@ jLamProcSelc(document).ready(function(){
 	jLamProcSelc("#lamina2_select").click(function(){
 		jLamProcSelc("#progressbar").removeClass("ocultar");
 		var lamina2=jLamProcSelc("#dt_articulo2").val();
+		var anchofinal=jLamProcSelc("#dtecnicos_anchofinal").val();
+		var nrobandas=jLamProcSelc("#dtecnicos_numbandas").val();
+		var formato=jLamProcSelc("#dtecnicos_formato").val();
 		
-		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina2: lamina2},
+		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina2: lamina2, anchofinal: anchofinal, nrobandas: nrobandas, formato: formato},
 			function(data){
 				jLamProcSelc("#lamina2_procesos").html(data);
 				jLamProcSelc("#progressbar").addClass("ocultar");
 			});
-	});
+	});		
 	
 	jLamProcSelc("#lamina3_select").click(function(){
 		jLamProcSelc("#progressbar").removeClass("ocultar");
 		var lamina3=jLamProcSelc("#dt_articulo3").val();
+		var anchofinal=jLamProcSelc("#dtecnicos_anchofinal").val();
+		var nrobandas=jLamProcSelc("#dtecnicos_numbandas").val();
+		var formato=jLamProcSelc("#dtecnicos_formato").val();
 		
-		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina3: lamina3},
+		jLamProcSelc.post("seleccionar-laminas-procesos.php", {lamina3: lamina3, anchofinal: anchofinal, nrobandas: nrobandas, formato: formato},
 			function(data){
 				jLamProcSelc("#lamina3_procesos").html(data);
 				jLamProcSelc("#progressbar").addClass("ocultar");
@@ -743,7 +752,8 @@ jslcmaq(document).ready(function(){
 											$filtro1_pead=BuscarPalabra("PEAD", $lamina1_nombre);
 											$filtro1_ppp=BuscarPalabra("PPP", $lamina1_nombre);
 											
-											if($cotizacion_lamina1==$lamina1_id){?>
+											if($cotizacion_lamina1==$lamina1_id){
+									?>
 										<option selected value="<?php echo $lamina1_id; ?>"><?php echo $lamina1_nombre; ?></option>
 									<?php }elseif($filtro1_polietileno==1 or $filtro1_pead==1 or $filtro1_pebd==1 or $filtro1_ppp==1){
 												if($lamina1_ancho>=$formula_filtro_polietileno){ ?>
